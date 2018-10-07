@@ -1,0 +1,9 @@
+.container-project {
+	grid-template-columns: 275px repeat(1, 1fr);
+	grid-template-rows: 64px 1fr 50px;
+	grid-gap: 0px;
+	grid-template-areas:
+	    "sidebar header"
+	    "sidebar content"
+	    "sidebar footer";
+}

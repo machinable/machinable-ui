@@ -1,0 +1,43 @@
+.header {
+    height: 64px;
+	display: flex;
+    align-items: center;
+    padding: 0px 20px;
+    box-shadow: 0px 1px 3px #CCC;
+    background-color: #FFF;
+}
+
+.header.no-shadow{
+    box-shadow: none;
+}
+
+.input {
+    width: 100%;
+    margin: 5px 0px;
+    border: 2px solid var(--card-border-color);
+    border-radius: 2px;
+    padding: 10px;
+    font-size: 16px;
+    font-family: inherit;
+    color: var(--text-color);
+}
+
+.dropdown-items {
+    margin-top: -10px;
+}
+.dropdown-items.show {
+    margin-top: 0px;
+}
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: var(--text-more-muted);
+}
+::-moz-placeholder { /* Firefox 19+ */
+    color: var(--text-more-muted);
+}
+:-ms-input-placeholder { /* IE 10+ */
+    color: var(--text-more-muted);
+}
+:-moz-placeholder { /* Firefox 18- */
+    color: var(--text-more-muted);
+}

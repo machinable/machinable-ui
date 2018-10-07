@@ -1,0 +1,9 @@
+version: '2'
+services:
+  ui:
+    container_name: machinable-ui
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+    - "localhost:80:80"

@@ -1,0 +1,28 @@
+.logo{
+	height: 36px;
+}
+
+.logo-element {
+	fill: var(--brand);
+	stroke: var(--brand);
+}
+
+.animate .logo-circle {
+	animation-name: circle;
+    animation-iteration-count: infinite;
+	animation-duration: 1s;
+}
+
+.animate .logo-circle:nth-child(3) {
+	animation-delay: .1s;
+}
+.animate .logo-circle:last-child {
+	animation-delay: .2s;
+}
+
+@keyframes circle {
+    0% {r: 3;}
+    25% {r: 4;cy:18;}
+    50% {r: 3;}
+    100% {r: 3;}
+}
