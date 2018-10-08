@@ -8,25 +8,20 @@
     --text-muted: #6c757d;
     --text-more-muted: #D5D5D5;
 
-    /* brand color */
-    --brand: #233237;
-    --accent: #008F95;
+	/* brand color */
+	--real-brand: #233237;
+    --brand: #1B9AAA;
+    --accent: #DA7B93;
 
     /* colors */
     /* https://coolors.co/f8ffe5-06d6a0-1b9aaa-ef476f-ffc43d */
-    /* --neutral: #F8FFE5; */
-    /*
+
+    /* more standard colors */
     --success: #06D6A0;
     --information: #1B9AAA;
     --warning: #FFC43D;
-    --danger: #EF476F;
-	*/
-
-    /* more standard colors */
-    --success: #1abc9c;
-    --information: #2980b9;
-    --warning: #e67e22;
-    --danger: #c0392b;
+	--danger: #EF476F;
+	--neutral: #F8FFE5;
     
 	--root-overflow: auto;
     --root-height: auto;
@@ -145,6 +140,9 @@ a {
     align-items: center;
 }
 
+.center-self {
+	align-self: center;
+}
 .center {
 	display: flex;
     align-items: center;
@@ -367,6 +365,12 @@ strong {
 }
 .nav.link-underline a {
     padding-bottom: 11px;
+}
+
+.navlink-description{
+	margin: 5px 0px;
+    font-size: 12px;
+    line-height: 16px;
 }
 
 /* UTILITY */

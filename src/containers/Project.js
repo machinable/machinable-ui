@@ -7,6 +7,8 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
 import API from '../app/api/API';
+import Access from '../app/access/Access';
+import Security from '../app/security/Security';
 import Collections from '../app/collections/Collections';
 import Settings from '../app/settings/Settings';
 
@@ -86,6 +88,8 @@ class Project extends Component {
                     <Switch>
                         <Route path={prefix+"/api"} component={API} />
                         <Route path={prefix+"/collections"} component={Collections} />
+                        <Route path={prefix+"/access"} component={Access} />
+                        <Route path={prefix+"/security"} component={Security} />
                         <Route path={prefix+"/settings"} component={Settings} />
 
                         <Redirect from="/" to={prefix+"/api"} />

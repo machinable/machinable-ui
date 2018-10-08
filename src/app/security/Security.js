@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { Nav } from 'turtle-ui';
-import Data from './Data';
-import Usage from './Usage';
+import Data from './Logs';
+import Usage from './Sessions';
 
-class Collections extends Component {
+class Security extends Component {
 
 	constructor(props) {
         super(props);
@@ -18,14 +18,14 @@ class Collections extends Component {
 	render() {
 		var prefix = this.props.match.url;
 		var collectionLinks = [
-			{to: `${prefix}/data`, text: 'Data'},
-			{to: `${prefix}/usage`, text: 'Usage'}
+			{to: `${prefix}/logs`, text: 'Logs'},
+			{to: `${prefix}/sessions`, text: 'Sessions'}
 		];
 		return (
 			<div>
 				<div className="padding-side content-header">
-					<h2 className="text-400 margin-bottom">Collections</h2>
-					<p className="text-muted margin-top margin-bottom-even-more">Use collections to store your project's unstructured JSON data</p>
+					<h2 className="text-400 margin-bottom">Security</h2>
+					<p className="text-muted margin-top margin-bottom-even-more">View activity logs and manage user sessions</p>
 					<Nav 
 						classes="horizontal link-underline"
 						links={collectionLinks}
@@ -34,9 +34,9 @@ class Collections extends Component {
 
 				<div className="project-content">
                     <Switch>
-                        <Route path={prefix+"/data"} component={Data} />
-                        <Route path={prefix+"/usage"} component={Usage} />
-                        <Redirect from="/" to={prefix+"/data"} />
+                        <Route path={prefix+"/logs"} component={Data} />
+                        <Route path={prefix+"/sessions"} component={Usage} />
+                        <Redirect from="/" to={prefix+"/logs"} />
                     </Switch>
 				</div>
 			</div>
@@ -45,4 +45,4 @@ class Collections extends Component {
 }
 
 
-export default Collections;
+export default Security;

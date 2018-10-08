@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class Settings extends Component {
+class Access extends Component {
 
 	constructor(props) {
         super(props);
@@ -15,12 +15,12 @@ class Settings extends Component {
 		return (
 			<div>
 				<div className="padding-side content-header">
-					<h2 className="text-400 margin-bottom">Settings</h2>
-					<p className="text-muted margin-top padding-bottom no-margin">Project configuration and settings</p>
+					<h2 className="text-400 margin-bottom">Access</h2>
+					<p className="text-muted padding-bottom no-margin">Manage users of this project</p>
 				</div>
 
 				<div className="project-content">
-					Settings
+                    User list
 				</div>
 			</div>
 		  );
@@ -28,4 +28,4 @@ class Settings extends Component {
 }
 
 
-export default Settings;
+export default Access;
