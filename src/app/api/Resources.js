@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import Machinable from '../../client';
+import ReactJson from 'react-json-view';
 
 class Resources extends Component {
 
 	constructor(props) {
 		super(props);
 		this.state = {
-			resources: []
+			resources: {}
 		}
 	}
 
@@ -15,7 +16,7 @@ class Resources extends Component {
 	}
 
 	resSuccess = (response) => {
-		this.setState({resources: response.data.items});
+		this.setState({resources: response.data});
 	}
 
 	getResources = () => {
@@ -29,9 +30,7 @@ class Resources extends Component {
 	render() {
 		return (
 			<div>
-				<pre>
-					{JSON.stringify(this.state.resources, null, 2)}
-				</pre>
+				<ReactJson collapsed={3} name={false} displayDataTypes={false} iconStyle="square" src={this.state.resources} />
 			</div>
 		  );
 	}

@@ -15,7 +15,8 @@
     "react-router-dom": "^4",
     "react-scripts": "1.1.0",
     "redux": "^3.7.2",
-    "turtle-ui": "^1.2.2"
+    "turtle-ui": "^1.2.2",
+    "react-json-view": "latest"
   },
   "scripts": {
     "start": "react-scripts start",

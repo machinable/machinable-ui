@@ -21,7 +21,7 @@ const App = () => (
 			<Route path="/home" component={Home} />
 			<Route path="/project" component={Project} />
 
-      		<Redirect from="/" to="home" />
+      		<Redirect from="/" to="project" />
 		</Switch>
 	</Router>
 )
