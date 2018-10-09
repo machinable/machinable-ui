@@ -7,11 +7,6 @@ import Usage from './Usage';
 
 class API extends Component {
 
-	constructor(props) {
-        super(props);
-        
-	}
-
 	componentDidMount = () => {		
 
 	}

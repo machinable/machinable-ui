@@ -12,6 +12,12 @@ class MachinableClient {
                 axios.get(GET_RESOURCES, {})
                     .then(success)
                     .catch(error);
+            },
+
+            create: function(data, success, error) {
+                axios.post(GET_RESOURCES, data, {})
+                    .then(success)
+                    .catch(error);
             }
         }
     }

@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { Button, Modal, Card, Input, Select } from 'turtle-ui';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faPlus from '@fortawesome/fontawesome-free-solid/faPlusCircle';
+import faTrash from '@fortawesome/fontawesome-free-solid/faTrash';
 import Machinable from '../../client';
 import ReactJson from 'react-json-view';
+import slugify from 'slugify';
 
 class Resources extends Component {
 
@@ -13,9 +15,10 @@ class Resources extends Component {
 			resources: {},
 			showModal: false,
 			newResource: {
+				errors: [],
 				title: "",
 				path_name: "",
-				properties: [{title: "", type: "", description: ""}]
+				properties: [{key: "", type: "string", description: ""}]
 			}
 		}
 	}
@@ -25,7 +28,7 @@ class Resources extends Component {
 	}
 
 	resSuccess = (response) => {
-		this.setState({resources: response.data});
+		this.setState({resources: response.data}, this.closeModal);
 	}
 
 	getResources = () => {
@@ -38,7 +41,8 @@ class Resources extends Component {
 		this.setState({showModal: false, newResource: {
 			title: "",
 			path_name: "",
-			properties: [{title: "", type: "", description: ""}]
+			errors: [],
+			properties: [{key: "", type: "string", description: ""}]
 		}});
 	}
 
@@ -50,9 +54,129 @@ class Resources extends Component {
 
 	addProperty = () => {
 		var newResource = this.state.newResource;
-		newResource.properties.push({title: "", type: "", description: ""})
+		newResource.properties.push({key: "", type: "string", description: ""});
 
 		this.setState({newResource: newResource});
+	}
+
+	onChange = (event) => {
+	    const target = event.target;
+	    var value = target.value;
+	    const name = target.name;
+
+		var newResource = this.state.newResource;
+		
+
+		if (name == "title") {
+			newResource["path_name"] = value.toLowerCase();
+		} 
+		else if (name == "path_name") {
+			var vals = value.split("/")
+			if (vals.length > 1) {
+				value = value.split("/")[1];
+			}
+		}
+
+		newResource[name] = value;
+
+		// slugify path name
+		newResource["path_name"] = slugify(newResource["path_name"], {
+										replacement: '-',
+										remove: null,  
+										lower: true
+									})
+
+	    this.setState({
+	    	newResource: newResource
+	    });
+	}
+	  
+	onChangeProperty = (event, idx) => {
+		const target = event.target;
+		var value = target.value;
+		const name = target.name;
+		console.log("name : " + name);
+		console.log("value : " + value);
+		
+		var newResource = this.state.newResource;
+		newResource.properties[idx][name] = value;
+
+		this.setState({
+			newResource: newResource
+		});
+	}
+
+	onDeleteProperty = (idx) => {
+		console.log("delete " + idx);
+		var newResource = this.state.newResource;
+		console.log(newResource.properties);
+		newResource.properties.splice(idx, 1);
+
+		this.setState({
+			newResource: newResource
+		});
+	}
+
+	saveError = (response) => {
+		console.log(response);
+
+		var newResource = this.state.newResource;
+		newResource.errors.push(response.data.error);
+
+		this.setState({
+			newResource: newResource
+		});
+	}
+
+	saveSuccess = (response) => {
+		this.getResources()
+	}
+
+	saveResource = () => {
+		var errors = [];
+		var newResource = this.state.newResource;
+		newResource.errors = [];
+		this.setState({
+			newResource: newResource
+		});
+		if (newResource.title == "") {
+			errors.push("Resource title cannot be empty.");
+		}
+		if (newResource.path_name == "") {
+			errors.push("Resource path cannot be empty.");
+		}
+		if (newResource.properties.length == 0) {
+			errors.push("A resource must have at least one property.");
+		}
+
+		for (let index = 0; index < newResource.properties.length; index++) {
+			const element = newResource.properties[index];
+			if (element.key == "") {
+				errors.push("Property key cannot be empty.")
+			}
+		}
+
+		if (errors.length > 0) {
+			console.log(errors);
+			newResource.errors = errors;
+			this.setState({
+				newResource: newResource
+			});
+			return;
+		}
+
+		var payload = {
+			"title": newResource.title,
+			"path_name": newResource.path_name,
+			"properties": {}
+		};
+
+		for (let index = 0; index < newResource.properties.length; index++) {
+			const element = newResource.properties[index];
+			payload.properties[element.key] = {type: element.type, description: element.description};
+		}
+
+		Machinable.resources().create(payload, this.saveSuccess, this.saveError)
 	}
 
 	componentDidMount = () => {		
@@ -83,7 +207,7 @@ class Resources extends Component {
 									footer={
 										<div className="grid grid-2">
 											<div className="col-2 col-right">
-												<Button classes="accent" onClick={this.closeModal}>Save</Button>	
+												<Button classes="accent" onClick={this.saveResource}>Save</Button>	
 												<Button classes="plain text" onClick={this.closeModal}>Cancel</Button>	
 											</div>
 										</div>
@@ -93,21 +217,37 @@ class Resources extends Component {
 										<p className="text-muted margin-top margin-bottom-even-more">Configure an API Resource to store structured data</p>
 									</div>
 									<div className="grid grid-1">
-										<Input placeholder="descriptive title of the resource" label="Title" name="title"/>
-										<Input placeholder="the url path of this resource" label="Path" name="path"/>
-										<div>
-											<strong>Properties</strong>
-											<div className="grid grid-3 margin-top-more">
-												<span className="text-muted">Key</span><span className="text-muted">Type</span><span className="text-muted">Description</span>
-												{this.state.newResource.properties.map(function(item, idx){
-													return (
-														<React.Fragment>
-															<Input placeholder="key" name="key"/>
-															<Select placeholder="type" options={typeOptions} />
-															<Input placeholder="description" name="path"/>
-														</React.Fragment>
+										{this.state.newResource.errors.length > 0 &&
+											<div className="text-danger">
+												{this.state.newResource.errors.map(function(error, i){
+													return(
+														<div>{error}</div>
 													)
 												})}
+											</div>
+										}
+										
+										<Input placeholder="descriptive title of the resource" label="Title" name="title" value={this.state.newResource.title} onChange={this.onChange}/>
+										<Input placeholder="the url path of this resource" label="Path" name="path_name" value={"/" + this.state.newResource.path_name} onChange={this.onChange}/>
+										<div>
+											<strong>Properties</strong>
+											<div className="grid grid-8 margin-top-more">
+												<span className="col-2 text-muted">Key</span>
+												<span className="col-2 text-muted">Type</span>
+												<span className="col-3 text-muted">Description</span>
+												<span></span>
+												{this.state.newResource.properties.map(function(item, idx){
+													return (
+														<React.Fragment key={"new_property_" + idx}>
+															<Input labelClasses="col-2" placeholder="key" name="key" value={this.state.newResource.properties[idx].key} onChange={(event) => this.onChangeProperty(event, idx)}/>
+															<Select labelClasses="col-2" placeholder="type" name="type" value={this.state.newResource.properties[idx].type} options={typeOptions} onChange={(event) => this.onChangeProperty(event, idx)}/>
+															<Input labelClasses="col-3" placeholder="description" name="description" value={this.state.newResource.properties[idx].description}  onChange={(event) => this.onChangeProperty(event, idx)}/>
+															<Button classes="text plain no-click" onClick={() => this.onDeleteProperty(idx)}>
+																<FontAwesomeIcon icon={faTrash} fixedWidth/>
+															</Button>	
+														</React.Fragment>
+													)
+												}, this)}
 
 											</div>
 											<Button classes="btn-small margin-top vertical-align" onClick={this.addProperty}>
