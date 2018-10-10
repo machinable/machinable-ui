@@ -8,6 +8,18 @@ class MachinableClient {
         var GET_RESOURCES = API_HOST + "/resources/"
 
         return {
+            data: function() {
+                var GET_DATA = API_HOST + "/api/{resource}"
+        
+                return {
+                    list: function(resourcePath, success, error) {
+                        axios.get(GET_DATA.replace("{resource}", resourcePath), {})
+                            .then(success)
+                            .catch(error);
+                    }
+                }
+            }, 
+
             list: function(success, error) {
                 axios.get(GET_RESOURCES, {})
                     .then(success)
@@ -22,12 +34,31 @@ class MachinableClient {
         }
     }
 
-    data() {
-        var GET_DATA = API_HOST + "/api/{resource}"
+    collections() {
+        var GET_COLLECTIONS = API_HOST + "/collections/"
+        var GET_COLLECTION = API_HOST + "/collections/{name}"
 
         return {
-            list: function(resourcePath, success, error) {
-                axios.get(GET_DATA.replace("{resource}", resourcePath), {})
+            data: function() {
+                var GET_COLLECTION = API_HOST + "/collections/{name}"
+        
+                return {
+                    list: function(name, success, error) {
+                        axios.get(GET_COLLECTION.replace("{name}", name), {})
+                            .then(success)
+                            .catch(error);
+                    }
+                }
+            }, 
+
+            list: function(success, error) {
+                axios.get(GET_COLLECTIONS, {})
+                    .then(success)
+                    .catch(error);
+            },
+
+            create: function(data, success, error) {
+                axios.post(GET_COLLECTIONS, data, {})
                     .then(success)
                     .catch(error);
             }

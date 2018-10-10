@@ -18,7 +18,7 @@ class Collections extends Component {
 	render() {
 		var prefix = this.props.match.url;
 		var collectionLinks = [
-			{to: `${prefix}/data`, text: 'Data'},
+			{to: `${prefix}/data`, text: 'Collections'},
 			{to: `${prefix}/usage`, text: 'Usage'}
 		];
 		return (

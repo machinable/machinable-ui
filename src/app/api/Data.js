@@ -21,7 +21,7 @@ class Dat extends Component {
 	}
 
 	getData = () => {
-		Machinable.data().list(this.state.path, this.dataSuccess, this.dataError);
+		Machinable.resources().data().list(this.state.path, this.dataSuccess, this.dataError);
 	}
 
 	componentDidMount = () => {		
@@ -32,6 +32,7 @@ class Dat extends Component {
 		return (
 			<div>
 				<ReactJson collapsed={1} name={this.state.path} iconStyle="square" src={this.state.items} />
+				<br/>
 			</div>
 		  );
 	}
