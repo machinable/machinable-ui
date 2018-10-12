@@ -208,6 +208,15 @@ pre {
 	padding: 15px;
 }
 
+/* FLEX */
+.flex {
+	display: flex;
+}
+.flex-grow {
+	flex-grow: 1;
+    flex-basis: 0;
+}
+
 /* GRID */
 .grid {
 	display: grid;
@@ -275,11 +284,18 @@ div[class^="col-"]{
 .col-2-5 {
 	grid-column: span 2/5;
 }
+.col-3-5 {
+	grid-column: span 3/5;
+}
 .col-5 {
 	grid-column: span 5;
 }
 .col-6 {
 	grid-column: span 6;
+}
+
+.grid-column-end-6{
+	grid-column-end: 6;
 }
 
 .col-right {

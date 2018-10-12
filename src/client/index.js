@@ -5,6 +5,7 @@ const API_HOST = Statics.API_HOST;
 
 class MachinableClient {
     resources() {
+        console.log(API_HOST);
         var GET_RESOURCES = API_HOST + "/resources/"
 
         return {

@@ -199,8 +199,8 @@ class Resources extends Component {
 					close={this.closeModal}
 					isOpen={this.state.showModal}>
 
-					<div className="full-height grid grid-4">
-						<div className="col-2-5">
+					<div className="full-height grid grid-5">
+						<div className="col-3-5 grid-column-end-6">
 							<div className="grid grid-1">
 								<Card 
 									classes="footer-plain no-border"
@@ -231,17 +231,23 @@ class Resources extends Component {
 										<Input placeholder="the url path of this resource" label="Path" name="path_name" value={"/" + this.state.newResource.path_name} onChange={this.onChange}/>
 										<div>
 											<strong>Properties</strong>
-											<div className="grid grid-8 margin-top-more">
+											<div className="grid margin-top-more">
 												<span className="col-2 text-muted">Key</span>
-												<span className="col-2 text-muted">Type</span>
-												<span className="col-3 text-muted">Description</span>
+												<span className="col-4 text-muted">Type</span>
+												<span className="col-5 text-muted">Description</span>
 												<span></span>
 												{this.state.newResource.properties.map(function(item, idx){
 													return (
 														<React.Fragment key={"new_property_" + idx}>
 															<Input labelClasses="col-2" placeholder="key" name="key" value={this.state.newResource.properties[idx].key} onChange={(event) => this.onChangeProperty(event, idx)}/>
-															<Select labelClasses="col-2" placeholder="type" name="type" value={this.state.newResource.properties[idx].type} options={typeOptions} onChange={(event) => this.onChangeProperty(event, idx)}/>
-															<Input labelClasses="col-3" placeholder="description" name="description" value={this.state.newResource.properties[idx].description}  onChange={(event) => this.onChangeProperty(event, idx)}/>
+															<div className="col-4 flex">
+																<Select labelClasses="flex-grow" placeholder="type" name="type" value={this.state.newResource.properties[idx].type} options={typeOptions} onChange={(event) => this.onChangeProperty(event, idx)}/>
+																
+																{this.state.newResource.properties[idx].type == "string" && <Select labelClasses="flex-grow margin-left" placeholder="format" name="format"/>}
+																{this.state.newResource.properties[idx].type == "array" && <Select labelClasses="flex-grow" placeholder="item type" name="item type"/>}
+
+															</div>
+															<Input labelClasses="col-5" placeholder="description" name="description" value={this.state.newResource.properties[idx].description}  onChange={(event) => this.onChangeProperty(event, idx)}/>
 															<Button classes="text plain no-click" onClick={() => this.onDeleteProperty(idx)}>
 																<FontAwesomeIcon icon={faTrash} fixedWidth/>
 															</Button>	
