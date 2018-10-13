@@ -188,7 +188,9 @@ class Resources extends Component {
 			{value: "string", text:"string"}, 
 			{value: "integer", text:"integer"}, 
 			{value: "number", text:"number"}, 
-			{value: "boolean", text:"boolean"}];
+			{value: "boolean", text:"boolean"},
+			{value: "array", text:"array"},
+			{value: "object", text:"object"} ];
 		return (
 			<div className="grid grid-1">
 				<ReactJson collapsed={3} name={false} displayDataTypes={false} iconStyle="square" src={this.state.resources} />
@@ -243,8 +245,8 @@ class Resources extends Component {
 															<div className="col-4 flex">
 																<Select labelClasses="flex-grow" placeholder="type" name="type" value={this.state.newResource.properties[idx].type} options={typeOptions} onChange={(event) => this.onChangeProperty(event, idx)}/>
 																
-																{this.state.newResource.properties[idx].type == "string" && <Select labelClasses="flex-grow margin-left" placeholder="format" name="format"/>}
-																{this.state.newResource.properties[idx].type == "array" && <Select labelClasses="flex-grow" placeholder="item type" name="item type"/>}
+																{/* {this.state.newResource.properties[idx].type == "string" && <Select labelClasses="flex-grow margin-left" placeholder="format" name="format"/>}
+																{this.state.newResource.properties[idx].type == "array" && <Select labelClasses="flex-grow" placeholder="item type" name="item type"/>} */}
 
 															</div>
 															<Input labelClasses="col-5" placeholder="description" name="description" value={this.state.newResource.properties[idx].description}  onChange={(event) => this.onChangeProperty(event, idx)}/>
