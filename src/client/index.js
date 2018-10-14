@@ -65,6 +65,42 @@ class MachinableClient {
             }
         }
     }
+
+    users() {
+        var GET_USERS = API_HOST + "/users/"
+
+        return {
+            list: function(success, error) {
+                axios.get(GET_USERS, {})
+                    .then(success)
+                    .catch(error);
+            },
+
+            create: function(data, success, error) {
+                axios.post(GET_USERS, data, {})
+                    .then(success)
+                    .catch(error);
+            }
+        }
+    }
+
+    tokens() {
+        var GET_TOKENS = API_HOST + "/tokens/"
+
+        return {
+            list: function(success, error) {
+                axios.get(GET_TOKENS, {})
+                    .then(success)
+                    .catch(error);
+            },
+
+            create: function(data, success, error) {
+                axios.post(GET_TOKENS, data, {})
+                    .then(success)
+                    .catch(error);
+            }
+        }
+    }
 }
 
 export default new MachinableClient();

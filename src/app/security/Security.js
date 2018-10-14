@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { Nav } from 'turtle-ui';
-import Data from './Logs';
-import Usage from './Sessions';
+import Logs from './Logs';
+import Sessions from './Sessions';
 
 class Security extends Component {
 
@@ -34,8 +34,8 @@ class Security extends Component {
 
 				<div className="project-content">
                     <Switch>
-                        <Route path={prefix+"/logs"} component={Data} />
-                        <Route path={prefix+"/sessions"} component={Usage} />
+                        <Route path={prefix+"/logs"} component={Logs} />
+                        <Route path={prefix+"/sessions"} component={Sessions} />
                         <Redirect from="/" to={prefix+"/logs"} />
                     </Switch>
 				</div>

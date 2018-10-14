@@ -130,6 +130,10 @@ hr {
     border: 1px solid var(--card-border-color);
 }
 
+.background-neutral{
+	background-color: var(--card-border-color);
+}
+
 /* UTILITY */
 .rotate10deg {
 	transform: rotate(-10deg);
@@ -422,6 +426,9 @@ strong {
 /* UTILITY */
 .padding {
 	padding: 15px;
+}
+.padding-less {
+	padding: 5px;
 }
 .padding-more{
 	padding: 30px;

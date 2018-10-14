@@ -12,7 +12,7 @@ class Dat extends Component {
 	}
 
 	dataError = (response) => {
-		console.log(response)
+		console.log(response);
 	}
 
 	dataSuccess = (response) => {
