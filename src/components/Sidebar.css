@@ -4,6 +4,8 @@
 
 .sidebar .title {
     height: 64px;
+    background-color: var(--brand);
+    border-bottom: inset 2px rgba(0,0,0, 0.1);
 }
 
 .sidebar-content {

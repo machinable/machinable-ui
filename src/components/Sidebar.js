@@ -32,7 +32,7 @@ class Footer extends Component {
                     <div>
                         <div className="title center">
                             {/* <h3 className="text-400">Machinable</h3> */}
-                            <Logo color={"#CCC"}/>
+                            <Logo color={"#FFF"}/>
                         </div>
                         <div className="links">
                             <ul>
