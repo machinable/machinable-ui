@@ -37,7 +37,7 @@ class MachinableClient {
 
     collections() {
         var GET_COLLECTIONS = API_HOST + "/collections/"
-        var GET_COLLECTION = API_HOST + "/collections/{name}"
+        // var GET_COLLECTION = API_HOST + "/collections/{name}"
 
         return {
             data: function() {

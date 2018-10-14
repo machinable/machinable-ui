@@ -67,10 +67,10 @@ class Resources extends Component {
 		var newResource = this.state.newResource;
 		
 
-		if (name == "title") {
+		if (name === "title") {
 			newResource["path_name"] = value.toLowerCase();
 		} 
-		else if (name == "path_name") {
+		else if (name === "path_name") {
 			var vals = value.split("/")
 			if (vals.length > 1) {
 				value = value.split("/")[1];
@@ -139,19 +139,19 @@ class Resources extends Component {
 		this.setState({
 			newResource: newResource
 		});
-		if (newResource.title == "") {
+		if (newResource.title === "") {
 			errors.push("Resource title cannot be empty.");
 		}
-		if (newResource.path_name == "") {
+		if (newResource.path_name === "") {
 			errors.push("Resource path cannot be empty.");
 		}
-		if (newResource.properties.length == 0) {
+		if (newResource.properties.length === 0) {
 			errors.push("A resource must have at least one property.");
 		}
 
 		for (let index = 0; index < newResource.properties.length; index++) {
 			const element = newResource.properties[index];
-			if (element.key == "") {
+			if (element.key === "") {
 				errors.push("Property key cannot be empty.")
 			}
 		}
@@ -193,7 +193,10 @@ class Resources extends Component {
 			{value: "object", text:"object"} ];
 		return (
 			<div className="grid grid-1">
-				<ReactJson collapsed={3} name={false} displayDataTypes={false} iconStyle="square" src={this.state.resources} />
+				<div className="code">
+					<ReactJson collapsed={3} name={false} displayDataTypes={false} iconStyle="square" src={this.state.resources} />
+				</div>
+				
 				<Button classes="accent page-btn" onClick={this.openModal}>New Resource</Button>
 
 				<Modal

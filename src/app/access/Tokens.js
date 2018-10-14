@@ -69,7 +69,7 @@ class Tokens extends Component {
 					classes="hover"
 					values={tableValues}
 				/>
-				<Button classes="accent page-btn" onClick={this.openModal}>Add API Token</Button>
+				<Button classes="accent page-btn" onClick={this.openModal}>Generate API Token</Button>
 			</div>
 		  );
 	}

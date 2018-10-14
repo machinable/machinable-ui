@@ -57,6 +57,7 @@ class Users extends Component {
                         <div className="text-muted">{moment(user.created).fromNow()}</div>
                     </div>
                 </div>,
+                <div>read/write</div>,
                 <div className="align-right">
                     <span className="vertical-align">
                         {user.id} <Button classes="btn-small margin-left">Copy</Button>
@@ -71,7 +72,8 @@ class Users extends Component {
 		return (
 			<div className="grid grid-1">
 				<Table
-					classes="hover"
+                    classes="hover"
+                    headers={["Username", "Access", <div className="align-center text-400">ID</div>, <div className="align-right text-400">Options</div>]}
 					values={tableValues}
 				/>
 				<Button classes="accent page-btn" onClick={this.openModal}>Add User</Button>

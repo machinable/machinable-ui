@@ -423,6 +423,20 @@ strong {
     line-height: 16px;
 }
 
+.code {
+	background-color: var(--card-border-color);
+	padding: 10px;
+	border-radius: 5px;
+	border: 1px solid var(--border-color);
+}
+
+.code .react-json-view {
+	margin-bottom: 10px;
+}
+.code .react-json-view:last-child {
+	margin-bottom: 0px;
+}
+
 /* UTILITY */
 .padding {
 	padding: 15px;

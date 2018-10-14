@@ -29,10 +29,7 @@ class Dat extends Component {
 
 	render() {
 		return (
-			<div>
-				<ReactJson collapsed={1} name={this.state.path} iconStyle="square" src={this.state.items} />
-				<br/>
-			</div>
+			<ReactJson name={this.state.path} iconStyle="square" src={this.state.items} />
 		  );
 	}
 }
@@ -65,7 +62,7 @@ class Data extends Component {
 
 	render() {
 		return (
-			<div>
+			<div className="code">
 				{/* <ReactJson name={false} iconStyle="square" src={this.state.data} /> */}
 				{this.state.collections.map(function(col, idx){
 					return (
