@@ -17,7 +17,8 @@ class Footer extends Component {
 	render() {
 		return (
 			<div className="footer">
-				&copy; {new Date().getFullYear()} Machinable.io
+				<span className="text-muted">&copy; {new Date().getFullYear()} Machinable.io </span>
+				{/* <span className="align-right text-muted">Project Icons made by [author link] from www.flaticon.com</span> */}
 			</div>
 		  );
 	}

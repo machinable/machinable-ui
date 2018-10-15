@@ -49,6 +49,13 @@ class Users extends Component {
 	render() {
 
         var tableValues = this.state.users.map(function(user, idx){
+            var accessList = [];
+            if(user.read) {
+                accessList.push("read");
+            }
+            if(user.write) {
+                accessList.push("write");
+            }
             return [
                 <div className="vertical-align">
                     <FontAwesomeIcon className="margin-right text-muted" style={{"fontSize": "24px"}} icon={faUser} />
@@ -57,7 +64,7 @@ class Users extends Component {
                         <div className="text-muted">{moment(user.created).fromNow()}</div>
                     </div>
                 </div>,
-                <div>read/write</div>,
+                <div>{accessList.join(" / ")}</div>,
                 <div className="align-right">
                     <span className="vertical-align">
                         {user.id} <Button classes="btn-small margin-left">Copy</Button>

@@ -38,6 +38,25 @@ class Collections extends Component {
                         <Route path={prefix+"/usage"} component={Usage} />
                         <Redirect from="/" to={prefix+"/data"} />
                     </Switch>
+
+					{/* DOCUMENTATION */}
+					<div>
+						<h4 className="text-more-muted text-600"><br/>DOCUMENTATION</h4>
+						<div className="grid grid-3">
+							<div>
+								<a className="link text-400 text-information">Overview</a>
+								<p className="text-muted">Understand what Collections are and how to manage them.</p>
+							</div>
+							<div>
+								<a className="link text-400 text-information">Collections API</a>
+								<p className="text-muted">Read and write to collections with our RESTful API.</p>
+							</div>
+							<div>
+								<a className="link text-400 text-information">Examples</a>
+								<p className="text-muted">View the Machinable Github page to see example applications.</p>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		  );

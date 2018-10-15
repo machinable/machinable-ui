@@ -39,6 +39,16 @@ class Access extends Component {
                         <Route path={prefix+"/tokens"} component={Tokens} />
                         <Redirect from="/" to={prefix+"/users"} />
                     </Switch>
+
+					<div>
+						<h4 className="text-more-muted text-600"><br/>DOCUMENTATION</h4>
+						<div className="grid grid-3">
+							<div>
+								<a className="link text-400 text-information">Overview</a>
+								<p className="text-muted">Read more about users and API tokens.</p>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		  );

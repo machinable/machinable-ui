@@ -196,7 +196,7 @@ class Resources extends Component {
 				<div className="code">
 					<ReactJson collapsed={3} name={false} displayDataTypes={false} iconStyle="square" src={this.state.resources} />
 				</div>
-				
+
 				<Button classes="accent page-btn" onClick={this.openModal}>New Resource</Button>
 
 				<Modal

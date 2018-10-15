@@ -109,29 +109,9 @@ a {
 }
 
 /* COPY TO TURTLEUI*/
-.modal, .backdrop{
-	position: fixed;
-}
-.modal .card{
-	border-radius: 0px;
-}
-.modal.show{
-	overflow: auto;
-}
-.modal.from-right.show {
-    margin-left: 0%;
-}
-.modal.from-right {
-    margin-top: 0%;
-    margin-left: 25%;
-}
 
 hr {
     border: 1px solid var(--card-border-color);
-}
-
-.background-neutral{
-	background-color: var(--card-border-color);
 }
 
 /* UTILITY */
@@ -479,6 +459,12 @@ strong {
 }
 .margin-right {
 	margin-right: 10px;
+}
+.margin-left-less {
+	margin-left: 5px;
+}
+.margin-right-less {
+	margin-right: 5px;
 }
 .margin-top {
 	margin-top: 10px;

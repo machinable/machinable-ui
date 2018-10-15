@@ -49,6 +49,16 @@ class Tokens extends Component {
 	render() {
 
         var tableValues = this.state.tokens.map(function(token, idx){
+            var accessList = [];
+            if(token.read) {
+                accessList.push("read");
+            }
+            if(token.write) {
+                accessList.push("write");
+            }
+            if(accessList.length == 0) {
+                accessList.push("none");
+            }
             return [
                 <div className="vertical-align">
                     <FontAwesomeIcon className="margin-right text-muted" style={{"fontSize": "24px"}} icon={faKey} />
@@ -57,6 +67,7 @@ class Tokens extends Component {
                         <div className="text-muted">{moment(token.created).fromNow()}</div>
                     </div>
                 </div>,
+                <div>{accessList.join(" / ")}</div>,
                 <div className=" align-right">
                     <Button classes="plain text no-click"><FontAwesomeIcon className="text-muted" icon={faEllipsis} /></Button>
                 </div>

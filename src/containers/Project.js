@@ -6,6 +6,7 @@ import { Dropdown, List, ListItem } from 'turtle-ui';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
+import ProjectIcon from '../components/ProjectIcon';
 import API from '../app/api/API';
 import Access from '../app/access/Access';
 import Security from '../app/security/Security';
@@ -55,23 +56,23 @@ class Project extends Component {
                         showIcon={true}
                         type="brand"
                         width={250}
-                        buttonText="Project Zero"
-                        buttonClasses="text plain text-muted no-click no-padding-side"
+                        buttonText={<div className="vertical-align"><ProjectIcon source="rocket"/> <span className="margin-left-less margin-right-less">Sample Blog</span></div>}
+                        buttonClasses="text plain text-muted no-click no-padding-side vertical-align"
                         classes="pull-left">
                         <div className="grid grid-1">
                             <List>
                                 <ListItem 
                                     imageClasses="" 
-                                    title="Project One" 
-                                    description="Some other project" />
+                                    title={<div className="vertical-align"><ProjectIcon source="rocket"/> <span className="margin-left-less margin-right-less">Sample Blog</span></div>}
+                                    description="A sample blog site that uses Machinable for content and user authentication" />
                                 <ListItem 
                                     imageClasses="" 
-                                    title="Project Two" 
-                                    description="Some other project" />
+                                    title={<div className="vertical-align"><ProjectIcon source="brain"/> <span className="margin-left-less margin-right-less">Mobile App</span></div>}
+                                    description="A mobile app that stores blah blah on Machinable" />
                                 <ListItem 
                                     imageClasses="" 
-                                    title="Project Three" 
-                                    description="Some other project" />
+                                    title={<div className="vertical-align"><ProjectIcon source="flask"/> <span className="margin-left-less margin-right-less">TODO WebApp</span></div>}
+                                    description="A good ol' todo app, demonstrating how Machinable can be used as a backend" />
                             </List>
                         </div>
                     </Dropdown></div></div>
