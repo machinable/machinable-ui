@@ -66,6 +66,18 @@ class MachinableClient {
         }
     }
 
+    sessions() {
+        var GET_SESSIONS = API_HOST + "/sessions/"
+
+        return {
+            list: function(success, error) {
+                axios.get(GET_SESSIONS, {})
+                    .then(success)
+                    .catch(error);
+            }
+        }
+    }
+
     users() {
         var GET_USERS = API_HOST + "/users/"
 
