@@ -89,6 +89,8 @@ a {
 
 .content {
 	grid-area: content;
+	display: grid;
+    grid-template-rows: auto 1fr;
 }
 
 .footer {
@@ -106,6 +108,27 @@ a {
     align-items: center;
     display: flex;
     justify-content: center;
+}
+
+/* PAGE CONTENT */
+.page {
+	display: grid;
+	grid-gap: 0px;
+	grid-template-rows: 1fr auto;
+	grid-template-areas:
+	    "page"
+	    "docs";
+}
+
+.page-docs{
+	grid-template: "docs";
+	height: auto;
+	display: grid;
+	align-items: end;
+	padding-bottom: 15px;
+}
+.page-content {
+	grid-template: "page";
 }
 
 /* COPY TO TURTLEUI*/
@@ -276,6 +299,9 @@ div[class^="col-"]{
 }
 .col-6 {
 	grid-column: span 6;
+}
+.col-2-8 {
+	grid-column: 2 / 8;
 }
 
 .grid-column-end-6{

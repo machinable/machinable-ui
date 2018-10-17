@@ -23,7 +23,7 @@ class Access extends Component {
 			{to: `${prefix}/tokens`, text: 'API Tokens'}
 		];
 		return (
-			<div>
+			<React.Fragment>
 				<div className="padding-side content-header">
 					<h2 className="text-400 margin-bottom">Access</h2>
 					<p className="text-muted margin-top margin-bottom-even-more">Manage users and API tokens of this project</p>
@@ -33,14 +33,17 @@ class Access extends Component {
 					/>
 				</div>
 
-				<div className="project-content">
-                    <Switch>
-                        <Route path={prefix+"/users"} component={Users} />
-                        <Route path={prefix+"/tokens"} component={Tokens} />
-                        <Redirect from="/" to={prefix+"/users"} />
-                    </Switch>
+				<div className="project-content page">
+					<div className="page-content">
+						<Switch>
+							<Route path={prefix+"/users"} component={Users} />
+							<Route path={prefix+"/tokens"} component={Tokens} />
+							<Redirect from="/" to={prefix+"/users"} />
+						</Switch>
+					</div>
 
-					<div>
+					{/* DOCUMENTATION */}
+					<div className="page-docs">
 						<h4 className="text-more-muted text-600"><br/>DOCUMENTATION</h4>
 						<div className="grid grid-3">
 							<div>
@@ -50,7 +53,7 @@ class Access extends Component {
 						</div>
 					</div>
 				</div>
-			</div>
+			</React.Fragment>
 		  );
 	}
 }

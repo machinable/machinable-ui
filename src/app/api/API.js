@@ -19,7 +19,7 @@ class API extends Component {
 			{to: `${prefix}/usage`, text: 'Usage'}
 		];
 		return (
-			<div>
+			<React.Fragment>
 				<div className="padding-side content-header">
 					<h2 className="text-400 margin-bottom">API Resources</h2>
 					<p className="text-muted margin-top margin-bottom-even-more">Create a new API for your application by defining HTTP resources using the JSON Schema standard</p>
@@ -29,16 +29,18 @@ class API extends Component {
 					/>
 				</div>
 
-				<div className="project-content">
-                    <Switch>
-                        <Route path={prefix+"/resources"} component={Resources} />
-                        <Route path={prefix+"/data"} component={Data} />
-                        <Route path={prefix+"/usage"} component={Usage} />
-                        <Redirect from="/" to={prefix+"/resources"} />
-                    </Switch>
+				<div className="project-content page">
+					<div className="page-content">
+						<Switch>
+							<Route path={prefix+"/resources"} component={Resources} />
+							<Route path={prefix+"/data"} component={Data} />
+							<Route path={prefix+"/usage"} component={Usage} />
+							<Redirect from="/" to={prefix+"/resources"} />
+						</Switch>
+					</div>
 
 					{/* DOCUMENTATION */}
-					<div>
+					<div className="page-docs">
 						<h4 className="text-more-muted text-600"><br/>DOCUMENTATION</h4>
 						<div className="grid grid-3">
 							<div>
@@ -57,7 +59,7 @@ class API extends Component {
 					</div>
 					
 				</div>
-			</div>
+			</React.Fragment>
 		  );
 	}
 }

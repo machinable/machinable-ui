@@ -22,7 +22,7 @@ class Collections extends Component {
 			{to: `${prefix}/usage`, text: 'Usage'}
 		];
 		return (
-			<div>
+			<React.Fragment>
 				<div className="padding-side content-header">
 					<h2 className="text-400 margin-bottom">Collections</h2>
 					<p className="text-muted margin-top margin-bottom-even-more">Use collections to store your project's unstructured JSON data</p>
@@ -32,15 +32,17 @@ class Collections extends Component {
 					/>
 				</div>
 
-				<div className="project-content">
-                    <Switch>
-                        <Route path={prefix+"/data"} component={Data} />
-                        <Route path={prefix+"/usage"} component={Usage} />
-                        <Redirect from="/" to={prefix+"/data"} />
-                    </Switch>
+				<div className="project-content page">
+					<div className="page-content">
+						<Switch>
+							<Route path={prefix+"/data"} component={Data} />
+							<Route path={prefix+"/usage"} component={Usage} />
+							<Redirect from="/" to={prefix+"/data"} />
+						</Switch>
+					</div>
 
 					{/* DOCUMENTATION */}
-					<div>
+					<div className="page-docs">
 						<h4 className="text-more-muted text-600"><br/>DOCUMENTATION</h4>
 						<div className="grid grid-3">
 							<div>
@@ -58,7 +60,7 @@ class Collections extends Component {
 						</div>
 					</div>
 				</div>
-			</div>
+			</React.Fragment>
 		  );
 	}
 }

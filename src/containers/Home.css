@@ -11,24 +11,7 @@
 }
 
 .home-content {
-	display: grid;
 	padding-top: 60px;
-	grid-gap: 0px;
-	grid-template-rows: 2fr auto;
-	grid-template-areas:
-	    "contentWrap"
-	    "docs";
-}
-
-.docs{
-	grid-template: "docs";
-	height: auto;
-	display: grid;
-	align-items: end;
-	padding-bottom: 15px;
-}
-.home-content-wrap {
-	grid-template: "contentWrap";
 }
 
 .home-header{
@@ -59,9 +42,6 @@
 .project-hover {
 	box-shadow: 0px 2px 0px #CCC;
 }
-.project-hover:hover{
-	cursor: pointer;
-}
 .project-hover.center-contents > .card-content {
 	display: -ms-flexbox;
     display: flex;
@@ -69,4 +49,10 @@
     align-items: center;
     -ms-flex-pack: center;
     justify-content: center;
+}
+
+.empty-state {
+	width: 350px;
+    margin: auto;
+    display: block;
 }

@@ -81,8 +81,8 @@ class Home extends Component {
 						</div>
 					</div>				
 
-					<div className="content home-content">
-						<div className="home-content-wrap">
+					<div className="content page">
+						<div className="page-content home-content">
 							<Switch>
 								<Route path={prefix+"/projects"} component={Projects} />
 
@@ -91,7 +91,7 @@ class Home extends Component {
 						</div>
 
 						{/* DOCUMENTATION */}
-						<div className="docs">
+						<div className="page-docs">
 							<div>
 								<h4 className="text-more-muted text-600"><br/>DOCUMENTATION</h4>
 								<div className="grid grid-3">
