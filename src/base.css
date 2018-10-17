@@ -125,7 +125,6 @@ a {
 	height: auto;
 	display: grid;
 	align-items: end;
-	padding-bottom: 15px;
 }
 .page-content {
 	grid-template: "page";
