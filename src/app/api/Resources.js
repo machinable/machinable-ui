@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Button, Modal, Card, Input, Select } from 'turtle-ui';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faPlus from '@fortawesome/fontawesome-free-solid/faPlusCircle';
@@ -14,7 +15,7 @@ class Resources extends Component {
 		this.state = {
 			resources: {},
 			showModal: false,
-			slug: props.projectSlug,
+			slug: props.slug,
 			newResource: {
 				errors: [],
 				title: "",
@@ -277,5 +278,11 @@ class Resources extends Component {
 	}
 }
 
-
-export default Resources;
+// redux
+function mapStateToProps(state) {
+	return {
+		slug: state.project_slug
+	};
+}
+  
+export default connect(mapStateToProps)(Resources);

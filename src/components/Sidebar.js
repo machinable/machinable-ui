@@ -12,13 +12,12 @@ import faShield from '@fortawesome/fontawesome-free-solid/faShieldAlt';
 import Logo from './Logo';
 import './Sidebar.css';
 
-class Footer extends Component {
+class SideBar extends Component {
 
 	constructor(props) {
 	    super(props);
 		this.state = {
-          body: "",
-          projectSlug: props.projectSlug
+          projectSlug: props.match.params.projectSlug
 		}
 	}
 
@@ -27,7 +26,7 @@ class Footer extends Component {
 	}
 
 	render() {
-        const slug = this.state.projectSlug;
+        var slug = this.state.projectSlug;
 		return (
 			<div className="sidebar">
                 <div className="sidebar-content">
@@ -98,5 +97,4 @@ class Footer extends Component {
 	}
 }
 
-
-export default Footer;
+export default SideBar;

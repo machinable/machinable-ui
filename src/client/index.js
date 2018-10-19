@@ -49,10 +49,10 @@ class MachinableClient {
 
     resources(projectSlug) {
         var GET_RESOURCES = this.projectHost(projectSlug) + "/resources/";
+        var GET_DATA = this.projectHost(projectSlug) + "/api/{resource}";
 
         return {
             data: function() {
-                var GET_DATA = this.projectHost(projectSlug) + "/api/{resource}";
                 return {
                     list: function(resourcePath, success, error) {
                         axios.get(GET_DATA.replace("{resource}", resourcePath), {})

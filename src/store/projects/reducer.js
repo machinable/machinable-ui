@@ -1,16 +1,15 @@
 import * as types from './actionTypes.js'
 
 const initialState = {
-	current_org: undefined
+    project_slug: undefined
 }
 
 export default function reducer(state = initialState, action = {}) {
 	switch (action.type) {
-		case types.UPDATE_CURRENT_ORG:
-			return {
-				...state,
-				current_org: action.current_org
-			};
+		case types.SET_CURRENT_PROJECT:
+			return Object.assign({}, state, {
+				project_slug: action.slug
+			});
 		default:
 			return state;
 	}

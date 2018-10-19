@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button } from 'turtle-ui';
+import { connect } from 'react-redux';
 import Machinable from '../../client';
 import ReactJson from 'react-json-view';
 
@@ -7,6 +7,7 @@ class Dat extends Component {
 	constructor(props) {
         super(props);
         this.state = {
+			slug: props.slug,
 			path: props.path,
 			items: []
 		}
@@ -21,7 +22,7 @@ class Dat extends Component {
 	}
 
 	getData = () => {
-		Machinable.resources().data().list(this.state.path, this.dataSuccess, this.dataError);
+		Machinable.resources(this.state.slug).data().list(this.state.path, this.dataSuccess, this.dataError);
 	}
 
 	componentDidMount = () => {		
@@ -41,6 +42,7 @@ class Data extends Component {
         super(props);
         this.state = {
 			resources: [],
+			slug: props.slug,
 			data: {}
 		}
 	}
@@ -55,7 +57,7 @@ class Data extends Component {
 	}
 
 	getResources = () => {
-		Machinable.resources().list(this.resSuccess, this.resError);
+		Machinable.resources(this.state.slug).list(this.resSuccess, this.resError);
 	}
 
 	componentDidMount = () => {		
@@ -68,7 +70,7 @@ class Data extends Component {
 				{/* <ReactJson name={false} iconStyle="square" src={this.state.data} /> */}
 				{this.state.resources.map(function(res, idx){
 					return (
-						<Dat path={res.path_name}/>
+						<Dat path={res.path_name} slug={this.state.slug}/>
 					)
 				}, this)}
 			</div>
@@ -76,5 +78,11 @@ class Data extends Component {
 	}
 }
 
-
-export default Data;
+// redux
+function mapStateToProps(state) {
+	return {
+		slug: state.project_slug
+	};
+}
+  
+export default connect(mapStateToProps)(Data);

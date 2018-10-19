@@ -13,6 +13,8 @@ import Security from '../app/security/Security';
 import Collections from '../app/collections/Collections';
 import Settings from '../app/settings/Settings';
 
+import {setCurrentProject} from '../store/projects/actionCreators';
+
 import './Project.css';
 
 import { Route, Switch, Redirect } from 'react-router-dom';
@@ -31,12 +33,7 @@ class Project extends Component {
   	}
 
   	componentWillMount = () => {
-  		// if(!API.loggedIn()) {
-  		// 	const history = this.props.history;
-  		// 	API.logout(function(){
-	    //         history.push('/login');
-	    //       });
-  		// }
+  		this.props.dispatch(setCurrentProject(this.state.projectSlug));
   	}
 
 	toggleSidebar = () => {
@@ -82,7 +79,7 @@ class Project extends Component {
         var prefix = this.props.match.url;
 		return (
 			<div className={"root container container-project " + this.state.body}>
-				<Sidebar projectSlug={this.state.projectSlug}/>
+				<Sidebar {...this.props}/>
 
 				<Header title={projectList} classes="no-shadow"/>				
 
@@ -90,27 +87,27 @@ class Project extends Component {
                     <Switch>
 						<Route 
 							path={prefix+"/api"} 
-							render={(props) => <API {...props} projectSlug={this.state.projectSlug} />} 
+							render={(props) => <API {...props} />} 
 						/>
 							
 						<Route 
 							path={prefix+"/collections"} 
-							render={(props) => <Collections {...props} projectSlug={this.state.projectSlug} />}
+							render={(props) => <Collections {...props} />}
 						/>
 
 						<Route 
 							path={prefix+"/access"} 
-							render={(props) => <Access {...props} projectSlug={this.state.projectSlug} />} 
+							render={(props) => <Access {...props} />} 
 						/>
 
 						<Route 
 							path={prefix+"/security"} 
-							render={(props) => <Security {...props} projectSlug={this.state.projectSlug} />} 
+							render={(props) => <Security {...props} />} 
 						/>
 
 						<Route 
 							path={prefix+"/settings"} 
-							render={(props) => <Settings {...props} projectSlug={this.state.projectSlug} />} 
+							render={(props) => <Settings {...props} />} 
 						/>
 
                         <Redirect from="/" to={prefix+"/api"} />
@@ -124,9 +121,4 @@ class Project extends Component {
 	}
 }
 
-// Add this function:
-function mapStateToProps(state) {
-  return {};
-}
-
-export default connect(mapStateToProps)(Project);
+export default connect()(Project);
