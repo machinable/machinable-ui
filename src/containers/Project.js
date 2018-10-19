@@ -24,6 +24,7 @@ class Project extends Component {
 	    super(props);
 		this.state = {
 		  body: "",
+		  projectSlug: props.match.params.projectSlug,
 		  sidebar: false,
 		  modal: false
 		}
@@ -81,17 +82,36 @@ class Project extends Component {
         var prefix = this.props.match.url;
 		return (
 			<div className={"root container container-project " + this.state.body}>
-				<Sidebar />
+				<Sidebar projectSlug={this.state.projectSlug}/>
 
 				<Header title={projectList} classes="no-shadow"/>				
 
 				<div className="content">
                     <Switch>
-                        <Route path={prefix+"/api"} component={API} />
-                        <Route path={prefix+"/collections"} component={Collections} />
-                        <Route path={prefix+"/access"} component={Access} />
-                        <Route path={prefix+"/security"} component={Security} />
-                        <Route path={prefix+"/settings"} component={Settings} />
+						<Route 
+							path={prefix+"/api"} 
+							render={(props) => <API {...props} projectSlug={this.state.projectSlug} />} 
+						/>
+							
+						<Route 
+							path={prefix+"/collections"} 
+							render={(props) => <Collections {...props} projectSlug={this.state.projectSlug} />}
+						/>
+
+						<Route 
+							path={prefix+"/access"} 
+							render={(props) => <Access {...props} projectSlug={this.state.projectSlug} />} 
+						/>
+
+						<Route 
+							path={prefix+"/security"} 
+							render={(props) => <Security {...props} projectSlug={this.state.projectSlug} />} 
+						/>
+
+						<Route 
+							path={prefix+"/settings"} 
+							render={(props) => <Settings {...props} projectSlug={this.state.projectSlug} />} 
+						/>
 
                         <Redirect from="/" to={prefix+"/api"} />
 

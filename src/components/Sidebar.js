@@ -17,7 +17,8 @@ class Footer extends Component {
 	constructor(props) {
 	    super(props);
 		this.state = {
-		  body: ""
+          body: "",
+          projectSlug: props.projectSlug
 		}
 	}
 
@@ -26,6 +27,7 @@ class Footer extends Component {
 	}
 
 	render() {
+        const slug = this.state.projectSlug;
 		return (
 			<div className="sidebar">
                 <div className="sidebar-content">
@@ -37,7 +39,7 @@ class Footer extends Component {
                         <div className="links">
                             <ul>
                                 <li>
-                                    <NavLink to="/project/api" style={{display: "flex"}}>
+                                    <NavLink to={"/project/"+slug+"/api"} style={{display: "flex"}}>
                                         <FontAwesomeIcon className="center-self" style={{fontSize: "24px"}} icon={faProject} fixedWidth/>
                                         <div className="margin-left-more">
                                             API
@@ -46,7 +48,7 @@ class Footer extends Component {
                                     </NavLink>
                                 </li>
                                 <li>
-                                    <NavLink to="/project/collections" style={{display: "flex"}}>
+                                    <NavLink to={"/project/"+slug+"/collections"} style={{display: "flex"}}>
                                         <FontAwesomeIcon className="center-self" style={{fontSize: "24px"}} icon={faDatabase} fixedWidth/>
                                         <div className="margin-left-more">
                                             Collections                                    
@@ -55,7 +57,7 @@ class Footer extends Component {
                                     </NavLink>
                                 </li>
                                 <li>
-                                    <NavLink to="/project/access" style={{display: "flex"}}>
+                                    <NavLink to={"/project/"+slug+"/access"} style={{display: "flex"}}>
                                         <FontAwesomeIcon className="center-self" style={{fontSize: "24px"}} icon={faUserLock} fixedWidth/>
                                         <div className="margin-left-more">
                                             Access                                    
@@ -64,7 +66,7 @@ class Footer extends Component {
                                     </NavLink>
                                 </li>
                                 <li>
-                                    <NavLink to="/project/security" style={{display: "flex"}}>
+                                    <NavLink to={"/project/"+slug+"/security"} style={{display: "flex"}}>
                                         <FontAwesomeIcon className="center-self" style={{fontSize: "24px"}} icon={faShield} fixedWidth/>
                                         <div className="margin-left-more">
                                             Security                                    
@@ -73,7 +75,7 @@ class Footer extends Component {
                                     </NavLink>
                                 </li>
                                 <li>
-                                    <NavLink to="/project/settings" style={{display: "flex"}}>
+                                    <NavLink to={"/project/"+slug+"/settings"} style={{display: "flex"}}>
                                         <FontAwesomeIcon className="center-self" style={{fontSize: "24px"}} icon={faSliders} fixedWidth/>
                                         <div className="margin-left-more">
                                             Settings

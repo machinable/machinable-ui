@@ -1,19 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import faUser from '@fortawesome/fontawesome-free-solid/faUserCircle';
-import signOut from '@fortawesome/fontawesome-free-solid/faSignOutAlt';
-import cog from '@fortawesome/fontawesome-free-solid/faCog';
-import { Dropdown, List, ListItem } from 'turtle-ui';
 import Footer from '../components/Footer';
 import Logo from '../components/Logo';
-import Projects from '../app/home/Projects';
+import Login from '../app/user/Login';
+import Register from '../app/user/Register';
 import './Home.css';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import Machinable from '../client';
 
 
-class Home extends Component {
+class User extends Component {
 
 	constructor(props) {
 	    super(props);
@@ -39,11 +34,10 @@ class Home extends Component {
 	}
 
 	logout = () => {
-		const history = this.props.history;
-		Machinable.user().logout(function(){
-			history.push('/login');
-		});
-		history.push('/login');
+		// const history = this.props.history;
+		// API.logout(function(){
+		// 	history.push('/login');
+		// });
 	}
 
 	render() {
@@ -54,30 +48,12 @@ class Home extends Component {
 				<div className={"root container container-home" + this.state.body}>
 					
 					<div className="home-header">
-						<div className="grid grid-2" style={{"height": "100%"}}>
+						<div className="grid grid-1" style={{"height": "100%"}}>
 							<div className="vertical-align">
-								<h3 className="vertical-align text-400 text-white">
-									<Logo color={"#FFF"}/>
-									<span className="margin-left">Machinable</span>
+								<h3 className="vertical-align align-center text-400 text-white">
+									<Logo color={"#FFF"} classes="logo-large"/>
+									{/* <span className="margin-left">Machinable</span> */}
 								</h3>
-							</div>
-							<div className="align-right vertical-align">
-								<Dropdown 
-									type="text plain"
-									width={200}
-									buttonText={<FontAwesomeIcon className="text-white" style={{fontSize: "24px"}} icon={faUser} />}
-									buttonClasses={"no-click"}
-									buttonStyle={{"paddingRight": "0"}}
-									classes="col-1 align-items-right">
-									<div className="grid grid-1">
-										<List>
-											<ListItem title="email@tld.io"/>
-											<ListItem icon={cog} title="Settings"/>
-											<ListItem icon={signOut} title="Logout" onClick={this.logout}/>
-										</List>
-									</div>
-								</Dropdown>
-								<input className="text-muted input" placeholder="search"/>
 							</div>
 						</div>
 					</div>				
@@ -85,9 +61,8 @@ class Home extends Component {
 					<div className="content page">
 						<div className="page-content home-content">
 							<Switch>
-								<Route path={prefix+"/projects"} component={Projects} />
-
-								<Redirect from="/" to={prefix+"/projects"} />
+                                <Route path="/login" component={Login} />
+                                <Route path="/register" component={Register} />
 							</Switch>
 						</div>
 
@@ -125,4 +100,4 @@ function mapStateToProps(state) {
   return {};
 }
 
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps)(User);

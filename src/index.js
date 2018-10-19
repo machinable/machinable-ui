@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import store from './store';
 import createHistory from 'history/createBrowserHistory';
 import Home from './containers/Home';
+import User from './containers/User';
 import Project from './containers/Project';
 
 import './base.css';
@@ -15,13 +16,13 @@ const history = createHistory();
 const App = () => (
 	<Router history={history}>
 		<Switch>
-			{/* <Route path="/login" exact component={Login} />
-			<Route path="/register" exact component={Register} /> */}
+			<Route path="/login" component={User} />
+			<Route path="/register" component={User} />
 
 			<Route path="/home" component={Home} />
-			<Route path="/project" component={Project} />
+			<Route path="/project/:projectSlug" component={({history, match}) => <Project history={history} match={match}/>} />
 
-      		<Redirect from="/" to="project" />
+      		<Redirect from="/" to="home" />
 		</Switch>
 	</Router>
 )

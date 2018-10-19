@@ -14,6 +14,7 @@ class Resources extends Component {
 		this.state = {
 			resources: {},
 			showModal: false,
+			slug: props.projectSlug,
 			newResource: {
 				errors: [],
 				title: "",
@@ -32,7 +33,7 @@ class Resources extends Component {
 	}
 
 	getResources = () => {
-		Machinable.resources().list(this.resSuccess, this.resError);
+		Machinable.resources(this.state.slug).list(this.resSuccess, this.resError);
 	}
 
 	closeModal = () => {
@@ -176,7 +177,7 @@ class Resources extends Component {
 			payload.properties[element.key] = {type: element.type, description: element.description};
 		}
 
-		Machinable.resources().create(payload, this.saveSuccess, this.saveError)
+		Machinable.resources(this.state.slug).create(payload, this.saveSuccess, this.saveError)
 	}
 
 	componentDidMount = () => {		

@@ -7,6 +7,13 @@ import Usage from './Usage';
 
 class API extends Component {
 
+	constructor(props) {
+		super(props);
+		this.state = {
+			slug: props.projectSlug
+		}
+	}
+
 	componentDidMount = () => {		
 
 	}
@@ -32,7 +39,7 @@ class API extends Component {
 				<div className="project-content page">
 					<div className="page-content">
 						<Switch>
-							<Route path={prefix+"/resources"} component={Resources} />
+							<Route path={prefix+"/resources"} render={(props) => <Resources {...props} projectSlug={this.state.slug}/>} />
 							<Route path={prefix+"/data"} component={Data} />
 							<Route path={prefix+"/usage"} component={Usage} />
 							<Redirect from="/" to={prefix+"/resources"} />
