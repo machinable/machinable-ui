@@ -3,17 +3,22 @@ import React, { Component } from 'react';
 import Brain from '../images/project/brain.svg';
 import Flask from '../images/project/flask.svg';
 import Rocket from '../images/project/rocket.svg';
-// import Analytics from '../images/project/analytics.svg';
-// import Box from '../images/project/box.svg';
-// import Chat from '../images/project/chat.svg';
-// import Checklist from '../images/project/checklist.svg';
-// import Structures from '../images/project/structure.svg';
+import Analytics from '../images/project/analytics.svg';
+import Box from '../images/project/box.svg';
+import Chat from '../images/project/chat.svg';
+import Checklist from '../images/project/checklist.svg';
+import Structures from '../images/project/structure.svg';
 
 // TODO
 const SOURCES = {
     "brain": Brain,
     "flask": Flask,
-    "rocket": Rocket
+    "rocket": Rocket,
+    "analytics": Analytics,
+    "box": Box,
+    "chat": Chat,
+    "checklist": Checklist,
+    "structures": Structures
 };
 
 class Icon extends Component {

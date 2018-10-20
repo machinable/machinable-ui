@@ -137,6 +137,17 @@ hr {
 }
 
 /* UTILITY */
+.hover {
+	transition: background-color 240ms;
+}
+.hover:hover {
+	cursor: pointer;
+	background-color: var(--content-background);
+}
+.dropdown-width-auto > .dropdown-items {
+	width: auto !important;
+}
+
 .rotate10deg {
 	transform: rotate(-10deg);
 }

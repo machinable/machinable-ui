@@ -108,14 +108,11 @@ class Login extends Component {
                             <h2 className="text-center">Login</h2>
 
                             { this.state.errors.length > 0 &&
-                                <Card
-                                    classes="danger margin-bottom-more">
-                                    <div className="text-danger">
-                                        {this.state.errors.map(function(error){
-                                            return (<div className="text-400">{error}</div>)
-                                        })}
-                                    </div>
-                                </Card>
+								<div className="text-danger text-center margin-bottom-more">
+									{this.state.errors.map(function(error){
+										return (<div className="text-400 padding-bottom">{error}</div>)
+									})}
+								</div>
                             }
 
                             <div>
