@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import {Button, Card, Modal, Input} from 'turtle-ui';
-import Logo from '../../components/Logo';
+import Machinable from '../../client';
+
+const UserAPI = Machinable.user();
 
 
 class Login extends Component {
@@ -8,7 +10,7 @@ class Login extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-		  email: "",
+		  username: "",
 		  password: "",
 		  errors: [],
 		  loading: false
@@ -16,75 +18,75 @@ class Login extends Component {
   }
 
  	handleResponse = (response) => {
-		// const history = this.props.history;
-		// API.setData(response.data, function(){
-		//   history.push('/sites');
-		// });
+		UserAPI.saveTokens(
+			response.data.access_token,
+			response.data.refresh_token,
+			response.data.session_id
+		);
+		this.props.history.push('/home');
 	}
 
 	handleError = (err) => {
-	    // var error = '';
-	    // if(err.status === 404) {
-	    //   error = 'Invalid email or password';
-	    // }
-	    // else {
-	    //   error = 'Issue logging in, please try again.'
-	    // }
-	    // this.setState({
-	    //     loading: false,
-	    //     errors: [error]
-	    //   });
+	    var error = '';
+	    if(err.status === 404) {
+	      error = 'Invalid username or password';
+	    }
+	    else {
+	      error = 'Issue logging in, please try again.'
+	    }
+	    this.setState({
+	        loading: false,
+	        errors: [error]
+	      });
 	}
 
   	onChange = (event) => {
-	    // const target = event.target;
-	    // const value = target.type === 'checkbox' ? target.checked : target.value;
-	    // const name = target.name;
+	    const target = event.target;
+	    const value = target.type === 'checkbox' ? target.checked : target.value;
+	    const name = target.name;
 
-	    // this.setState({
-	    // 	[name]: value
-	    // });
+	    this.setState({
+	    	[name]: value
+	    });
   	}
 
   	onSubmit = (event) => {
-    	// event.preventDefault();
-    	// var errors = [];
+    	event.preventDefault();
+    	var errors = [];
 
-	    // if(!this.state.email) {
-	    //   errors.push('Email cannot be empty');
-	    // }
+	    if(!this.state.username) {
+	      errors.push('Username cannot be empty');
+	    }
 
-	    // if(!this.state.password) {
-	    //   errors.push('Password cannot be empty');
-	    // }
+	    if(!this.state.password) {
+	      errors.push('Password cannot be empty');
+	    }
 
-	    // this.setState({
-	    //   errors: errors
-	    // });
+	    this.setState({
+	      errors: errors
+	    });
 
-	    // var arr = errors.map(function(k) { return k });
+	    var arr = errors.map(function(k) { return k });
 
-	    // if(arr.join('').length === 0) {
+	    if(arr.join('').length === 0) {
+			var un = this.state.username;
+			var pw = this.state.password;
+	     	this.setState({
+				loading: true,
+				password: ''
+	      	});
 
-	    //   this.setState({
-	    //     loading: true
-	    //   });
-
-	    //   API.login(
-	    //     this.state.email, 
-	    //     this.state.password)
-	    //     .then(this.handleResponse)
-	    //     .catch(this.handleError);
-	    // }
+	      	UserAPI.login(
+					un, 
+					pw)
+					.then(this.handleResponse)
+					.catch(this.handleError);
+	    }
   	}
 
   	Register = () => {
         this.props.history.push('/register');
   	}
-
-  	componentDidMount = () => {
-
-    }
 
 	render() {
 
@@ -117,7 +119,7 @@ class Login extends Component {
                             }
 
                             <div>
-                                <Input placeholder="email address" label="Email" name="email" value={this.state.email} onChange={this.onChange}/>
+                                <Input placeholder="username" label="Username" name="username" value={this.state.username} onChange={this.onChange}/>
                             </div>
                             
                             <div className="margin-top-more">

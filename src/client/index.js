@@ -5,12 +5,28 @@ const MGMT_API_HOST = Statics.MGMT_API_HOST;
 const PROJECT_API_HOST = Statics.PROJECT_API_HOST;
 
 class MachinableClient {
+    /* helpers */
+    getAuthHeaders(){
+        return {"Authorization": "Bearer " + this.getAccessToken()}
+    }
+
+    getRefreshToken() {
+        return localStorage.getItem("refresh_token")
+    }
+
+    getAccessToken() {
+        return localStorage.getItem("access_token")
+    }
+
 
     /* MANAGEMENT APIS */
     user() {
         var LOGIN = MGMT_API_HOST + "/users/sessions";
         var REGISTER = MGMT_API_HOST + "/users/register";
         var REFRESH = MGMT_API_HOST + "/users/refresh";
+        var DELETE_SESSION = MGMT_API_HOST + "/users/sessions/{sid}";
+        var authHeaders = this.getAuthHeaders();
+        var refreshHeaders = {"Authorization": "Bearer " + this.getRefreshToken()}
 
         return {
             login: function(username, password) {
@@ -30,14 +46,26 @@ class MachinableClient {
             },
 
             refreshToken: function() {
-                var headers = {"Authorization": "Bearer " + this.getRefreshToken()};
-                return axios.post(REFRESH, {}, {headers: headers})
+                return axios.post(REFRESH, {}, {headers: refreshHeaders})
             },
 
-            logout: function() {
-                localStorage.removeItem("access_token");
-                localStorage.removeItem("refresh_token");
-                localStorage.removeItem("session_id");
+            logout: function(success, error) {
+                this.deleteCurrentSession(function(){
+                    localStorage.removeItem("access_token");
+                    localStorage.removeItem("refresh_token");
+                    localStorage.removeItem("session_id");
+                    success();
+                }, error);
+            },
+
+            deleteCurrentSession: function(success, error) {
+                var sid = localStorage.getItem("session_id");
+                if (sid) {
+                    var headers = authHeaders;
+                    var URL = DELETE_SESSION.replace("{sid}", sid)
+                    axios.delete(URL, {headers: headers}).then(success).catch(error);
+                }
+                success();
             }
         }
     }
@@ -50,12 +78,13 @@ class MachinableClient {
     resources(projectSlug) {
         var GET_RESOURCES = this.projectHost(projectSlug) + "/resources/";
         var GET_DATA = this.projectHost(projectSlug) + "/api/{resource}";
+        var authHeaders = this.getAuthHeaders();
 
         return {
             data: function() {
                 return {
                     list: function(resourcePath, success, error) {
-                        axios.get(GET_DATA.replace("{resource}", resourcePath), {})
+                        axios.get(GET_DATA.replace("{resource}", resourcePath), {headers: authHeaders})
                             .then(success)
                             .catch(error);
                     }
@@ -63,13 +92,13 @@ class MachinableClient {
             }, 
 
             list: function(success, error) {
-                axios.get(GET_RESOURCES, {})
+                axios.get(GET_RESOURCES, {headers: authHeaders})
                     .then(success)
                     .catch(error);
             },
 
             create: function(data, success, error) {
-                axios.post(GET_RESOURCES, data, {})
+                axios.post(GET_RESOURCES, data, {headers: authHeaders})
                     .then(success)
                     .catch(error);
             }
@@ -79,12 +108,13 @@ class MachinableClient {
     collections(projectSlug) {
         var GET_COLLECTIONS = this.projectHost(projectSlug) + "/collections/"
         var GET_COLLECTION = this.projectHost(projectSlug) + "/collections/{name}";
+        var authHeaders = this.getAuthHeaders();
 
         return {
             data: function() {
                 return {
                     list: function(name, success, error) {
-                        axios.get(GET_COLLECTION.replace("{name}", name), {})
+                        axios.get(GET_COLLECTION.replace("{name}", name), {headers: authHeaders})
                             .then(success)
                             .catch(error);
                     }
@@ -92,13 +122,13 @@ class MachinableClient {
             }, 
 
             list: function(success, error) {
-                axios.get(GET_COLLECTIONS, {})
+                axios.get(GET_COLLECTIONS, {headers: authHeaders})
                     .then(success)
                     .catch(error);
             },
 
             create: function(data, success, error) {
-                axios.post(GET_COLLECTIONS, data, {})
+                axios.post(GET_COLLECTIONS, data, {headers: authHeaders})
                     .then(success)
                     .catch(error);
             }
@@ -106,11 +136,12 @@ class MachinableClient {
     }
 
     sessions(projectSlug) {
-        var GET_SESSIONS = this.projectHost(projectSlug) + "/sessions/"
+        var GET_SESSIONS = this.projectHost(projectSlug) + "/sessions/";
+        var authHeaders = this.getAuthHeaders();
 
         return {
             list: function(success, error) {
-                axios.get(GET_SESSIONS, {})
+                axios.get(GET_SESSIONS, {headers: authHeaders})
                     .then(success)
                     .catch(error);
             }
@@ -118,17 +149,18 @@ class MachinableClient {
     }
 
     users(projectSlug) {
-        var GET_USERS = this.projectHost(projectSlug) + "/users/"
+        var GET_USERS = this.projectHost(projectSlug) + "/users/";
+        var authHeaders = this.getAuthHeaders();
 
         return {
             list: function(success, error) {
-                axios.get(GET_USERS, {})
+                axios.get(GET_USERS, {headers: authHeaders})
                     .then(success)
                     .catch(error);
             },
 
             create: function(data, success, error) {
-                axios.post(GET_USERS, data, {})
+                axios.post(GET_USERS, data, {headers: authHeaders})
                     .then(success)
                     .catch(error);
             }
@@ -136,17 +168,18 @@ class MachinableClient {
     }
 
     tokens(projectSlug) {
-        var GET_TOKENS = this.projectHost(projectSlug) + "/tokens/"
+        var GET_TOKENS = this.projectHost(projectSlug) + "/tokens/";
+        var authHeaders = this.getAuthHeaders();
 
         return {
             list: function(success, error) {
-                axios.get(GET_TOKENS, {})
+                axios.get(GET_TOKENS, {headers: authHeaders})
                     .then(success)
                     .catch(error);
             },
 
             create: function(data, success, error) {
-                axios.post(GET_TOKENS, data, {})
+                axios.post(GET_TOKENS, data, {headers: authHeaders})
                     .then(success)
                     .catch(error);
             }

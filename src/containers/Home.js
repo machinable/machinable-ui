@@ -40,10 +40,9 @@ class Home extends Component {
 
 	logout = () => {
 		const history = this.props.history;
-		Machinable.user().logout(function(){
+		Machinable.user().logout(function(response){
 			history.push('/login');
-		});
-		history.push('/login');
+		}, function(response) {});
 	}
 
 	render() {
