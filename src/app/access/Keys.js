@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Table, Button } from 'turtle-ui';
+import { connect } from 'react-redux';
 import Loader from '../../components/Loader';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faKey from '@fortawesome/fontawesome-free-solid/faKey';
@@ -7,14 +8,15 @@ import faEllipsis from '@fortawesome/fontawesome-free-solid/faEllipsisV';
 import Machinable from '../../client';
 import moment from 'moment';
 
-class Tokens extends Component {
+class Keys extends Component {
 
 	constructor(props) {
         super(props);
 		this.state = {
             loading: true,
             tokens: [],
-            showModal: false
+            showModal: false,
+            slug: props.slug
 		}
 	}
 
@@ -27,7 +29,7 @@ class Tokens extends Component {
     }
 
     getTokens = () => {
-        Machinable.tokens().list(this.tokenSuccess, this.tokenError);
+        Machinable.tokens(this.state.slug).list(this.tokenSuccess, this.tokenError);
     }
 
 	componentDidMount = () => {		
@@ -86,5 +88,11 @@ class Tokens extends Component {
 	}
 }
 
-
-export default Tokens;
+// redux
+function mapStateToProps(state) {
+	return {
+		slug: state.project_slug
+	};
+}
+  
+export default connect(mapStateToProps)(Keys);

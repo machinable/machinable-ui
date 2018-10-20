@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Machinable from '../../client';
 import ReactJson from 'react-json-view';
 
@@ -7,6 +8,7 @@ class Dat extends Component {
         super(props);
         this.state = {
 			path: props.path,
+			slug: props.slug,
 			items: []
 		}
 	}
@@ -20,7 +22,7 @@ class Dat extends Component {
 	}
 
 	getData = () => {
-		Machinable.collections().data().list(this.state.path, this.dataSuccess, this.dataError);
+		Machinable.collections(this.state.slug).data().list(this.state.path, this.dataSuccess, this.dataError);
 	}
 
 	componentDidMount = () => {		
@@ -40,6 +42,7 @@ class Data extends Component {
         super(props);
         this.state = {
 			collections: [],
+			slug: props.slug,
 			data: {}
 		}
 	}
@@ -53,7 +56,7 @@ class Data extends Component {
 	}
 
 	getCollections = () => {
-		Machinable.collections().list(this.colSuccess, this.colError);
+		Machinable.collections(this.state.slug).list(this.colSuccess, this.colError);
 	}
 
 	componentDidMount = () => {		
@@ -66,7 +69,7 @@ class Data extends Component {
 				{/* <ReactJson name={false} iconStyle="square" src={this.state.data} /> */}
 				{this.state.collections.map(function(col, idx){
 					return (
-						<Dat path={col.name}/>
+						<Dat path={col.name} slug={this.state.slug}/>
 					)
 				}, this)}
 			</div>
@@ -74,5 +77,11 @@ class Data extends Component {
 	}
 }
 
-
-export default Data;
+// redux
+function mapStateToProps(state) {
+	return {
+		slug: state.project_slug
+	};
+}
+  
+export default connect(mapStateToProps)(Data);

@@ -70,7 +70,7 @@ class Resources extends Component {
 		
 
 		if (name === "title") {
-			newResource["path_name"] = value.toLowerCase();
+			newResource["path_name"] = value;
 		} 
 		else if (name === "path_name") {
 			var vals = value.split("/")
@@ -85,7 +85,7 @@ class Resources extends Component {
 		newResource["path_name"] = slugify(newResource["path_name"], {
 										replacement: '-',
 										remove: null,  
-										lower: true
+										lower: false
 									})
 
 	    this.setState({

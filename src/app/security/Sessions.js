@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Table, Button, Card } from 'turtle-ui';
 
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
@@ -12,7 +13,8 @@ class Sessions extends Component {
 	constructor(props) {
         super(props);
         this.state = {
-			sessions: []
+			sessions: [],
+			slug: props.slug
 		}
 	}
 
@@ -25,7 +27,7 @@ class Sessions extends Component {
 	}
 
 	getSessions = () => {
-		Machinable.sessions().list(this.handleSessions, this.sessionsError);
+		Machinable.sessions(this.state.slug).list(this.handleSessions, this.sessionsError);
 	}
 
 	componentDidMount = () => {		
@@ -63,5 +65,11 @@ class Sessions extends Component {
 	}
 }
 
-
-export default Sessions;
+// redux
+function mapStateToProps(state) {
+	return {
+		slug: state.project_slug
+	};
+}
+  
+export default connect(mapStateToProps)(Sessions);

@@ -6,11 +6,6 @@ import Usage from './Usage';
 
 class Collections extends Component {
 
-	constructor(props) {
-        super(props);
-        
-	}
-
 	componentDidMount = () => {		
 
 	}

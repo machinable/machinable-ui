@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Table, Button } from 'turtle-ui';
 import Loader from '../../components/Loader';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
@@ -14,7 +15,8 @@ class Users extends Component {
 		this.state = {
             loading: true,
             users: [],
-            showModal: false
+            showModal: false,
+			slug: props.slug
 		}
 	}
 
@@ -27,7 +29,7 @@ class Users extends Component {
     }
 
     getUsers = () => {
-        Machinable.users().list(this.usersSuccess, this.usersError);
+        Machinable.users(this.state.slug).list(this.usersSuccess, this.usersError);
     }
 
 	componentDidMount = () => {		
@@ -89,5 +91,11 @@ class Users extends Component {
 	}
 }
 
-
-export default Users;
+// redux
+function mapStateToProps(state) {
+	return {
+		slug: state.project_slug
+	};
+}
+  
+export default connect(mapStateToProps)(Users);

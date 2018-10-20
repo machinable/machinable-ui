@@ -78,11 +78,10 @@ class MachinableClient {
 
     collections(projectSlug) {
         var GET_COLLECTIONS = this.projectHost(projectSlug) + "/collections/"
+        var GET_COLLECTION = this.projectHost(projectSlug) + "/collections/{name}";
 
         return {
             data: function() {
-                var GET_COLLECTION = this.projectHost(projectSlug) + "/collections/{name}"
-        
                 return {
                     list: function(name, success, error) {
                         axios.get(GET_COLLECTION.replace("{name}", name), {})
