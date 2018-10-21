@@ -8,6 +8,7 @@ import createHistory from 'history/createBrowserHistory';
 import Home from './containers/Home';
 import User from './containers/User';
 import Project from './containers/Project';
+import Errors from './containers/Error';
 import Machinable from './client';
 
 import './base.css';
@@ -38,6 +39,8 @@ axios.interceptors.response.use(function (response) {
 		}, function(){
 			history.push('/login');
 		});
+	} else if (404 === error.response.status) {
+		history.replace('/error/404');
 	} else {
 	  // return the actual error response and handle it explicitly
 	  return Promise.reject(error.response);
@@ -54,6 +57,8 @@ const App = () => (
 
 			<Route path="/home" component={Home} />
 			<Route path="/project/:projectSlug" component={({history, match}) => <Project history={history} match={match}/>} />
+
+			<Route path="/error" component={Errors} />
 
       		<Redirect from="/" to="home" />
 		</Switch>

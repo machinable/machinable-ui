@@ -100,7 +100,7 @@ class MachinableClient {
 
     resources(projectSlug) {
         var GET_RESOURCES = this.projectHost(projectSlug) + "/resources/";
-        var GET_DATA = this.projectHost(projectSlug) + "/api/{resource}";
+        var GET_DATA = this.projectHost(projectSlug) + "/mgmt/api/{resource}";
         var authHeaders = this.getAuthHeaders();
 
         return {
@@ -129,8 +129,8 @@ class MachinableClient {
     }
 
     collections(projectSlug) {
-        var GET_COLLECTIONS = this.projectHost(projectSlug) + "/collections/"
-        var GET_COLLECTION = this.projectHost(projectSlug) + "/collections/{name}";
+        var GET_COLLECTIONS = this.projectHost(projectSlug) + "/mgmt/collections/"
+        var GET_COLLECTION = this.projectHost(projectSlug) + "/mgmt/collections/{name}";
         var authHeaders = this.getAuthHeaders();
 
         return {
