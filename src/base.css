@@ -309,7 +309,7 @@ div[class^="col-"]{
 	grid-column: span 4;
 }
 /* span 2 of 4, offset to column 2 */
-.col-4-2 {
+.col-2-4 {
 	grid-column: span 2/4;
 }
 .col-2-5 {

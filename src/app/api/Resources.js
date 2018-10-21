@@ -9,6 +9,54 @@ import Machinable from '../../client';
 import ReactJson from 'react-json-view';
 import slugify from 'slugify';
 
+
+const typeOptions = [
+	{value: "string", text:"string"}, 
+	{value: "integer", text:"integer"}, 
+	{value: "number", text:"number"}, 
+	{value: "boolean", text:"boolean"},
+	{value: "array", text:"array"},
+	{value: "object", text:"object"} ];
+
+class Data extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			slug: props.slug,
+			path: props.path,
+			items: {}
+		}
+	}
+
+	dataError = (response) => {
+		console.log(response)
+	}
+
+	dataSuccess = (response) => {
+		delete response.data["definition"];
+		this.setState({items: response.data});
+	}
+
+	getData = () => {
+		Machinable.resources(this.state.slug).data().list(this.state.path, this.dataSuccess, this.dataError);
+	}
+
+	componentDidMount = () => {		
+		this.getData();
+	}
+
+	render() {
+		return (
+			<div>
+				<h3 className="no-margin text-400">/api/{this.state.path}</h3>
+				<div className="margin-top-more code">
+					<ReactJson name={this.state.path} iconStyle="square" src={this.state.items} />
+				</div>
+			</div>
+		);
+	}
+}
+
 class Resources extends Component {
 
 	constructor(props) {
@@ -16,13 +64,15 @@ class Resources extends Component {
 		this.state = {
 			resources: {},
 			showModal: false,
+			showExtraModal: false,
 			slug: props.slug,
 			newResource: {
 				errors: [],
 				title: "",
 				path_name: "",
 				properties: [{key: "", type: "string", description: ""}]
-			}
+			},
+			extraElement: <div>nothing selected</div>
 		}
 	}
 
@@ -53,6 +103,18 @@ class Resources extends Component {
 		var html = document.getElementsByTagName('html')[0];
         html.style.cssText = "--root-overflow: hidden";
 		this.setState({showModal: true});
+	}
+
+	closeExtraModal = () => {
+		var html = document.getElementsByTagName('html')[0];
+        html.style.cssText = "--root-overflow: auto";
+		this.setState({showExtraModal: false});
+	}
+
+	openExtraModal = (element) => {
+		var html = document.getElementsByTagName('html')[0];
+        html.style.cssText = "--root-overflow: hidden";
+		this.setState({showExtraModal: true, extraElement: element});
 	}
 
 	addProperty = () => {
@@ -182,31 +244,25 @@ class Resources extends Component {
 	}
 
 	render() {
-		const typeOptions = [
-			{value: "string", text:"string"}, 
-			{value: "integer", text:"integer"}, 
-			{value: "number", text:"number"}, 
-			{value: "boolean", text:"boolean"},
-			{value: "array", text:"array"},
-			{value: "object", text:"object"} ];
 		return (
 			<div className="grid grid-1">
 				{this.state.resources.items && this.state.resources.items.map(function(def, idx){
+					var definitionTitle = 	<div className="col-2 flex-col">
+												<div className="vertical-align">
+													<h3 className="no-margin text-400 pull-left">
+														{def.title}
+													</h3>
+													<p className="text-muted no-margin margin-left"> - /api/{def.path_name}</p>
+												</div>
+												<div className="margin-top-less margin-bottom-less">
+													<span className="text-muted text-small">{def.id}</span>
+												</div>
+											</div>;
 					return (
 						<div>
 							<div className="grid grid-4 margin-bottom-more">
-								<div className="">
-									<div className="vertical-align">
-										<h3 className="no-margin text-400 pull-left">
-											{def.title}
-										</h3>
-										<p className="text-muted no-margin margin-left"> - /api/{def.path_name}</p>
-									</div>
-									<div className="margin-top-less margin-bottom-less">
-										<span className="text-muted text-small">{def.id}</span>
-									</div>
-								</div>
-								<div className="col-2 vertical-align">
+								{definitionTitle}
+								<div className="col-1 vertical-align">
 									<Dropdown 
 										showIcon={true}
 										width={250}
@@ -234,15 +290,15 @@ class Resources extends Component {
 								<div className="align-right vertical-align">
 									<Dropdown 
 										showIcon={false}
-										width={200}
+										width={150}
 										buttonText={<FontAwesomeIcon className="text-muted" icon={faEllipsis} />}
 										buttonClasses="text plain vertical-align"
 										classes="align-items-right">
 										<div className="grid grid-1">
 											<List>
-												<ListItem title={"Resource JSON"}/>
-												<ListItem title={"Data"}/>
-												<ListItem title={"Help"}/>
+												<ListItem title={"Resource JSON"} onClick={() => this.openExtraModal(<div>{definitionTitle}<div className="margin-top-more code"><ReactJson name={false} iconStyle="square" src={def} /></div></div>)}/>
+												<ListItem title={"Data"} onClick={() => this.openExtraModal(<Data slug={this.state.slug} path={def.path_name} />)}/>
+												<ListItem title={"Help"} onClick={this.openExtraModal}/>
 												<hr className="no-margin no-padding"/>
 												<ListItem title={<div className="text-center text-danger text-400">Delete</div>}/>
 											</List>
@@ -253,12 +309,35 @@ class Resources extends Component {
 							<hr/>
 						</div>
 					)
-				})}
+				}, this)}
 				{/* <div className="code">
 					<ReactJson collapsed={3} name={false} displayDataTypes={false} iconStyle="square" src={this.state.resources} />
 				</div> */}
 
 				<Button classes="accent page-btn" onClick={this.openModal}>New Resource</Button>
+
+				<Modal
+					classes="from-right"
+					close={this.closeExtraModal}
+					isOpen={this.state.showExtraModal}>
+					<div className="full-height grid grid-4">
+						<div className="col-2-5">
+							<div className="grid grid-1">
+								<Card 
+									classes="footer-plain no-border"
+									footer={
+										<div className="grid grid-2">
+											<div className="col-2 col-right">
+												<Button classes="plain text" onClick={this.closeExtraModal}>Close</Button>	
+											</div>
+										</div>
+									}>
+									{this.state.extraElement}
+								</Card>
+							</div>
+						</div>
+					</div>
+				</Modal>
 
 				<Modal
 					classes="from-right"

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { Nav } from 'turtle-ui';
 import Resources from './Resources';
-import Data from './Data';
 import Usage from './Usage';
 
 class API extends Component {
@@ -14,7 +13,6 @@ class API extends Component {
 		var prefix = this.props.match.url;
 		var apiLinks = [
 			{to: `${prefix}/resources`, text: 'Resources'},
-			{to: `${prefix}/data`, text: 'Data'},
 			{to: `${prefix}/usage`, text: 'Usage'}
 		];
 		return (
@@ -32,7 +30,6 @@ class API extends Component {
 					<div className="page-content">
 						<Switch>
 							<Route path={prefix+"/resources"} component={Resources} />
-							<Route path={prefix+"/data"} component={Data} />
 							<Route path={prefix+"/usage"} component={Usage} />
 							<Redirect from="/" to={prefix+"/resources"} />
 						</Switch>
