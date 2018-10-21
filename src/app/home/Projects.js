@@ -4,6 +4,7 @@ import Loader from '../../components/Loader';
 import ProjectIcon from '../../components/ProjectIcon';
 import IconSelect from '../../components/IconSelect';
 import Empty from '../../images/outer_space.svg';
+import Machinable from '../../client';
 import slugify from 'slugify';
 
 class Projects extends Component {
@@ -47,10 +48,58 @@ class Projects extends Component {
 		var html = document.getElementsByTagName('html')[0];
         html.style.cssText = "--root-overflow: hidden";
 		this.setState({showModal: true});
-	}
+    }
+    
+    handleError = (response) => {
+        console.log(response);
+        if(response.data && response.data.error) {
+            var errors = [response.data.error];
+            this.setState({errors: errors, loading: false});
+        }
+    }
+
+    handleProjects = (response) => {
+        console.log(response);
+        this.setState({
+            projects: response.data.items,
+            loading: false,
+            showModal: false,
+            newProject: this.projectReset()
+        });
+    }
+
+    getProjects = () => {
+        Machinable.projects().list(this.handleProjects, this.handleError);
+    }
 
     createProject = () => {
+        var errors = [];
 
+	    if(!this.state.newProject.name) {
+	        errors.push('Project name cannot be empty');
+	    }
+
+	    if(!this.state.newProject.slug) {
+            errors.push('Project slug cannot be empty');
+        }
+
+	    this.setState({
+	      errors: errors
+        });
+        
+        Machinable.projects().create(
+            this.state.newProject,
+            this.getProjects, 
+            this.handleError);
+    }
+
+    selectIcon = (icon) => {
+        console.log(icon);
+        var np = this.state.newProject;
+        np.icon = icon;
+	    this.setState({
+	    	newProject: np
+	    });
     }
 
     onChange = (event) => {
@@ -102,8 +151,11 @@ class Projects extends Component {
                 <div className="grid grid-3">
                     {this.state.projects.map(function(project, idx){
                         return(
-                            <Card classes="project-hover" to={"/projects"}>
-                                <h3 className="text-400 vertical-align no-margin"><ProjectIcon source={project.icon}/>&nbsp;&nbsp;{project.name}</h3>
+                            <Card key={"project-"+idx} classes="project-hover" to={"/project/"+project.slug}>
+                                <h3 className="text-400 vertical-align no-margin">
+                                    <ProjectIcon source={project.icon}/>&nbsp;&nbsp;{project.name}
+                                </h3>
+                                <span className="margin-top text-information text-small" style={{"display": "block"}} href="#">https://{project.slug}.mchbl.com</span>
                                 <p>{project.description}</p>
                             </Card>
                         )
@@ -119,12 +171,11 @@ class Projects extends Component {
     }
 
 	componentDidMount = () => {		
-		this.setState({loading: false});
+		this.getProjects();
 	}
 
 	render() {
         var render = this.state.projects.length > 0 ? this.renderProjects() : this.emptyState();
-        var sIcon = "";
 
 		return (
 			<React.Fragment>
@@ -135,40 +186,35 @@ class Projects extends Component {
                     <div className="align-center grid grid-3">
                         <div className="col-3-2">
                             <div className=" grid grid-1">
-                                <form onSubmit={this.onSubmit}>
-                                    <Card
-                                        classes="footer-plain no-border"
-                                        footer={
-                                            <div className="grid grid-2">
-                                                <div className="col-2 col-right">
-                                                    <Button classes="plain text" onClick={this.closeModal}>Cancel</Button>	
-                                                    <Button classes="brand margin-left" type="submit" loading={this.state.loading} onClick={this.createProject}>Create</Button>	
-                                                </div>
+                                <Card
+                                    classes="footer-plain no-border"
+                                    footer={
+                                        <div className="grid grid-2">
+                                            <div className="col-2 col-right">
+                                                <Button classes="plain text" onClick={this.closeModal}>Cancel</Button>	
+                                                <Button classes="brand margin-left" type="submit" loading={this.state.loading} onClick={this.createProject}>Create</Button>	
                                             </div>
-                                        }>
-
-                                        <h2 className="text-center">New Project</h2>
-
-                                        { this.state.errors.length > 0 &&
-                                            <Card
-                                                classes="danger margin-bottom-more">
-                                                <div className="text-danger">
-                                                    {this.state.errors.map(function(error){
-                                                        return (<div className="text-400">{error}</div>)
-                                                    })}
-                                                </div>
-                                            </Card>
-                                        }
-
-                                        <div>
-                                            <IconSelect selected={sIcon}/>
-                                            <Input placeholder="project name" label="Name" name="name" value={this.state.newProject.name} onChange={this.onChange}/>
-                                            <Input placeholder="unique slug" label="Slug" name="slug" value={this.state.newProject.slug} onChange={this.onChange}/>
-                                            <TextArea placeholder="project description" label="Description" name="description" value={this.state.newProject.description} onChange={this.onChange}/>
                                         </div>
-                                        
-                                    </Card>
-                                </form>
+                                    }>
+
+                                    <h2 className="text-center">New Project</h2>
+
+                                    { this.state.errors.length > 0 &&
+                                        <div className="text-danger text-center margin-bottom-more">
+                                            {this.state.errors.map(function(error){
+                                                return (<div className="text-400 padding-bottom">{error}</div>)
+                                            })}
+                                        </div>
+                                    }
+
+                                    <div>
+                                        <IconSelect selected={this.state.newProject.icon} onSelect={this.selectIcon}/>
+                                        <Input placeholder="project name" label="Name" name="name" value={this.state.newProject.name} onChange={this.onChange}/>
+                                        <Input placeholder="unique slug" label="Slug" name="slug" value={this.state.newProject.slug} onChange={this.onChange}/>
+                                        <TextArea placeholder="project description" label="Description" name="description" value={this.state.newProject.description} onChange={this.onChange}/>
+                                    </div>
+                                    
+                                </Card>
                             </div>
                         </div>
                     </div>

@@ -97,8 +97,6 @@ class Resources extends Component {
 		const target = event.target;
 		var value = target.value;
 		const name = target.name;
-		console.log("name : " + name);
-		console.log("value : " + value);
 		
 		var newResource = this.state.newResource;
 		newResource.properties[idx][name] = value;
@@ -109,9 +107,7 @@ class Resources extends Component {
 	}
 
 	onDeleteProperty = (idx) => {
-		console.log("delete " + idx);
 		var newResource = this.state.newResource;
-		console.log(newResource.properties);
 		newResource.properties.splice(idx, 1);
 
 		this.setState({
@@ -159,7 +155,6 @@ class Resources extends Component {
 		}
 
 		if (errors.length > 0) {
-			console.log(errors);
 			newResource.errors = errors;
 			this.setState({
 				newResource: newResource

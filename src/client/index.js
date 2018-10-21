@@ -18,6 +18,10 @@ class MachinableClient {
         return localStorage.getItem("access_token")
     }
 
+    setAccessToken(token) {
+        localStorage.setItem("access_token", token);
+    }
+
 
     /* MANAGEMENT APIS */
     user() {
@@ -66,6 +70,25 @@ class MachinableClient {
                     axios.delete(URL, {headers: headers}).then(success).catch(error);
                 }
                 success();
+            }
+        }
+    }
+
+    projects() {
+        var GET_PROJECTS = MGMT_API_HOST + "/projects/";
+        var authHeaders = this.getAuthHeaders();
+
+        return {
+            create: function(data, success, error) {
+                axios.post(GET_PROJECTS, data, {headers: authHeaders})
+                    .then(success)
+                    .catch(error);
+            },
+
+            list: function(success, error) {
+                axios.get(GET_PROJECTS, {headers: authHeaders})
+                .then(success)
+                .catch(error);
             }
         }
     }

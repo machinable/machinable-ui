@@ -23,8 +23,8 @@ class SideBar extends Component {
 
 	componentDidMount = () => {		
 
-	}
-
+    }
+    
 	render() {
         var slug = this.state.projectSlug;
 		return (
@@ -32,8 +32,7 @@ class SideBar extends Component {
                 <div className="sidebar-content">
                     <div>
                         <div className="title center">
-                            {/* <h3 className="text-400">Machinable</h3> */}
-                            <Logo color={"#FFF"}/>
+                            <NavLink className="full-height align-center vertical-align" to="/home"><Logo color={"#FFF"}/></NavLink>
                         </div>
                         <div className="links">
                             <ul>
