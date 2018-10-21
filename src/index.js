@@ -50,19 +50,22 @@ axios.interceptors.response.use(function (response) {
 const history = createHistory();
 
 const App = () => (
-	<Router history={history}>
-		<Switch>
-			<Route path="/login" component={User} />
-			<Route path="/register" component={User} />
+	<div>
+		{/* <div className="text-warning padding-less text-center text-small">Machinable is in Alpha. Data will be cleared regularly.</div> */}
+		<Router history={history}>
+			<Switch>
+				<Route path="/login" component={User} />
+				<Route path="/register" component={User} />
 
-			<Route path="/home" component={Home} />
-			<Route path="/project/:projectSlug" component={({history, match}) => <Project history={history} match={match}/>} />
+				<Route path="/home" component={Home} />
+				<Route path="/project/:projectSlug" component={({history, match}) => <Project history={history} match={match}/>} />
 
-			<Route path="/error" component={Errors} />
+				<Route path="/error" component={Errors} />
 
-      		<Redirect from="/" to="home" />
-		</Switch>
-	</Router>
+				<Redirect from="/" to="home" />
+			</Switch>
+		</Router>
+	</div>
 )
 
 ReactDOM.render((

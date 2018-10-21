@@ -37,6 +37,14 @@
 	background-color: var(--information);
 }
 
+/* https://coolors.co/b8bfac-01966e-11606b-af3350-bf932d */
+.text-string {color: #01966E;}
+.text-integer {color:  #11606B;}
+.text-boolean {color: #AF3350;}
+.text-number {color: #BF932D;}
+.text-object {color: #233237;}
+.text-array {color: #233237;}
+
 .page-btn {
 	position: fixed;
 	right: 50px;
@@ -275,6 +283,12 @@ pre {
 	grid-template-columns: repeat(1, 1fr);
 }
 
+.flex-row {
+	flex-direction: row;
+}
+.flex-col {
+	flex-direction: column;
+}
 div[class^="col-"]{
 	display: flex;
 }
@@ -522,6 +536,12 @@ strong {
 }
 .margin-bottom-even-more {
 	margin-bottom: 30px;
+}
+.margin-top-less {
+	margin-top: 5px;
+}
+.margin-bottom-less {
+	margin-bottom: 5px;
 }
 .margin {
 	margin: 10px;

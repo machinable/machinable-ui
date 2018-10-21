@@ -13,11 +13,7 @@ class Projects extends Component {
         super(props);
 		this.state = {
             loading: true,
-            projects: [
-                // {"icon": "rocket", "name": "Sample Blog", "description": "A sample blog that uses Machinable."},
-                // {"icon": "brain", "name": "Mobile", "description": "A mobile app that stores blah blah on Machinable."},
-                // {"icon": "flask", "name": "Todo App", "description": "A good ol' todo app.."}
-            ],
+            projects: [],
             newProject: {
                 "icon": "rocket",
                 "name": "",
@@ -154,7 +150,7 @@ class Projects extends Component {
                                 <h3 className="text-400 vertical-align no-margin">
                                     <ProjectIcon source={project.icon}/>&nbsp;&nbsp;{project.name}
                                 </h3>
-                                <span className="margin-top text-information text-small" style={{"display": "block"}} href="#">https://{project.slug}.mchbl.com</span>
+                                <span className="margin-top text-information text-small" style={{"display": "block"}} href="#">https://{project.slug}.mchbl.app</span>
                                 <p>{project.description}</p>
                             </Card>
                         )

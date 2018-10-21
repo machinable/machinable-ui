@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Modal, Card, Input, Select } from 'turtle-ui';
+import { Button, Input } from 'turtle-ui';
 
 class Settings extends Component {
 

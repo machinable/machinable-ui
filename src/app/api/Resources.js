@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Modal, Card, Input, Select } from 'turtle-ui';
+import { Button, Modal, Card, Input, Select, Dropdown, List, ListItem } from 'turtle-ui';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faPlus from '@fortawesome/fontawesome-free-solid/faPlusCircle';
 import faTrash from '@fortawesome/fontawesome-free-solid/faTrash';
+import faEllipsis from '@fortawesome/fontawesome-free-solid/faEllipsisV';
 import Machinable from '../../client';
 import ReactJson from 'react-json-view';
 import slugify from 'slugify';
@@ -190,9 +191,72 @@ class Resources extends Component {
 			{value: "object", text:"object"} ];
 		return (
 			<div className="grid grid-1">
-				<div className="code">
+				{this.state.resources.items && this.state.resources.items.map(function(def, idx){
+					return (
+						<div>
+							<div className="grid grid-4 margin-bottom-more">
+								<div className="">
+									<div className="vertical-align">
+										<h3 className="no-margin text-400 pull-left">
+											{def.title}
+										</h3>
+										<p className="text-muted no-margin margin-left"> - /api/{def.path_name}</p>
+									</div>
+									<div className="margin-top-less margin-bottom-less">
+										<span className="text-muted text-small">{def.id}</span>
+									</div>
+								</div>
+								<div className="col-2 vertical-align">
+									<Dropdown 
+										showIcon={true}
+										width={250}
+										buttonText={Object.keys(def.properties).length + " Properties"}
+										buttonClasses="text plain btn-small vertical-align"
+										classes="pull-left">
+										<div className="grid grid-1">
+											<List>
+												{Object.keys(def.properties).map(function(key, pidx){
+													var prop = def.properties[key];
+													console.log(prop.description);
+													var desc = prop.description === undefined ? null : <div>&nbsp;&nbsp;{prop.description}</div>;
+													var title = <div><span className="text-400">{key}</span>&nbsp;-&nbsp;<i className={"text-" + prop.type}>{prop.type}</i></div>
+													return (
+														<ListItem 
+															key={"res-prop-" + idx + pidx}
+															title={title}
+															description={desc}/>
+													)
+												})}
+											</List>
+										</div>
+									</Dropdown>
+								</div>
+								<div className="align-right vertical-align">
+									<Dropdown 
+										showIcon={false}
+										width={200}
+										buttonText={<FontAwesomeIcon className="text-muted" icon={faEllipsis} />}
+										buttonClasses="text plain vertical-align"
+										classes="align-items-right">
+										<div className="grid grid-1">
+											<List>
+												<ListItem title={"Resource JSON"}/>
+												<ListItem title={"Data"}/>
+												<ListItem title={"Help"}/>
+												<hr className="no-margin no-padding"/>
+												<ListItem title={<div className="text-center text-danger text-400">Delete</div>}/>
+											</List>
+										</div>
+									</Dropdown>
+								</div>
+							</div>
+							<hr/>
+						</div>
+					)
+				})}
+				{/* <div className="code">
 					<ReactJson collapsed={3} name={false} displayDataTypes={false} iconStyle="square" src={this.state.resources} />
-				</div>
+				</div> */}
 
 				<Button classes="accent page-btn" onClick={this.openModal}>New Resource</Button>
 
