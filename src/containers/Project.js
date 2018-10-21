@@ -18,6 +18,7 @@ import {setCurrentProject} from '../store/projects/actionCreators';
 import './Project.css';
 
 import { Route, Switch, Redirect } from 'react-router-dom';
+import Machinable from '../client';
 
 
 class Project extends Component {
@@ -25,15 +26,49 @@ class Project extends Component {
 	constructor(props) {
 	    super(props);
 		this.state = {
-		  body: "",
-		  projectSlug: props.match.params.projectSlug,
-		  sidebar: false,
-		  modal: false
+			body: "",
+			projectSlug: props.match.params.projectSlug,
+			sidebar: false,
+			modal: false,
+			projects: []
 		}
-  	}
+	}
+
+	handleError = (response) => {
+        console.log(response);
+        if(response.data && response.data.error) {
+            var errors = [response.data.error];
+            this.setState({errors: errors, loading: false});
+        }
+    }
+
+    handleProjects = (response) => {
+        this.setState({
+            projects: response.data.items
+        });
+    }
+
+    getProjects = () => {
+        Machinable.projects().list(this.handleProjects, this.handleError);
+    }
+
+
+	componentDidUpdate = (prevProps) => {
+		var newSlug = this.props.match.params.projectSlug;
+		var oldSlug = prevProps.match.params.projectSlug;
+		
+		if (newSlug !== oldSlug) {
+			this.setState({
+				projectSlug: newSlug
+			})
+			this.props.dispatch(setCurrentProject(newSlug));
+			this.getProjects();
+		}
+	}
 
   	componentWillMount = () => {
-  		this.props.dispatch(setCurrentProject(this.state.projectSlug));
+		this.props.dispatch(setCurrentProject(this.state.projectSlug));
+		this.getProjects();
   	}
 
 	toggleSidebar = () => {
@@ -41,36 +76,37 @@ class Project extends Component {
 		this.setState({sidebar: !this.state.sidebar, body: body});
 	}
 
-	logout = () => {
-		// const history = this.props.history;
-		// API.logout(function(){
-		// 	history.push('/login');
-		// });
+	navToProject = (slug) => {
+		this.props.history.push("/project/"+slug);
 	}
 
 	render() {
+
+		var currentProjectRender = <div>...</div>;
+		var projectItems = this.state.projects.map(function(project, idx){
+			var el = <div className="vertical-align"><ProjectIcon source={project.icon}/> <span className="margin-left-less margin-right-less">{project.name}</span></div>
+			if (this.state.projectSlug === project.slug) {
+				currentProjectRender = el;
+			}
+			return (
+				<ListItem 
+					key={"project-listitem-"+idx}
+					onClick={() => this.navToProject(project.slug)}
+					title={el}
+					description={project.description} />
+			)
+		}, this);
 
         var projectList = <div className="grid grid-3"><div><Dropdown 
                         showIcon={true}
                         type="brand"
                         width={250}
-                        buttonText={<div className="vertical-align"><ProjectIcon source="rocket"/> <span className="margin-left-less margin-right-less">Sample Blog</span></div>}
+                        buttonText={currentProjectRender}
                         buttonClasses="text plain text-muted no-click no-padding-side vertical-align"
                         classes="pull-left">
                         <div className="grid grid-1">
                             <List>
-                                <ListItem 
-                                    imageClasses="" 
-                                    title={<div className="vertical-align"><ProjectIcon source="rocket"/> <span className="margin-left-less margin-right-less">Sample Blog</span></div>}
-                                    description="A sample blog site that uses Machinable for content and user authentication" />
-                                <ListItem 
-                                    imageClasses="" 
-                                    title={<div className="vertical-align"><ProjectIcon source="brain"/> <span className="margin-left-less margin-right-less">Mobile App</span></div>}
-                                    description="A mobile app that stores blah blah on Machinable" />
-                                <ListItem 
-                                    imageClasses="" 
-                                    title={<div className="vertical-align"><ProjectIcon source="flask"/> <span className="margin-left-less margin-right-less">TODO WebApp</span></div>}
-                                    description="A good ol' todo app, demonstrating how Machinable can be used as a backend" />
+								{projectItems}
                             </List>
                         </div>
                     </Dropdown></div></div>
@@ -81,7 +117,7 @@ class Project extends Component {
 			<div className={"root container container-project " + this.state.body}>
 				<Sidebar {...this.props}/>
 
-				<Header title={projectList} classes="no-shadow"/>				
+				<Header {...this.props} title={projectList} classes="no-shadow"/>				
 
 				<div className="content">
                     <Switch>

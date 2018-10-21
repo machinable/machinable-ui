@@ -25,12 +25,7 @@ class Home extends Component {
   	}
 
   	componentWillMount = () => {
-  		// if(!API.loggedIn()) {
-  		// 	const history = this.props.history;
-  		// 	API.logout(function(){
-	    //         history.push('/login');
-	    //       });
-  		// }
+
   	}
 
 	toggleSidebar = () => {

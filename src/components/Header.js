@@ -4,6 +4,7 @@ import faUser from '@fortawesome/fontawesome-free-solid/faUserCircle';
 import signOut from '@fortawesome/fontawesome-free-solid/faSignOutAlt';
 import cog from '@fortawesome/fontawesome-free-solid/faCog';
 import { Dropdown, List, ListItem } from 'turtle-ui';
+import Machinable from '../client';
 import './Header.css';
 
 class Header extends Component {
@@ -11,8 +12,7 @@ class Header extends Component {
 	constructor(props) {
 	    super(props);
 		this.state = {
-          body: "",
-          title: props.title
+          body: ""
 		}
 	}
 
@@ -20,12 +20,19 @@ class Header extends Component {
 
 	}
 
+    logout = () => {
+		const history = this.props.history;
+		Machinable.user().logout(function(response){
+			history.push('/login');
+		}, function(response) {});
+	}
+
 	render() {
 		return (
 			<div className={"header " + this.props.classes}>
                 <div className="grid grid-2" style={{"height": "100%"}}>
                     <div className="vertical-align">
-                        {this.state.title}
+                        {this.props.title}
                     </div>
                     <div className="align-right vertical-align">
                         <Dropdown 
@@ -39,7 +46,7 @@ class Header extends Component {
 								<List>
 									<ListItem title="email@tld.io"/>
 									<ListItem icon={cog} title="Settings"/>
-									<ListItem icon={signOut} title="Logout"/>
+									<ListItem icon={signOut} title="Logout" onClick={this.logout}/>
 								</List>
 							</div>
 						</Dropdown>

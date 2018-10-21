@@ -59,7 +59,6 @@ class Projects extends Component {
     }
 
     handleProjects = (response) => {
-        console.log(response);
         this.setState({
             projects: response.data.items,
             loading: false,

@@ -14,19 +14,8 @@ import './Sidebar.css';
 
 class SideBar extends Component {
 
-	constructor(props) {
-	    super(props);
-		this.state = {
-          projectSlug: props.match.params.projectSlug
-		}
-	}
-
-	componentDidMount = () => {		
-
-    }
-    
 	render() {
-        var slug = this.state.projectSlug;
+        var slug = this.props.match.params.projectSlug;
 		return (
 			<div className="sidebar">
                 <div className="sidebar-content">
