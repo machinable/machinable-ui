@@ -145,6 +145,12 @@ hr {
 }
 
 /* UTILITY */
+.empty-state {
+	width: 350px;
+    margin: auto;
+    display: block;
+}
+
 .hover {
 	transition: background-color 240ms;
 }

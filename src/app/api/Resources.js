@@ -267,7 +267,7 @@ class Resources extends Component {
 										showIcon={true}
 										width={250}
 										buttonText={Object.keys(def.properties).length + " Properties"}
-										buttonClasses="text plain btn-small vertical-align"
+										buttonClasses="text plain text-information btn-small vertical-align"
 										classes="pull-left">
 										<div className="grid grid-1">
 											<List>

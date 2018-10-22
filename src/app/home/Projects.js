@@ -82,10 +82,12 @@ class Projects extends Component {
 	      errors: errors
         });
         
-        Machinable.projects().create(
-            this.state.newProject,
-            this.getProjects, 
-            this.handleError);
+        if(errors.length === 0) {
+            Machinable.projects().create(
+                this.state.newProject,
+                this.getProjects, 
+                this.handleError);
+        }
     }
 
     selectIcon = (icon) => {
