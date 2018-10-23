@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Input } from 'turtle-ui';
+import { Button, Input, Switch } from 'turtle-ui';
 
 class Settings extends Component {
 
@@ -35,6 +35,19 @@ class Settings extends Component {
 							<p className="text-muted padding-bottom no-margin">The project hostname used for API access.</p>
 						</div>
 						<Input labelClasses="vertical-align" value="project-zero.mchbl.com" />
+					</div>
+					<hr/>
+					<div className="grid grid-2">
+						<div>
+							<h3 className="margin-bottom">Authentication Required</h3>
+							<p className="text-muted padding-bottom no-margin">
+								{"Requests to collections and resources will require authentication"}
+								{/* {"Collections and resources are accessible to anyone with your project URL"} */}
+							</p>
+						</div>
+						<div className="vertical-align align-right">
+							<Switch on={true}/>
+						</div>
 					</div>
 					<hr/>
 					<div className="grid grid-2">
