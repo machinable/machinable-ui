@@ -35,7 +35,7 @@ class IconSelect extends Component {
                 <div className="grid grid-3 padding-top">
                     {iconList.map(function(icon, idx){
                         return (
-                            <div key={"icon-" + idx} className="hover align-center padding" onClick={() => onSelect(icon)}><ProjectIcon source={icon} /></div>
+                            <div key={"icon-" + idx} className="tile-hover align-center padding" onClick={() => onSelect(icon)}><ProjectIcon source={icon} /></div>
                         )
                     })
                     }

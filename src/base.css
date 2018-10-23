@@ -151,10 +151,10 @@ hr {
     display: block;
 }
 
-.hover {
+.tile-hover {
 	transition: background-color 240ms;
 }
-.hover:hover {
+.tile-hover:hover {
 	cursor: pointer;
 	background-color: var(--content-background);
 }

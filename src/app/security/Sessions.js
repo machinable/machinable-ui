@@ -30,6 +30,10 @@ class Sessions extends Component {
 		Machinable.sessions(this.state.slug).list(this.handleSessions, this.sessionsError);
 	}
 
+	deleteSession = (id) => {
+		Machinable.sessions(this.state.slug).delete(id, this.getSessions, this.sessionsError);
+	}
+
 	componentDidMount = () => {		
 		this.getSessions();
 	}
@@ -39,7 +43,7 @@ class Sessions extends Component {
 		var currentSession = -1;
 		var sessions = this.state.sessions.reverse();
 		var values = sessions.map(function(session){
-			var isCurrent = currentSession == session.id ? <span style={{"float":"right"}} className="background-information text-400 tag">Active Session</span> : <Button style={{"float":"right"}} classes="btn-small" onClick={() => this.deleteSession(session)}>Revoke</Button>;
+			var isCurrent = currentSession == session.id ? <span style={{"float":"right"}} className="background-information text-400 tag">Active Session</span> : <Button style={{"float":"right"}} classes="btn-small" onClick={() => this.deleteSession(session.id)}>Revoke</Button>;
 			var icon = session.mobile ? faMobile : faComputer;
 			return [
 				<div>
@@ -55,11 +59,11 @@ class Sessions extends Component {
 			]
 		}, this);
 
+		var rndr = values.length > 0 ? <Table values={values} /> : <h3>No Active Sessions</h3>
+
 		return (
 			<div className="grid grid-1">
-				<Table
-					values={values}
-				/>
+				{rndr}
 			</div>
 		  );
 	}

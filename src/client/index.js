@@ -159,12 +159,19 @@ class MachinableClient {
     }
 
     sessions(projectSlug) {
-        var GET_SESSIONS = this.projectHost(projectSlug) + "/sessions/";
+        var GET_SESSIONS = this.projectHost(projectSlug) + "/mgmt/sessions/";
+        var DELETE_SESSION = this.projectHost(projectSlug) + "/mgmt/sessions/{id}";
         var authHeaders = this.getAuthHeaders();
 
         return {
             list: function(success, error) {
                 axios.get(GET_SESSIONS, {headers: authHeaders})
+                    .then(success)
+                    .catch(error);
+            },
+
+            delete: function(id, success, error) {
+                axios.delete(DELETE_SESSION.replace("{id}", id), {headers: authHeaders})
                     .then(success)
                     .catch(error);
             }
