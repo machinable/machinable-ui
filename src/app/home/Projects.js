@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TextArea, Modal, Input, Button, Card } from 'turtle-ui';
+import { TextArea, Modal, Input, Button, Card, Switch } from 'turtle-ui';
 import Loader from '../../components/Loader';
 import ProjectIcon from '../../components/ProjectIcon';
 import IconSelect from '../../components/IconSelect';
@@ -18,7 +18,8 @@ class Projects extends Component {
                 "icon": "rocket",
                 "name": "",
                 "description": "",
-                "slug": ""
+                "slug": "",
+                "authn": true
             },
             errors: [],
             showModal: false
@@ -30,14 +31,15 @@ class Projects extends Component {
             "icon": "rocket",
             "name": "",
             "description": "",
-            "slug": ""
+            "slug": "",
+            "authn": true
         }
     }
 
 	closeModal = () => {
 		var html = document.getElementsByTagName('html')[0];
         html.style.cssText = "--root-overflow: auto";
-		this.setState({showModal: false, newProject: this.projectReset()});
+		this.setState({showModal: false, newProject: this.projectReset(), errors:[]});
 	}
 
 	openModal = () => {
@@ -204,11 +206,21 @@ class Projects extends Component {
                                         </div>
                                     }
 
-                                    <div>
+                                    <div className="grid grid-1">
                                         <IconSelect selected={this.state.newProject.icon} onSelect={this.selectIcon}/>
                                         <Input placeholder="project name" label="Name" name="name" value={this.state.newProject.name} onChange={this.onChange}/>
                                         <Input placeholder="unique slug" label="Slug" name="slug" value={this.state.newProject.slug} onChange={this.onChange}/>
                                         <TextArea placeholder="project description" label="Description" name="description" value={this.state.newProject.description} onChange={this.onChange}/>
+                                        <div className="grid grid-1">
+                                            <strong>Authentication Required</strong>
+                                            <Switch name="authn" on={this.state.newProject.authn} onChange={this.onChange}/>
+                                            {this.state.newProject.authn && 
+                                                <span>Requests to collections and resources will require authentication</span>
+                                            }
+                                            {!this.state.newProject.authn && 
+                                                <span>Collections and resources are accessible to anyone with your project URL</span>
+                                            }
+                                        </div>
                                     </div>
                                     
                                 </Card>

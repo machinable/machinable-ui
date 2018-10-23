@@ -15,8 +15,8 @@
 }
 
 .home-header{
-	grid-template: "header";
-	z-index: 2;
+	grid-template: "header";    
+	z-index: 0;
 }
 .container-home > .content {
 	grid-template: "content";
