@@ -138,6 +138,7 @@ class MachinableClient {
     collections(projectSlug) {
         var GET_COLLECTIONS = this.projectHost(projectSlug) + "/mgmt/collections/"
         var GET_COLLECTION = this.projectHost(projectSlug) + "/mgmt/collections/{name}";
+        var GET_COLLECTION_STATS = this.projectHost(projectSlug) + "/stats/collections/{id}";
         var DELETE_COLLECTION = this.projectHost(projectSlug) + "/mgmt/collections/{id}";
         var authHeaders = this.getAuthHeaders();
 
@@ -166,6 +167,12 @@ class MachinableClient {
 
             delete: function(id, success, error) {
                 axios.delete(DELETE_COLLECTION.replace("{id}", id), {headers: authHeaders})
+                    .then(success)
+                    .catch(error);
+            },
+
+            stats: function(id, success, error) {
+                axios.get(GET_COLLECTION_STATS.replace("{id}", id), {headers: authHeaders})
                     .then(success)
                     .catch(error);
             }

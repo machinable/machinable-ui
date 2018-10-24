@@ -94,8 +94,13 @@ class Data extends Component {
                 <div className="col-3-7 flex-col">
                     <h3 className="text-center">POST some JSON to any <code>/collection</code> endpoint to create a new collection</h3>
                     <br/>
-					<div className="code">
-						curl -d '&#123;"name":"Murphy", "age":2, "breed": "French Bulldog"&#125;'  -H "Content-Type: application/json" -X POST http://{this.state.slug}.machinable.test:5001/collections/dogs<br/>
+					<div className="code align-center">
+						<div style={{"width": "450px"}}>
+							<div>cURL</div>
+							<div>&nbsp;&nbsp;-d '&#123;"name":"Murphy", "age":2, "breed": "French Bulldog"&#125;'</div>
+							<div>&nbsp;&nbsp;-H "Content-Type: application/json"</div>
+							<div>&nbsp;&nbsp;-X POST http://{this.state.slug}.machinable.test:5001/collections/dogs</div>
+						</div>
 					</div>
                 </div>
             </div>
@@ -110,10 +115,9 @@ class Data extends Component {
 					<div className="text-muted text-small">https://{this.state.slug}.mchbl.app/collections/{col.name}</div>
 				</div>,
 				<div>
-					<div>100 MB</div>
-					<div className="text-small">14 items</div>
+					{col.items} {col.items > 1 ? "items" : "item"}
 				</div>,
-				<div>{moment(new Date()).fromNow()}</div>,
+				<div>{moment(col.created).fromNow()}</div>,
 				<div className="align-right vertical-align">
 					<Dropdown 
 						showIcon={false}

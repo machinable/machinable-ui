@@ -267,10 +267,6 @@ class Resources extends Component {
 									</div>;
 			return [
 				definitionTitle,
-				<div>
-					<div>100 MB</div>
-					<div className="text-small">14 items</div>
-				</div>,
 				<div>{moment(def.created).fromNow()}</div>,
 				<Dropdown 
 					showIcon={true}
@@ -323,7 +319,7 @@ class Resources extends Component {
 			<div className="grid grid-1">
 				<Table 
 					classes="m-table"
-					headers={["Name", "Size", "Created", <div className="align-center m-th">Properties</div>, ""]}
+					headers={["Name", "Created", <div className="align-center m-th">Properties</div>, ""]}
 					values={resourceValues} />
 
 				<Button classes="accent page-btn" onClick={this.openModal}>New Resource</Button>
