@@ -67,6 +67,20 @@ class Data extends Component {
 		this.getCollections();
 	}
 
+	emptyState = () => {
+		return (
+			<div className="grid grid-8">
+                <div className="col-3-7 flex-col">
+                    <h3 className="text-center">POST some JSON to any <code>/collection</code> endpoint to create a new collection</h3>
+                    <br/>
+					<div className="code">
+						curl -d '&#123;"name":"Murphy", "age":2, "breed": "French Bulldog"&#125;'  -H "Content-Type: application/json" -X POST http://{this.state.slug}.machinable.test:5001/collections/dogs<br/>
+					</div>
+                </div>
+            </div>
+		)
+	}
+
 	render() {
 		var collections = this.state.collections.map(function(col, idx){
 			return [
@@ -98,13 +112,20 @@ class Data extends Component {
 				</div>
 			];
 		}, this);
+
 		return (
 			<div>
+				{collections.length > 0 &&
 				<Table 
 					classes="m-table"
 					headers={["Name", "Size", "Created", ""]}
 					values={collections}
 				/>
+				}
+
+				{collections.length == 0 &&
+					this.emptyState()
+				}
 			</div>
 		  );
 	}
