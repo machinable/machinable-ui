@@ -140,6 +140,30 @@ a {
 
 /* COPY TO TURTLEUI*/
 
+.m-table {
+	border: none;
+	border-bottom: 2px solid var(--card-border-color);
+}
+
+.m-table>thead>tr {
+    background-color: #FFF;
+    text-transform: uppercase;
+}
+
+.m-table>thead>tr>th {
+    text-align: left;
+    font-weight: 600;
+    padding: 8px 15px;
+    border-bottom: 2px solid var(--card-border-color);
+    color: var(--text-more-muted);
+    font-size: 12px;
+}
+.m-th {
+	color: var(--text-more-muted);
+    font-size: 12px;
+    font-weight: 600;
+}
+
 hr {
     border: 1px solid var(--card-border-color);
 }

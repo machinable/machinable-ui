@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Modal, Card, Input, Select, Dropdown, List, ListItem } from 'turtle-ui';
+import { Button, Modal, Card, Input, Select, Dropdown, List, ListItem, Table } from 'turtle-ui';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faPlus from '@fortawesome/fontawesome-free-solid/faPlusCircle';
 import faTrash from '@fortawesome/fontawesome-free-solid/faTrash';
@@ -8,6 +8,7 @@ import faEllipsis from '@fortawesome/fontawesome-free-solid/faEllipsisV';
 import Machinable from '../../client';
 import ReactJson from 'react-json-view';
 import slugify from 'slugify';
+import moment from 'moment';
 
 
 const typeOptions = [
@@ -62,9 +63,11 @@ class Resources extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			loading: true,
 			resources: {},
 			showModal: false,
 			showExtraModal: false,
+			showDeleteModal: false,
 			slug: props.slug,
 			newResource: {
 				errors: [],
@@ -72,7 +75,8 @@ class Resources extends Component {
 				path_name: "",
 				properties: [{key: "", type: "string", description: ""}]
 			},
-			extraElement: <div>nothing selected</div>
+			extraElement: <div>nothing selected</div>,
+			deleteResource: {}
 		}
 	}
 
@@ -81,7 +85,7 @@ class Resources extends Component {
 	}
 
 	resSuccess = (response) => {
-		this.setState({resources: response.data}, this.closeModal);
+		this.setState({resources: response.data, loading: false}, this.closeModal);
 	}
 
 	getResources = () => {
@@ -91,7 +95,7 @@ class Resources extends Component {
 	closeModal = () => {
 		var html = document.getElementsByTagName('html')[0];
         html.style.cssText = "--root-overflow: auto";
-		this.setState({showModal: false, newResource: {
+		this.setState({showModal: false, showDeleteModal: false, newResource: {
 			title: "",
 			path_name: "",
 			errors: [],
@@ -108,13 +112,24 @@ class Resources extends Component {
 	closeExtraModal = () => {
 		var html = document.getElementsByTagName('html')[0];
         html.style.cssText = "--root-overflow: auto";
-		this.setState({showExtraModal: false});
+		this.setState({showExtraModal: false, showDeleteModal: false});
 	}
 
 	openExtraModal = (element) => {
 		var html = document.getElementsByTagName('html')[0];
         html.style.cssText = "--root-overflow: hidden";
 		this.setState({showExtraModal: true, extraElement: element});
+	}
+
+	openDeleteModal = (resource) => {
+		var html = document.getElementsByTagName('html')[0];
+        html.style.cssText = "--root-overflow: hidden";
+		this.setState({showDeleteModal: true, deleteResource: resource});
+	}
+
+	deleteResource = () => {
+		this.setState({loading: true});
+		Machinable.resources(this.state.slug).delete(this.state.deleteResource.id, this.getResources, this.resError);
 	}
 
 	addProperty = () => {
@@ -243,76 +258,73 @@ class Resources extends Component {
 		this.getResources();
 	}
 
+	getTableValues = () => {
+		var resourceValues = this.state.resources.items.map(function(def, idx){
+			var definitionTitle = <div>
+										<h3 className="text-400 no-margin margin-bottom-less">{def.title}</h3>
+										<div className="text-muted text-small">https://{this.state.slug}.mchbl.app/api/{def.path_name}</div>
+										<div className="text-muted text-small margin-top-less">{def.id}</div>
+									</div>;
+			return [
+				definitionTitle,
+				<div>
+					<div>100 MB</div>
+					<div className="text-small">14 items</div>
+				</div>,
+				<div>{moment(def.created).fromNow()}</div>,
+				<Dropdown 
+					showIcon={true}
+					width={250}
+					buttonText={Object.keys(def.properties).length + " Properties"}
+					buttonClasses="text plain text-information vertical-align">
+					<div className="grid grid-1">
+						<List>
+							{Object.keys(def.properties).map(function(key, pidx){
+								var prop = def.properties[key];
+								var desc = prop.description === undefined ? null : <div>&nbsp;&nbsp;{prop.description}</div>;
+								var title = <div><span className="text-400">{key}</span>&nbsp;-&nbsp;<i className={"text-" + prop.type}>{prop.type}</i></div>
+								return (
+									<ListItem 
+										key={"res-prop-" + idx + pidx}
+										title={title}
+										description={desc}/>
+								)
+							})}
+						</List>
+					</div>
+				</Dropdown>,
+				<div className="align-right vertical-align">
+					<Dropdown 
+						showIcon={false}
+						width={150}
+						buttonText={<FontAwesomeIcon className="text-muted" icon={faEllipsis} />}
+						buttonClasses="text plain vertical-align"
+						classes="align-items-right">
+						<div className="grid grid-1">
+							<List>
+								<ListItem title={"Resource JSON"} onClick={() => this.openExtraModal(<div>{definitionTitle}<div className="margin-top-more code"><ReactJson name={false} iconStyle="square" src={def} /></div></div>)}/>
+								<ListItem title={"Data"} onClick={() => this.openExtraModal(<Data slug={this.state.slug} path={def.path_name} />)}/>
+								<ListItem title={"Help"} onClick={() => this.openExtraModal(<div></div>)}/>
+								<hr className="no-margin no-padding"/>
+								<ListItem title={<div className="text-center text-danger text-400" onClick={() => this.openDeleteModal(def)}>Delete</div>}/>
+							</List>
+						</div>
+					</Dropdown>
+				</div>
+			]
+		}, this);
+		return resourceValues;
+	}
+
 	render() {
+		var resourceValues = this.state.resources.items ? this.getTableValues() : [];
+
 		return (
 			<div className="grid grid-1">
-				{this.state.resources.items && this.state.resources.items.map(function(def, idx){
-					var definitionTitle = 	<div className="col-2 flex-col">
-												<div className="vertical-align">
-													<h3 className="no-margin text-400 pull-left">
-														{def.title}
-													</h3>
-													<p className="text-muted no-margin margin-left"> - /api/{def.path_name}</p>
-												</div>
-												<div className="margin-top-less margin-bottom-less">
-													<span className="text-muted text-small">{def.id}</span>
-												</div>
-											</div>;
-					return (
-						<div>
-							<div className="grid grid-4 margin-bottom-more">
-								{definitionTitle}
-								<div className="col-1 vertical-align">
-									<Dropdown 
-										showIcon={true}
-										width={250}
-										buttonText={Object.keys(def.properties).length + " Properties"}
-										buttonClasses="text plain text-information btn-small vertical-align"
-										classes="pull-left">
-										<div className="grid grid-1">
-											<List>
-												{Object.keys(def.properties).map(function(key, pidx){
-													var prop = def.properties[key];
-													console.log(prop.description);
-													var desc = prop.description === undefined ? null : <div>&nbsp;&nbsp;{prop.description}</div>;
-													var title = <div><span className="text-400">{key}</span>&nbsp;-&nbsp;<i className={"text-" + prop.type}>{prop.type}</i></div>
-													return (
-														<ListItem 
-															key={"res-prop-" + idx + pidx}
-															title={title}
-															description={desc}/>
-													)
-												})}
-											</List>
-										</div>
-									</Dropdown>
-								</div>
-								<div className="align-right vertical-align">
-									<Dropdown 
-										showIcon={false}
-										width={150}
-										buttonText={<FontAwesomeIcon className="text-muted" icon={faEllipsis} />}
-										buttonClasses="text plain vertical-align"
-										classes="align-items-right">
-										<div className="grid grid-1">
-											<List>
-												<ListItem title={"Resource JSON"} onClick={() => this.openExtraModal(<div>{definitionTitle}<div className="margin-top-more code"><ReactJson name={false} iconStyle="square" src={def} /></div></div>)}/>
-												<ListItem title={"Data"} onClick={() => this.openExtraModal(<Data slug={this.state.slug} path={def.path_name} />)}/>
-												<ListItem title={"Help"} onClick={this.openExtraModal}/>
-												<hr className="no-margin no-padding"/>
-												<ListItem title={<div className="text-center text-danger text-400">Delete</div>}/>
-											</List>
-										</div>
-									</Dropdown>
-								</div>
-							</div>
-							<hr/>
-						</div>
-					)
-				}, this)}
-				{/* <div className="code">
-					<ReactJson collapsed={3} name={false} displayDataTypes={false} iconStyle="square" src={this.state.resources} />
-				</div> */}
+				<Table 
+					classes="m-table"
+					headers={["Name", "Size", "Created", <div className="align-center m-th">Properties</div>, ""]}
+					values={resourceValues} />
 
 				<Button classes="accent page-btn" onClick={this.openModal}>New Resource</Button>
 
@@ -338,6 +350,34 @@ class Resources extends Component {
 						</div>
 					</div>
 				</Modal>
+
+				<Modal 
+					close={this.closeExtraModal}
+					isOpen={this.state.showDeleteModal}>
+                    <div className="align-center grid grid-3">
+                        <div className="col-3-2">
+                            <div className=" grid grid-1">
+                                <Card
+                                    classes="footer-plain no-border"
+                                    footer={
+                                        <div className="grid grid-2">
+                                            <div className="col-2 col-right">
+                                                <Button classes="plain text" onClick={this.closeExtraModal}>Cancel</Button>	
+                                                <Button classes="danger margin-left" type="submit" loading={this.state.loading} onClick={this.deleteResource}>Yes, I'm sure</Button>	
+                                            </div>
+                                        </div>
+                                    }>
+
+                                    <h2 className="text-center">Delete Resource</h2>
+									<h3 className="text-center">Are you sure you want to delete <strong>{this.state.deleteResource.title}</strong>?</h3>
+									<p className="text-center">
+										This will delete the definition and remove all data stored for this resource. This cannot be undone.
+									</p>
+                                </Card>
+                            </div>
+                        </div>
+                    </div>
+                </Modal>
 
 				<Modal
 					classes="from-right"

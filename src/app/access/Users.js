@@ -158,7 +158,8 @@ class Users extends Component {
                 {tableValues.length > 0 && 
                     <React.Fragment>
                         <Table
-                            headers={["Username", "Access", <div className="align-center text-400">ID</div>, <div className="align-right text-400">Options</div>]}
+                            classes="m-table"
+                            headers={["Username", "Access", <div className="align-center m-th">ID</div>, <div className="align-right m-th">Options</div>]}
                             values={tableValues}
                         />
                         <Button classes="accent page-btn" onClick={this.openModal}>Add User</Button>
