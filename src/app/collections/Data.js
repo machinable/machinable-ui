@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Table, List, ListItem, Dropdown } from 'turtle-ui';
+import { Table, List, ListItem, Dropdown, Modal, Card, Button } from 'turtle-ui';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faEllipsis from '@fortawesome/fontawesome-free-solid/faEllipsisV';
 import Machinable from '../../client';
@@ -47,20 +47,41 @@ class Data extends Component {
         this.state = {
 			collections: [],
 			slug: props.slug,
-			data: {}
+			data: {},
+			deleteCollection: {},
+			showDeleteModal: false,
+			loading: true
 		}
 	}
 
 	colError = (response) => {
 		console.log(response)
+		this.setState({loading: false});
 	}
 
 	colSuccess = (response) => {
-		this.setState({collections: response.data.items})
+		this.setState({collections: response.data.items, loading: false, showDeleteModal: false});
 	}
 
 	getCollections = () => {
 		Machinable.collections(this.state.slug).list(this.colSuccess, this.colError);
+	}
+
+	closeModal = () => {
+		var html = document.getElementsByTagName('html')[0];
+        html.style.cssText = "--root-overflow: auto";
+		this.setState({showDeleteModal: false});
+	}
+
+	openDeleteModal = (collection) => {
+		var html = document.getElementsByTagName('html')[0];
+        html.style.cssText = "--root-overflow: hidden";
+		this.setState({showDeleteModal: true, deleteCollection: collection});
+	}
+
+	deleteCollection = () => {
+		this.setState({loading: true});
+		Machinable.collections(this.state.slug).delete(this.state.deleteCollection.id, this.getCollections, this.colError);
 	}
 
 	componentDidMount = () => {		
@@ -105,7 +126,7 @@ class Data extends Component {
 								<ListItem title={"Data"}/>
 								<ListItem title={"Help"}/>
 								<hr className="no-margin no-padding"/>
-								<ListItem title={<div className="text-center text-danger text-400">Delete</div>}/>
+								<ListItem title={<div className="text-center text-danger text-400" onClick={() => this.openDeleteModal(col)}>Delete</div>}/>
 							</List>
 						</div>
 					</Dropdown>
@@ -126,6 +147,34 @@ class Data extends Component {
 				{collections.length == 0 &&
 					this.emptyState()
 				}
+
+				<Modal 
+					close={this.closeModal}
+					isOpen={this.state.showDeleteModal}>
+                    <div className="align-center grid grid-3">
+                        <div className="col-3-2">
+                            <div className=" grid grid-1">
+                                <Card
+                                    classes="footer-plain no-border"
+                                    footer={
+                                        <div className="grid grid-2">
+                                            <div className="col-2 col-right">
+                                                <Button classes="plain text" onClick={this.closeModal}>Cancel</Button>	
+                                                <Button classes="danger margin-left" type="submit" loading={this.state.loading} onClick={this.deleteCollection}>Yes, I'm sure</Button>	
+                                            </div>
+                                        </div>
+                                    }>
+
+                                    <h2 className="text-center">Delete Collection</h2>
+									<h3 className="text-center">Are you sure you want to delete <strong>{this.state.deleteCollection.name}</strong>?</h3>
+									<p className="text-center">
+										This will delete all data stored in this collection. This cannot be undone.
+									</p>
+                                </Card>
+                            </div>
+                        </div>
+                    </div>
+                </Modal>
 			</div>
 		  );
 	}
