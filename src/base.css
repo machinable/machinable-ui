@@ -424,6 +424,11 @@ strong {
 	background-color: var(--card-border-color);
 }
 
+.background-accent {
+	background-color: var(--accent);
+	color: #FFF;
+}
+
 .background-success {
 	background-color: var(--success);
 	color: #FFF;

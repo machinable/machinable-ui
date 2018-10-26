@@ -29,7 +29,7 @@ class SideBar extends Component {
                                     <NavLink to={"/project/"+slug+"/api"} style={{display: "flex"}}>
                                         <FontAwesomeIcon className="center-self" style={{fontSize: "24px"}} icon={faProject} fixedWidth/>
                                         <div className="margin-left-more">
-                                            API
+                                            <div className="vertical-align margin-right"><span>API</span><span className="tag background-accent margin-left" style={{"padding": "1px 5px"}}>beta</span></div>
                                             <p className="navlink-description">Manage defined API resources</p>
                                         </div>
                                     </NavLink>
