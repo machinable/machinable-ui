@@ -113,7 +113,7 @@ class Users extends Component {
                     <h2 className="text-center">It's a bit empty in here</h2>
                     <img src={Empty} className="empty-state"/>
                     <br/>
-                    <h3 className="text-center">Add project users that have access to your project's API Resources and Collections</h3>
+                    <h3 className="text-center">Create users that have access to your project's API Resources and Collections</h3>
                     <br/>
                     <div className="align-center">
                         <Button classes="accent" onClick={this.openModal}>Add A User</Button>

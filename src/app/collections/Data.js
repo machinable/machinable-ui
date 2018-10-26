@@ -89,17 +89,15 @@ class Data extends Component {
 	}
 
 	emptyState = () => {
+		var curl = "curl -d '{\"name\":\"Murphy\", \"age\":2, \"breed\": \"French Bulldog\"}' -H \"Content-Type: application/json\" -X POST http://"+this.state.slug+".machinable.test:5001/collections/dogs";
 		return (
 			<div className="grid grid-8">
                 <div className="col-3-7 flex-col">
                     <h3 className="text-center">POST some JSON to any <code>/collection</code> endpoint to create a new collection</h3>
                     <br/>
 					<div className="code align-center">
-						<div style={{"width": "450px"}}>
-							<div>cURL</div>
-							<div>&nbsp;&nbsp;-d '&#123;"name":"Murphy", "age":2, "breed": "French Bulldog"&#125;'</div>
-							<div>&nbsp;&nbsp;-H "Content-Type: application/json"</div>
-							<div>&nbsp;&nbsp;-X POST http://{this.state.slug}.machinable.test:5001/collections/dogs</div>
+						<div style={{"width": "450px", "whiteSpace": "pre-line"}}>
+							{curl}
 						</div>
 					</div>
                 </div>

@@ -34,14 +34,16 @@ axios.interceptors.response.use(function (response) {
 					}
 				  });
 	} else if (401 === error.response.status) {
-		Machinable.logout(function(){
+		Machinable.user().logout(function(){
 			history.push('/login');
 		}, function(){
 			history.push('/login');
 		});
-	} else if (404 === error.response.status) {
-		history.replace('/error/404');
-	} else {
+	} 
+	// else if (404 === error.response.status) {
+	// 	history.replace('/error/404');
+	// }
+	else {
 	  // return the actual error response and handle it explicitly
 	  return Promise.reject(error.response);
 	}
