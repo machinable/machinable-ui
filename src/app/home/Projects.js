@@ -151,8 +151,9 @@ class Projects extends Component {
                     {this.state.projects.map(function(project, idx){
                         return(
                             <Card key={"project-"+idx} classes="project-hover" to={"/project/"+project.slug}>
-                                <h3 className="text-400 vertical-align no-margin">
-                                    <ProjectIcon source={project.icon}/>&nbsp;&nbsp;{project.name}
+                                <h3 className="text-400 vertical-align no-margin-bottom" style={{"position": "relative"}}>
+                                    <ProjectIcon source={project.icon}/>
+                                    &nbsp;&nbsp;{project.name}
                                 </h3>
                                 <span className="margin-top text-information text-small" style={{"display": "block"}} href="#">https://{project.slug}.mchbl.app</span>
                                 <p>{project.description}</p>

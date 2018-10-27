@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Table, Button, Card, Modal, Input, Switch } from 'turtle-ui';
+import { Table, Button, Card, Modal, Input, Switch, Dropdown, List, ListItem } from 'turtle-ui';
 import Loader from '../../components/Loader';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faUser from '@fortawesome/fontawesome-free-solid/faUserCircle';
@@ -24,7 +24,9 @@ class Users extends Component {
                 read: true,
                 write: false
             },
-            errors: []
+            errors: [],
+			showDeleteModal: false,
+            deleteUser: {username:""}
 		}
     }
     
@@ -39,11 +41,18 @@ class Users extends Component {
 
     usersError = (response) => {
         console.log(response);
-        this.setState({errors: [response.data.error], loading: false});
+        var errors = [];
+        if(response.data.error) {
+            errors.push(response.data.error);
+        } else {
+            errors.push("An unknown error occured trying to delete this user. Please try again later.")
+            errors.push(response.status + " " + response.statusText);
+        }
+        this.setState({errors: errors, loading: false});
     }
 
     usersSuccess = (response) => {
-        this.setState({users: response.data.items, loading: false, showModal: false, newUser: this.userReset()});
+        this.setState({users: response.data.items, loading: false, showModal: false, showDeleteModal: false, newUser: this.userReset()});
     }
 
     getUsers = () => {
@@ -57,7 +66,7 @@ class Users extends Component {
     closeModal = () => {
 		var html = document.getElementsByTagName('html')[0];
         html.style.cssText = "--root-overflow: auto";
-		this.setState({showModal: false});
+		this.setState({showModal: false, showDeleteModal: false});
 	}
 
 	openModal = () => {
@@ -65,6 +74,17 @@ class Users extends Component {
         html.style.cssText = "--root-overflow: hidden";
 		this.setState({showModal: true});
     }
+
+    openDeleteModal = (user) => {
+		var html = document.getElementsByTagName('html')[0];
+        html.style.cssText = "--root-overflow: hidden";
+		this.setState({showDeleteModal: true, deleteUser: user});
+	}
+
+	deleteUser = () => {
+		this.setState({loading: true});
+		Machinable.users(this.state.slug).delete(this.state.deleteUser.id, this.getUsers, this.usersError);
+	}
 
     createUser = () => {
 	    this.setState({
@@ -114,8 +134,8 @@ class Users extends Component {
                     <img src={Empty} className="empty-state-sm"/>
                     <h3 className="text-center">Create users with read/write access to your project's API Resources and Collections</h3>
                     <div className="align-center">
-                        <Button classes="accent" onClick={this.openModal}>Add A User</Button>
-                    </div>
+                        <Button classes="accent" onClick={this.openModal}>Create A User</Button>
+					</div>
                 </div>
             </div>
         )
@@ -145,10 +165,23 @@ class Users extends Component {
                     </span>
                 </div>,
                 <div className=" align-right">
-                    <Button classes="plain text no-click"><FontAwesomeIcon className="text-muted" icon={faEllipsis} /></Button>
+                    <Dropdown 
+                        showIcon={false}
+                        width={150}
+                        buttonText={<FontAwesomeIcon className="text-muted" icon={faEllipsis} />}
+                        buttonClasses="text plain vertical-align"
+                        classes="align-items-right">
+                        <div className="grid grid-1">
+                            <List>
+                                <ListItem title={<div className="text-center">Edit Access</div>}/>
+                                <hr className="no-margin no-padding"/>
+                                <ListItem title={<div className="text-center text-danger text-400" onClick={() => this.openDeleteModal(user)}>Delete</div>}/>
+                            </List>
+                        </div>
+                    </Dropdown>
                 </div>
             ]
-        });
+        }, this);
         return (
             <React.Fragment>
                 <Table
@@ -211,6 +244,41 @@ class Users extends Component {
                                         </div>
                                     </div>
                                     
+                                </Card>
+                            </div>
+                        </div>
+                    </div>
+                </Modal>
+
+                <Modal 
+					close={this.closeModal}
+					isOpen={this.state.showDeleteModal}>
+                    <div className="align-center grid grid-3">
+                        <div className="col-3-2">
+                            <div className=" grid grid-1">
+                                <Card
+                                    classes="footer-plain no-border"
+                                    footer={
+                                        <div className="grid grid-2">
+                                            <div className="col-2 col-right">
+                                                <Button classes="plain text" onClick={this.closeModal}>Cancel</Button>	
+                                                <Button classes="danger margin-left" type="submit" loading={this.state.loading} onClick={this.deleteUser}>Yes, I'm sure</Button>	
+                                            </div>
+                                        </div>
+                                    }>
+
+                                    <h2 className="text-center">Delete Project User</h2>
+                                    { this.state.errors.length > 0 &&
+                                        <div className="text-danger text-center margin-bottom-more">
+                                            {this.state.errors.map(function(error){
+                                                return (<div className="text-400 padding-bottom">{error}</div>)
+                                            })}
+                                        </div>
+                                    }
+									<h3 className="text-center">Are you sure you want to delete <strong>{this.state.deleteUser.username}</strong>?</h3>
+									<p className="text-center">
+										This will delete the user as well as any active sessions. This cannot be undone.
+									</p>
                                 </Card>
                             </div>
                         </div>

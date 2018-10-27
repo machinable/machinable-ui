@@ -45,10 +45,26 @@
 .text-object {color: #233237;}
 .text-array {color: #233237;}
 
+
+.project-icon {
+	width: 48px;
+    height: 48px;
+    position: absolute;
+    top: -42px;
+    /* text-align: center; */
+    /* margin: auto; */
+    padding: 5px;
+    background-color: #FFF;
+    border-radius: 50%;
+    /* border-right: 2px solid #000; */
+    left: calc(50% - 24px);
+}
+
 .page-btn {
 	position: fixed;
 	right: 50px;
-	bottom: 50px;
+	/* bottom: 50px; */
+	bottom: 240px;
 	border-radius: 100px;
 	box-shadow: 1px 2px 3px rgba(0,0,0,.4);
 }

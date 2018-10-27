@@ -33,7 +33,7 @@ class Access extends Component {
 
 					{/* DOCUMENTATION */}
 					<div className="page-docs">
-						<h4 className="text-more-muted text-600"><br/>DOCUMENTATION</h4>
+						<h4 className="text-more-muted text-600">DOCUMENTATION</h4>
 						<div className="grid grid-3">
 							<div>
 								<a className="link text-400 text-information">Overview</a>

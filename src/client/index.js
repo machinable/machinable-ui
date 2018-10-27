@@ -200,6 +200,7 @@ class MachinableClient {
 
     users(projectSlug) {
         var GET_USERS = this.projectHost(projectSlug) + "/users/";
+        var DELETE_USER = this.projectHost(projectSlug) + "/users/{id}";
         var authHeaders = this.getAuthHeaders();
 
         return {
@@ -211,6 +212,12 @@ class MachinableClient {
 
             create: function(data, success, error) {
                 axios.post(GET_USERS, data, {headers: authHeaders})
+                    .then(success)
+                    .catch(error);
+            },
+
+            delete: function(id, success, error) {
+                axios.delete(DELETE_USER.replace("{id}", id), {headers: authHeaders})
                     .then(success)
                     .catch(error);
             }
