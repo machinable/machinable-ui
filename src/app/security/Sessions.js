@@ -59,7 +59,7 @@ class Sessions extends Component {
 			]
 		}, this);
 
-		var rndr = values.length > 0 ? <Table values={values} /> : <h3 className="no-margin text-center text-muted">No Active Sessions</h3>
+		var rndr = values.length > 0 ? <Table values={values} /> : <h3 className="no-margin text-center text-muted">No Active Sessions</h3>;
 
 		return (
 			<div className="grid grid-1">

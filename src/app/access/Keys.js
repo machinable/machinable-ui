@@ -46,10 +46,15 @@ class Keys extends Component {
 		var html = document.getElementsByTagName('html')[0];
         html.style.cssText = "--root-overflow: hidden";
 		this.setState({showModal: true});
-	}
+    }
+    
+    emptyState = () => {
+        return (
+            <h3 className="no-margin text-center text-muted">No API Keys</h3>
+        );
+    }
 
-	render() {
-
+    renderKeys = () => {
         var tableValues = this.state.tokens.map(function(token, idx){
             var accessList = [];
             if(token.read) {
@@ -74,15 +79,26 @@ class Keys extends Component {
                     <Button classes="plain text no-click"><FontAwesomeIcon className="text-muted" icon={faEllipsis} /></Button>
                 </div>
             ]
-        })
+        });
 
-		return (
-			<div className="grid grid-1">
-				<Table
+        return (
+            <React.Fragment>
+                <Table
 					classes="hover"
 					values={tableValues}
 				/>
 				<Button classes="accent page-btn" onClick={this.openModal}>Generate API Token</Button>
+            </React.Fragment>
+        )
+    }
+
+	render() {
+
+        var renderKeys = this.state.tokens.length > 0 ? this.renderKeys() : this.emptyState();
+
+		return (
+			<div>
+				{renderKeys}
 			</div>
 		  );
 	}
