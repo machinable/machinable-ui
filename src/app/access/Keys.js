@@ -50,7 +50,15 @@ class Keys extends Component {
     
     emptyState = () => {
         return (
-            <h3 className="no-margin text-center text-muted">No API Keys</h3>
+            <div className="grid grid-8">
+                <div className="col-2-8 flex-col">
+                    <h2 className="text-center">No API Keys</h2>
+                    <h3 className="text-center">Create API Keys with read/write access to your project's API Resources and Collections</h3>
+                    <div className="align-center">
+                        <Button classes="accent" onClick={this.openModal}>Generate API Token</Button>
+                    </div>
+                </div>
+            </div>
         );
     }
 
