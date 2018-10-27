@@ -5,6 +5,7 @@ import Loader from '../../components/Loader';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faKey from '@fortawesome/fontawesome-free-solid/faKey';
 import faEllipsis from '@fortawesome/fontawesome-free-solid/faEllipsisV';
+import Empty from '../../images/safe.svg';
 import Machinable from '../../client';
 import moment from 'moment';
 
@@ -14,26 +15,27 @@ class Keys extends Component {
         super(props);
 		this.state = {
             loading: true,
-            tokens: [],
+            keys: [],
             showModal: false,
             slug: props.slug
 		}
 	}
 
-    tokenError = (response) => {
+    keyError = (response) => {
         console.log(response);
+        this.setState({loading: false});
     }
 
-    tokenSuccess = (response) => {
-        this.setState({tokens: response.data.items, loading: false});
+    keySuccess = (response) => {
+        this.setState({keys: response.data.items, loading: false});
     }
 
-    getTokens = () => {
-        Machinable.tokens(this.state.slug).list(this.tokenSuccess, this.tokenError);
+    getKeys = () => {
+        Machinable.tokens(this.state.slug).list(this.keySuccess, this.keyError);
     }
 
 	componentDidMount = () => {		
-		this.getTokens();
+		this.getKeys();
     }
     
     closeModal = () => {
@@ -53,6 +55,7 @@ class Keys extends Component {
             <div className="grid grid-8">
                 <div className="col-2-8 flex-col">
                     <h2 className="text-center">No API Keys</h2>
+                    <img src={Empty} className="empty-state-sm"/>
                     <h3 className="text-center">Create API Keys with read/write access to your project's API Resources and Collections</h3>
                     <div className="align-center">
                         <Button classes="accent" onClick={this.openModal}>Generate API Token</Button>
@@ -63,12 +66,12 @@ class Keys extends Component {
     }
 
     renderKeys = () => {
-        var tableValues = this.state.tokens.map(function(token, idx){
+        var tableValues = this.state.keys.map(function(key, idx){
             var accessList = [];
-            if(token.read) {
+            if(key.read) {
                 accessList.push("read");
             }
-            if(token.write) {
+            if(key.write) {
                 accessList.push("write");
             }
             if(accessList.length == 0) {
@@ -78,8 +81,8 @@ class Keys extends Component {
                 <div className="vertical-align">
                     <FontAwesomeIcon className="margin-right text-muted" style={{"fontSize": "24px"}} icon={faKey} />
                     <div>
-                        <h3 className="text-400 no-margin">{token.description}</h3>
-                        <div className="text-muted">{moment(token.created).fromNow()}</div>
+                        <h3 className="text-400 no-margin">{key.description}</h3>
+                        <div className="text-muted">{moment(key.created).fromNow()}</div>
                     </div>
                 </div>,
                 <div>{accessList.join(" / ")}</div>,
@@ -102,11 +105,12 @@ class Keys extends Component {
 
 	render() {
 
-        var renderKeys = this.state.tokens.length > 0 ? this.renderKeys() : this.emptyState();
+        var renderKeys = this.state.keys.length > 0 ? this.renderKeys() : this.emptyState();
 
 		return (
 			<div>
-				{renderKeys}
+                <Loader loading={this.state.loading}/>
+				{!this.state.loading && renderKeys}
 			</div>
 		  );
 	}
