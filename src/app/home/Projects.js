@@ -178,7 +178,8 @@ class Projects extends Component {
 
 		return (
 			<React.Fragment>
-                {render}
+                <Loader loading={this.state.loading} />
+                {!this.state.loading && render}
                 <Modal 
 					close={this.closeModal}
 					isOpen={this.state.showModal}>

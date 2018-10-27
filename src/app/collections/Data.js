@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Table, List, ListItem, Dropdown, Modal, Card, Button } from 'turtle-ui';
+import Loader from '../../components/Loader';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faEllipsis from '@fortawesome/fontawesome-free-solid/faEllipsisV';
+import Empty from '../../images/empty_canvas.svg';
 import Machinable from '../../client';
 import ReactJson from 'react-json-view';
 import moment from 'moment';
@@ -89,14 +91,15 @@ class Data extends Component {
 	}
 
 	emptyState = () => {
-		var curl = "curl -d '{\"name\":\"Murphy\", \"age\":2, \"breed\": \"French Bulldog\"}' -H \"Content-Type: application/json\" -X POST http://"+this.state.slug+".machinable.test:5001/collections/dogs";
+		var curl = "curl -d '{\"name\":\"Murphy\", \"age\":2, \"breed\": \"French Bulldog\"}' -X POST http://"+this.state.slug+".machinable.test:5001/collections/dogs";
 		return (
-			<div className="grid grid-8">
-                <div className="col-3-7 flex-col">
+			<div className="grid grid-1">
+                <div className="align-center flex-col">
+					<h2 className="text-center">There aren't any Collections for this Project</h2>
+                    <img src={Empty} className="empty-state-sm"/>
                     <h3 className="text-center">POST some JSON to any <code>/collection</code> endpoint to create a new collection</h3>
-                    <br/>
-					<div className="code align-center">
-						<div style={{"width": "450px", "whiteSpace": "pre-line"}}>
+					<div className="code center-self" style={{"width":"450px"}}>
+						<div>
 							{curl}
 						</div>
 					</div>
@@ -105,50 +108,52 @@ class Data extends Component {
 		)
 	}
 
-	render() {
+	renderCollections = () => {
 		var collections = this.state.collections.map(function(col, idx){
-			return [
-				<div>
-					<h3 className="text-400 no-margin margin-bottom-less">{col.name}</h3>
-					<div className="text-muted text-small">https://{this.state.slug}.mchbl.app/collections/{col.name}</div>
-				</div>,
-				<div>
-					{col.items} {col.items > 1 ? "items" : "item"}
-				</div>,
-				<div>{moment(col.created).fromNow()}</div>,
-				<div className="align-right vertical-align">
-					<Dropdown 
-						showIcon={false}
-						width={150}
-						buttonText={<FontAwesomeIcon className="text-muted" icon={faEllipsis} />}
-						buttonClasses="text plain vertical-align"
-						classes="align-items-right">
-						<div className="grid grid-1">
-							<List>
-								<ListItem title={"Data"}/>
-								<ListItem title={"Help"}/>
-								<hr className="no-margin no-padding"/>
-								<ListItem title={<div className="text-center text-danger text-400" onClick={() => this.openDeleteModal(col)}>Delete</div>}/>
-							</List>
-						</div>
-					</Dropdown>
-				</div>
-			];
-		}, this);
+				return [
+					<div>
+						<h3 className="text-400 no-margin margin-bottom-less">{col.name}</h3>
+						<div className="text-muted text-small">https://{this.state.slug}.mchbl.app/collections/{col.name}</div>
+					</div>,
+					<div>
+						{col.items} {col.items > 1 ? "items" : "item"}
+					</div>,
+					<div>{moment(col.created).fromNow()}</div>,
+					<div className="align-right vertical-align">
+						<Dropdown 
+							showIcon={false}
+							width={150}
+							buttonText={<FontAwesomeIcon className="text-muted" icon={faEllipsis} />}
+							buttonClasses="text plain vertical-align"
+							classes="align-items-right">
+							<div className="grid grid-1">
+								<List>
+									<ListItem title={"Data"}/>
+									<ListItem title={"Help"}/>
+									<hr className="no-margin no-padding"/>
+									<ListItem title={<div className="text-center text-danger text-400" onClick={() => this.openDeleteModal(col)}>Delete</div>}/>
+								</List>
+							</div>
+						</Dropdown>
+					</div>
+				];
+			}, this);
 
 		return (
-			<div>
-				{collections.length > 0 &&
-				<Table 
+			<Table 
 					classes="m-table"
 					headers={["Name", "Size", "Created", ""]}
 					values={collections}
 				/>
-				}
+		);
+	}
 
-				{collections.length == 0 &&
-					this.emptyState()
-				}
+	render() {
+		var renderCollections = this.state.collections.length > 0 ? this.renderCollections() : this.emptyState();
+		return (
+			<div>
+				<Loader loading={this.state.loading} />
+				{!this.state.loading && renderCollections}
 
 				<Modal 
 					close={this.closeModal}

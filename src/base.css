@@ -175,6 +175,12 @@ hr {
     display: block;
 }
 
+.empty-state-sm {
+	width: 170px;
+    margin: auto;
+    display: block;
+}
+
 .tile-hover {
 	transition: background-color 240ms;
 }
@@ -201,6 +207,9 @@ hr {
 
 .pull-left {
 	float: left;
+}
+.pull-right {
+	float: right;
 }
 
 .tag {

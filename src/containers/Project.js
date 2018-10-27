@@ -52,7 +52,6 @@ class Project extends Component {
         Machinable.projects().list(this.handleProjects, this.handleError);
     }
 
-
 	componentDidUpdate = (prevProps) => {
 		var newSlug = this.props.match.params.projectSlug;
 		var oldSlug = prevProps.match.params.projectSlug;

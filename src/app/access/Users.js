@@ -110,11 +110,9 @@ class Users extends Component {
         return (
             <div className="grid grid-8">
                 <div className="col-2-8 flex-col">
-                    <h2 className="text-center">It's a bit empty in here</h2>
-                    <img src={Empty} className="empty-state"/>
-                    <br/>
-                    <h3 className="text-center">Create users that have access to your project's API Resources and Collections</h3>
-                    <br/>
+                    <h2 className="text-center">There aren't any Users for this Project</h2>
+                    <img src={Empty} className="empty-state-sm"/>
+                    <h3 className="text-center">Create users with read/write access to your project's API Resources and Collections</h3>
                     <div className="align-center">
                         <Button classes="accent" onClick={this.openModal}>Add A User</Button>
                     </div>
@@ -123,8 +121,7 @@ class Users extends Component {
         )
     }
 
-	render() {
-
+    renderTable = () => {
         var tableValues = this.state.users.map(function(user, idx){
             var accessList = [];
             if(user.read) {
@@ -152,23 +149,25 @@ class Users extends Component {
                 </div>
             ]
         });
+        return (
+            <React.Fragment>
+                <Table
+                    classes="m-table"
+                    headers={["Username", "Access", <div className="align-center m-th">ID</div>, <div className="align-right m-th">Options</div>]}
+                    values={tableValues}
+                />
+                <Button classes="accent page-btn" onClick={this.openModal}>Add User</Button>
+            </React.Fragment>
+        )
+    }
+
+	render() {
+        var render = this.state.users.length > 0 ? this.renderTable() : this.emptyState();
 
 		return (
-			<div className="grid grid-1">
-                {tableValues.length > 0 && 
-                    <React.Fragment>
-                        <Table
-                            classes="m-table"
-                            headers={["Username", "Access", <div className="align-center m-th">ID</div>, <div className="align-right m-th">Options</div>]}
-                            values={tableValues}
-                        />
-                        <Button classes="accent page-btn" onClick={this.openModal}>Add User</Button>
-                    </React.Fragment>
-                }
-
-                {!tableValues.length &&
-                    this.emptyState()
-                }
+			<div>
+                <Loader loading={this.state.loading} />
+                {!this.state.loading && render}
 
                 <Modal 
 					close={this.closeModal}

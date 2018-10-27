@@ -26,7 +26,9 @@ class Settings extends Component {
 							<h3 className="margin-bottom">Name</h3>
 							<p className="text-muted padding-bottom no-margin">The name of this project.</p>
 						</div>
-						<Input labelClasses="vertical-align" value="Project Zero" />
+						<h3 className="vertical-align align-right text-muted padding-side">
+							<Button classes="btn-small margin-left">Copy</Button>Project Zero 
+						</h3>
 					</div>
 					<hr/>
 					<div className="grid grid-2">
@@ -34,7 +36,9 @@ class Settings extends Component {
 							<h3 className="margin-bottom">Hostname</h3>
 							<p className="text-muted padding-bottom no-margin">The project hostname used for API access.</p>
 						</div>
-						<Input labelClasses="vertical-align" value="project-zero.mchbl.com" />
+						<h3 className="vertical-align align-right text-muted padding-side">
+							<Button classes="btn-small margin-left">Copy</Button>http://project0.mchbl.app/
+						</h3>
 					</div>
 					<hr/>
 					<div className="grid grid-2">

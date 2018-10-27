@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Modal, Card, Input, Select, Dropdown, List, ListItem, Table } from 'turtle-ui';
+import Loader from '../../components/Loader';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faPlus from '@fortawesome/fontawesome-free-solid/faPlusCircle';
 import faTrash from '@fortawesome/fontawesome-free-solid/faTrash';
 import faEllipsis from '@fortawesome/fontawesome-free-solid/faEllipsisV';
+import Empty from '../../images/empty_board.svg';
 import Machinable from '../../client';
 import ReactJson from 'react-json-view';
 import slugify from 'slugify';
@@ -64,7 +66,7 @@ class Resources extends Component {
 		super(props);
 		this.state = {
 			loading: true,
-			resources: {},
+			resources: {items:[]},
 			showModal: false,
 			showExtraModal: false,
 			showDeleteModal: false,
@@ -258,7 +260,7 @@ class Resources extends Component {
 		this.getResources();
 	}
 
-	getTableValues = () => {
+	getResourceTable = () => {
 		var resourceValues = this.state.resources.items.map(function(def, idx){
 			var definitionTitle = <div>
 										<h3 className="text-400 no-margin margin-bottom-less">{def.title}</h3>
@@ -309,21 +311,42 @@ class Resources extends Component {
 				</div>
 			]
 		}, this);
-		return resourceValues;
-	}
-
-	render() {
-		var resourceValues = this.state.resources.items ? this.getTableValues() : [];
 
 		return (
-			<div className="grid grid-1">
+			<React.Fragment>
 				<Table 
 					classes="m-table"
 					headers={["Name", "Created", <div className="align-center m-th">Properties</div>, ""]}
 					values={resourceValues} />
 
 				<Button classes="accent page-btn" onClick={this.openModal}>New Resource</Button>
+			</React.Fragment>
+		);
+	}
 
+	emptyState = () => {
+		return (
+			<div className="grid grid-1">
+                <div className="align-center flex-col">
+					<h2 className="text-center">Get started with a new API Resource</h2>
+                    <img src={Empty} className="empty-state-sm"/>
+                    <h3 className="text-center">Define an API Resource that will validate user submitted data</h3>
+					<div className="align-center">
+                        <Button classes="accent" onClick={this.openModal}>Create A Resource</Button>
+                    </div>
+				</div>
+            </div>
+		);
+	}
+
+	render() {
+		var renderResources = Object.keys(this.state.resources.items).length > 0 ? this.getResourceTable() : this.emptyState();
+
+		return (
+			<div>
+				<Loader loading={this.state.loading} />
+				{!this.state.loading && renderResources}
+				
 				<Modal
 					classes="from-right"
 					close={this.closeExtraModal}

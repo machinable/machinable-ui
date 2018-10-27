@@ -22,7 +22,6 @@ class MachinableClient {
         localStorage.setItem("access_token", token);
     }
 
-
     /* MANAGEMENT APIS */
     user() {
         var LOGIN = MGMT_API_HOST + "/users/sessions";

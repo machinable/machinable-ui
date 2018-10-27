@@ -39,6 +39,14 @@ class Access extends Component {
 								<a className="link text-400 text-information">Overview</a>
 								<p className="text-muted">Read more about users and API keys.</p>
 							</div>
+							<div>
+								<a className="link text-400 text-information">API</a>
+								<p className="text-muted">Learn how to manage user JSON web tokens or make requests with API keys.</p>
+							</div>
+							<div>
+								<a className="link text-400 text-information">Examples</a>
+								<p className="text-muted">View the Machinable Github page to see example applications.</p>
+							</div>
 						</div>
 					</div>
 				</div>
