@@ -13,7 +13,7 @@ import Security from '../app/security/Security';
 import Collections from '../app/collections/Collections';
 import Settings from '../app/settings/Settings';
 
-import {setCurrentProject} from '../store/projects/actionCreators';
+import {setCurrentProject, setProjectObject} from '../store/projects/actionCreators';
 
 import './Project.css';
 
@@ -43,6 +43,13 @@ class Project extends Component {
     }
 
     handleProjects = (response) => {
+		for (let index = 0; index < response.data.items.length; index++) {
+			const element = response.data.items[index];
+			if (element.slug === this.state.projectSlug) {
+				this.props.dispatch(setProjectObject(element));
+			}
+		}
+
         this.setState({
             projects: response.data.items
         });

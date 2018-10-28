@@ -43,7 +43,7 @@ class Home extends Component {
 	render() {
         var prefix = this.props.match.url;
 		return (
-			<React.Fragment>
+			<div>
 				<div className="back-drop"></div>
 				<div className={"root container container-home" + this.state.body}>
 					
@@ -109,7 +109,7 @@ class Home extends Component {
 
 					<Footer />
 				</div>
-			</React.Fragment>
+			</div>
 		  );
 	}
 }

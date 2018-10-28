@@ -7,3 +7,11 @@ export function setCurrentProject(projectSlug) {
     }
     return action;
 }
+
+export function setProjectObject(project) {
+    const action = {
+        type: types.SET_PROJECT_OBJECT,
+        project: project
+    }
+    return action;
+}

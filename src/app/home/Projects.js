@@ -178,7 +178,7 @@ class Projects extends Component {
         var render = this.state.projects.length > 0 ? this.renderProjects() : this.emptyState();
 
 		return (
-			<React.Fragment>
+			<div>
                 <Loader loading={this.state.loading} />
                 {!this.state.loading && render}
                 <Modal 
@@ -230,7 +230,7 @@ class Projects extends Component {
                         </div>
                     </div>
                 </Modal>
-            </React.Fragment>
+            </div>
 		  );
 	}
 }

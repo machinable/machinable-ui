@@ -1,1 +1,2 @@
 export const SET_CURRENT_PROJECT = 'projects.SET_CURRENT_PROJECT';
+export const SET_PROJECT_OBJECT = 'projects.SET_PROJECT_OBJECT';

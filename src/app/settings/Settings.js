@@ -1,15 +1,31 @@
 import React, { Component } from 'react';
-import { Button, Input, Switch } from 'turtle-ui';
+import { Button, Switch } from 'turtle-ui';
+import { connect } from 'react-redux';
+import Statics from '../../Statics';
 
 class Settings extends Component {
 
 	constructor(props) {
-        super(props);
-        
+		super(props);
+		console.log(props);
+        this.state = {
+			project: props.project
+		}
 	}
 
 	componentDidMount = () => {		
 
+	}
+
+	componentDidUpdate = (prevProps) => {
+		var newSlug = this.props.project.slug;
+		var oldSlug = prevProps.project.slug;
+		
+		if (newSlug !== oldSlug) {
+			this.setState({
+				project: this.props.project
+			})
+		}
 	}
 
 	render() {
@@ -26,8 +42,8 @@ class Settings extends Component {
 							<h3 className="margin-bottom">Name</h3>
 							<p className="text-muted padding-bottom no-margin">The name of this project.</p>
 						</div>
-						<h3 className="vertical-align align-right text-muted padding-side">
-							<Button classes="btn-small margin-left">Copy</Button>Project Zero 
+						<h3 className="vertical-align align-right text-muted">
+							<Button classes="btn-small margin-left">Copy</Button>{this.state.project.name}
 						</h3>
 					</div>
 					<hr/>
@@ -36,8 +52,8 @@ class Settings extends Component {
 							<h3 className="margin-bottom">Hostname</h3>
 							<p className="text-muted padding-bottom no-margin">The project hostname used for API access.</p>
 						</div>
-						<h3 className="vertical-align align-right text-muted padding-side">
-							<Button classes="btn-small margin-left">Copy</Button>http://project0.mchbl.app/
+						<h3 className="vertical-align align-right text-muted">
+							<Button classes="btn-small margin-left">Copy</Button>{Statics.GenerateAPIHost(this.state.project.slug)}
 						</h3>
 					</div>
 					<hr/>
@@ -50,7 +66,7 @@ class Settings extends Component {
 							</p>
 						</div>
 						<div className="vertical-align align-right">
-							<Switch on={true}/>
+							<Switch on={this.state.project.authn}/>
 						</div>
 					</div>
 					<hr/>
@@ -70,5 +86,11 @@ class Settings extends Component {
 	}
 }
 
-
-export default Settings;
+// redux
+function mapStateToProps(state) {
+	return {
+		project: state.project
+	};
+}
+  
+export default connect(mapStateToProps)(Settings);
