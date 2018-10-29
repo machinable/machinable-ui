@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Button, Switch } from 'turtle-ui';
 import { connect } from 'react-redux';
 import Statics from '../../Statics';
+import Machinable from '../../client';
+import {setProjectObject} from '../../store/projects/actionCreators';
 
 class Settings extends Component {
 
@@ -11,6 +13,10 @@ class Settings extends Component {
         this.state = {
 			project: props.project
 		}
+	}
+
+	updateResponse = (response) => {
+		console.log(response);
 	}
 
 	componentDidMount = () => {		
@@ -26,6 +32,15 @@ class Settings extends Component {
 				project: this.props.project
 			})
 		}
+	}
+
+	updateAuthn = () => {
+		console.log("update authn");
+		var proj = this.state.project;
+		proj.authn = !proj.authn;
+		console.log(proj);
+		this.props.dispatch(setProjectObject(proj));
+		Machinable.projects().update(proj, this.updateResponse, this.updateResponse);
 	}
 
 	render() {
@@ -66,7 +81,7 @@ class Settings extends Component {
 							</p>
 						</div>
 						<div className="vertical-align align-right">
-							<Switch on={this.state.project.authn}/>
+							<Switch on={this.props.project.authn} onChange={this.updateAuthn}/>
 						</div>
 					</div>
 					<hr/>

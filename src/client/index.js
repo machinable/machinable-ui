@@ -75,11 +75,18 @@ class MachinableClient {
 
     projects() {
         var GET_PROJECTS = MGMT_API_HOST + "/projects/";
+        var UPDATE_PROJECT =  MGMT_API_HOST + "/projects/{id}";
         var authHeaders = this.getAuthHeaders();
 
         return {
             create: function(data, success, error) {
                 axios.post(GET_PROJECTS, data, {headers: authHeaders})
+                    .then(success)
+                    .catch(error);
+            },
+
+            update: function(data, success, error) {
+                axios.put(UPDATE_PROJECT.replace("{id}", data.slug), data, {headers: authHeaders})
                     .then(success)
                     .catch(error);
             },
