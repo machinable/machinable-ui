@@ -184,6 +184,12 @@ hr {
     border: 1px solid var(--card-border-color);
 }
 
+.copy-text {
+    display: block;
+    width: 0;
+    height: 0;
+    opacity: 0;
+}
 /* UTILITY */
 .empty-state {
 	width: 350px;

@@ -47,7 +47,14 @@ class Settings extends Component {
 		Machinable.projects().update(proj, this.updateResponse, this.updateResponse);
 	}
 
+	copyText = (id) => {
+		var copyText = document.getElementById(id);
+		copyText.select();
+		document.execCommand("Copy");
+	}
+
 	render() {
+		var hostName = Statics.GenerateAPIHost(this.state.project.slug);
 		return (
 			<div>
 				<div className="padding-side content-header">
@@ -62,7 +69,8 @@ class Settings extends Component {
 							<p className="text-muted padding-bottom no-margin">The name of this project.</p>
 						</div>
 						<h3 className="vertical-align align-right text-muted">
-							<Button classes="btn-small margin-left">Copy</Button>{this.state.project.name}
+							<Button classes="btn-small margin-left" onClick={() => this.copyText("projectName")}>Copy</Button><span>{this.state.project.name}</span>
+							<textarea cols="1000" className="copy-text"  id="projectName" value={this.state.project.name} readOnly/>
 						</h3>
 					</div>
 					<hr/>
@@ -72,7 +80,8 @@ class Settings extends Component {
 							<p className="text-muted padding-bottom no-margin">The project hostname used for API access.</p>
 						</div>
 						<h3 className="vertical-align align-right text-muted">
-							<Button classes="btn-small margin-left">Copy</Button>{Statics.GenerateAPIHost(this.state.project.slug)}
+							<Button classes="btn-small margin-left" onClick={() => this.copyText("projectHost")}>Copy</Button><span>{hostName}</span>
+							<textarea cols="1000" className="copy-text"  id="projectHost" value={hostName} readOnly/>
 						</h3>
 					</div>
 					<hr/>
