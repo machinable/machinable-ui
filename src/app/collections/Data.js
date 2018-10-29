@@ -6,6 +6,7 @@ import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faEllipsis from '@fortawesome/fontawesome-free-solid/faEllipsisV';
 import Empty from '../../images/empty_canvas.svg';
 import Machinable from '../../client';
+import Statics from '../../Statics';
 import ReactJson from 'react-json-view';
 import moment from 'moment';
 
@@ -110,10 +111,13 @@ class Data extends Component {
 
 	renderCollections = () => {
 		var collections = this.state.collections.map(function(col, idx){
+				var fullURL = Statics.GenerateAPIHost(this.state.slug) + "/collections/" + col.name;
 				return [
 					<div>
 						<h3 className="text-400 no-margin margin-bottom-less">{col.name}</h3>
-						<div className="text-muted text-small">https://{this.state.slug}.mchbl.app/collections/{col.name}</div>
+						<div className="text-small text-information">
+							<a target="_blank" rel="noopener" href={fullURL} title={fullURL}>{fullURL}</a>
+						</div>
 					</div>,
 					<div>
 						{col.items} {col.items > 1 ? "items" : "item"}

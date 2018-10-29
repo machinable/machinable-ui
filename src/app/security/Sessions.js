@@ -38,6 +38,17 @@ class Sessions extends Component {
 		this.getSessions();
 	}
 
+	emptyState = () => {
+        return (
+            <div className="grid grid-8">
+                <div className="col-2-8 flex-col">
+                    <h2 className="text-center">No Active Sessions</h2>
+                    <h3 className="text-center">Sessions will be shown here once a project user logs in to your project.</h3>
+                </div>
+            </div>
+        );
+    }
+
 	render() {
 
 		var currentSession = -1;
@@ -59,7 +70,7 @@ class Sessions extends Component {
 			]
 		}, this);
 
-		var rndr = values.length > 0 ? <Table values={values} /> : <h3 className="no-margin text-center text-muted">No Active Sessions</h3>;
+		var rndr = values.length > 0 ? <Table values={values} /> : this.emptyState();
 
 		return (
 			<div className="grid grid-1">
