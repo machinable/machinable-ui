@@ -9,7 +9,6 @@ class Settings extends Component {
 
 	constructor(props) {
 		super(props);
-		console.log(props);
         this.state = {
 			project: props.project
 		}
@@ -17,6 +16,14 @@ class Settings extends Component {
 
 	updateResponse = (response) => {
 		console.log(response);
+		if(response.status == 200) {
+			var updatedProject = response.data;
+			this.props.dispatch(setProjectObject(updatedProject));
+			this.setState({project: updatedProject});
+		}
+		else {
+			console.log("error updating authn");
+		}
 	}
 
 	componentDidMount = () => {		
@@ -35,11 +42,8 @@ class Settings extends Component {
 	}
 
 	updateAuthn = () => {
-		console.log("update authn");
 		var proj = this.state.project;
 		proj.authn = !proj.authn;
-		console.log(proj);
-		this.props.dispatch(setProjectObject(proj));
 		Machinable.projects().update(proj, this.updateResponse, this.updateResponse);
 	}
 
@@ -81,7 +85,7 @@ class Settings extends Component {
 							</p>
 						</div>
 						<div className="vertical-align align-right">
-							<Switch on={this.props.project.authn} onChange={this.updateAuthn}/>
+							<Switch on={this.state.project.authn} onChange={this.updateAuthn}/>
 						</div>
 					</div>
 					<hr/>
