@@ -31,7 +31,7 @@ class Keys extends Component {
     }
 
     getKeys = () => {
-        Machinable.tokens(this.state.slug).list(this.keySuccess, this.keyError);
+        Machinable.keys(this.state.slug).list(this.keySuccess, this.keyError);
     }
 
 	componentDidMount = () => {		

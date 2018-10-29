@@ -231,8 +231,8 @@ class MachinableClient {
         }
     }
 
-    tokens(projectSlug) {
-        var GET_TOKENS = this.projectHost(projectSlug) + "/tokens/";
+    keys(projectSlug) {
+        var GET_TOKENS = this.projectHost(projectSlug) + "/keys/";
         var authHeaders = this.getAuthHeaders();
 
         return {
