@@ -207,6 +207,7 @@ class Keys extends Component {
                                             <Button classes="btn-small margin-left" onClick={() => this.copyText("generated-key")}>Copy</Button>
 							                <textarea cols="1000" className="copy-text"  id="generated-key" value={this.state.newKey.key} readOnly/>
                                         </div>
+                                        <div className="text-small text-muted">Copy this API key and save it somewhere safe. You will not be able to view it here again.</div>
                                         <TextArea placeholder="what will this API Key be used for?" label="Description" name="description" value={this.state.newKey.description} onChange={this.onChange}/>
                                         <div className="grid grid-2">
                                             <div className="align-center vertical-align">
