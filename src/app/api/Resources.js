@@ -8,6 +8,7 @@ import faTrash from '@fortawesome/fontawesome-free-solid/faTrash';
 import faEllipsis from '@fortawesome/fontawesome-free-solid/faEllipsisV';
 import Empty from '../../images/empty_board.svg';
 import Machinable from '../../client';
+import Statics from '../../Statics';
 import ReactJson from 'react-json-view';
 import slugify from 'slugify';
 import moment from 'moment';
@@ -262,9 +263,12 @@ class Resources extends Component {
 
 	getResourceTable = () => {
 		var resourceValues = this.state.resources.items.map(function(def, idx){
+			var fullURL = Statics.GenerateAPIHost(this.state.slug) + "/api/" + def.path_name;
 			var definitionTitle = <div>
 										<h3 className="text-400 no-margin margin-bottom-less">{def.title}</h3>
-										<div className="text-muted text-small">https://{this.state.slug}.mchbl.app/api/{def.path_name}</div>
+										<div className="text-small text-information">
+											<a className="anchor" target="_blank" rel="noopener" href={fullURL} title={fullURL}>{fullURL}</a>
+										</div>
 										<div className="text-muted text-small margin-top-less">{def.id}</div>
 									</div>;
 			return [

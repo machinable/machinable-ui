@@ -98,7 +98,10 @@ body {
 
 a {
 	text-decoration: none;
-	/* color: var(--text-color); */
+	color: var(--text-color);
+}
+a.anchor {
+	color: var(--information);
 }
 
 .container {
@@ -208,8 +211,8 @@ hr {
 }
 .project-hover:hover{
 	cursor: pointer;
-	margin-top: -3px;
-    margin-bottom: 3px;
+	/* margin-top: -3px;
+    margin-bottom: 3px; */
 }
 
 .tile-hover {
@@ -548,6 +551,9 @@ strong {
 /* UTILITY */
 .padding {
 	padding: 15px;
+}
+.padding-bit-less {
+	padding: 10px;
 }
 .padding-less {
 	padding: 5px;

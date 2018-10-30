@@ -232,18 +232,32 @@ class MachinableClient {
     }
 
     keys(projectSlug) {
-        var GET_TOKENS = this.projectHost(projectSlug) + "/keys/";
+        var GET_APIKEYS = this.projectHost(projectSlug) + "/keys/";
+        var GENERATE_KEY = this.projectHost(projectSlug) + "/keys/generate";
+        var DELETE_KEY = this.projectHost(projectSlug) + "/keys/{id}";
         var authHeaders = this.getAuthHeaders();
 
         return {
             list: function(success, error) {
-                axios.get(GET_TOKENS, {headers: authHeaders})
+                axios.get(GET_APIKEYS, {headers: authHeaders})
+                    .then(success)
+                    .catch(error);
+            },
+
+            generate: function(success, error) {
+                axios.get(GENERATE_KEY, {headers: authHeaders})
                     .then(success)
                     .catch(error);
             },
 
             create: function(data, success, error) {
-                axios.post(GET_TOKENS, data, {headers: authHeaders})
+                axios.post(GET_APIKEYS, data, {headers: authHeaders})
+                    .then(success)
+                    .catch(error);
+            },
+
+            delete: function(id, success, error) {
+                axios.delete(DELETE_KEY.replace("{id}", id), {headers: authHeaders})
                     .then(success)
                     .catch(error);
             }
