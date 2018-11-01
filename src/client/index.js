@@ -263,6 +263,19 @@ class MachinableClient {
             }
         }
     }
+
+    logs(projectSlug) {
+        var GET_LOGS = this.projectHost(projectSlug) + "/logs/";
+        var authHeaders = this.getAuthHeaders();
+
+        return {
+            list: function(success, error) {
+                axios.get(GET_LOGS, {headers: authHeaders})
+                    .then(success)
+                    .catch(error);
+            }
+        }
+    }
 }
 
 export default new MachinableClient();

@@ -1,62 +1,135 @@
 import React, { Component } from 'react';
 import { Table, Button } from 'turtle-ui';
+import { connect } from 'react-redux';
 import Loader from '../../components/Loader';
+import Machinable from '../../client';
+import moment from 'moment';
 
 class Logs extends Component {
 
 	constructor(props) {
         super(props);
 		this.state = {
-			loading: true
+			slug: props.slug,
+			loading: true,
+			logs: [],
+            pageLogs: [],
+			tableLimit: 8,
+            tablePage: 0,
 		}
 	}
 
+	nextPage = () => {
+		var pages = this.state.logs.length / this.state.tableLimit;
+		var page = this.state.tablePage + 1;
+
+		if(page < pages) {
+			this.updatePage(page);
+		}
+	}
+
+	previousPage = () => {
+		var page = this.state.tablePage - 1;
+
+		if(page >= 0) {
+			this.updatePage(page);
+		}
+	}
+	
+	updatePage = (p) => {
+		var tableStart = p * this.state.tableLimit;
+		var tableEnd = tableStart + this.state.tableLimit;
+
+		var pageValues = this.state.logs.slice(tableStart, tableEnd);
+		this.setState({pageLogs: pageValues, tablePage: p});
+	}
+
+	logError = (response) => {
+		console.log(response);
+	}
+
+	logSuccess = (response) => {
+		this.setState({logs: response.data.items, loading: false}, () => this.updatePage(0));
+	}
+
+	getLogs = () => {
+		Machinable.logs(this.state.slug).list(this.logSuccess, this.logError);
+	}
+
 	componentDidMount = () => {		
-		this.setState({loading: false});
+		this.getLogs();
 	}
 
 	getTablePageButtons = () => {
 		var buttons = [];
-		var selected = 2;
-		var pages = 8;
-		buttons.push(<Button classes="text plain btn-small">Previous</Button>)
-		for(var i = 0; i < pages; i ++) {
-			var color = i === selected ? "information" : "text plain";
-			(function(th){
-				var index = i;
-				buttons.push(<Button classes={color + " btn-small"} >{i+1}</Button>)
-			})(this);
-		}
-		buttons.push(<Button classes="text plain btn-small">Next</Button>)
+        buttons.push(<Button key={"table_btn_0"} classes="text plain btn-small" onClick={this.previousPage}>Previous</Button>)
+		buttons.push(<Button key={"table_btn_1"} classes="text plain btn-small" onClick={this.nextPage}>Next</Button>)
 		return buttons;
 	}
 
-	render() {
-		var logValues = [
-			[<div className="text-small"><span className="text-400">login</span><span className="text-muted"> - originated from 208.54.90.139</span></div>, <div className="text-small">user: nsjostrom</div>, <div className="text-small text-muted text-right">12 days ago</div>],
-			[<div className="text-small"><span className="text-400">collection.created</span><span className="text-muted"></span></div>, <div className="text-small">user: nsjostrom</div>, <div className="text-small text-muted text-right">12 days ago</div>],
-			[<div className="text-small"><span className="text-400">collection.created</span><span className="text-muted"></span></div>, <div className="text-small">api token: Sample Token Name</div>, <div className="text-small text-muted text-right">12 days ago</div>],
-			[<div className="text-small"><span className="text-400">definition.created</span><span className="text-muted"></span></div>, <div className="text-small">user: nsjostrom</div>, <div className="text-small text-muted text-right">12 days ago</div>],
-			[<div className="text-small"><span className="text-400">resource.dog.created</span><span className="text-muted"></span></div>, <div className="text-small">user: nsjostrom</div>, <div className="text-small text-muted text-right">12 days ago</div>],
-			[<div className="text-small"><span className="text-400">resource.cat.deleted</span><span className="text-muted"></span></div>, <div className="text-small">api token: Sample Token Name</div>, <div className="text-small text-muted text-right">12 days ago</div>],
-			[<div className="text-small"><span className="text-400">collection.deleted</span><span className="text-muted"></span></div>, <div className="text-small">user: nsjostrom</div>, <div className="text-small text-muted text-right">12 days ago</div>],
-		];
+	renderLogs = () => {
+		var tableStart = (this.state.tablePage) * this.state.tableLimit + 1;
+		var tableEnd = tableStart + this.state.tableLimit - 1;
+		var pages = this.state.logs.length / this.state.tableLimit;
+		if(tableEnd > this.state.logs.length - 1) tableEnd = this.state.logs.length;
+        var buttons = this.getTablePageButtons(pages);
 
+		var logValues = this.state.pageLogs.map(function(log, idx){
+			return [
+				<div className="text-small">
+					<span className="text-400">{log.event}</span>
+					<span className="text-muted"></span>
+				</div>, 
+				<span className={"text-400 tag tag-" + (log.status_code+"")[0]}>{log.status_code}</span>,
+				<div className="text-small">{log.initiator}</div>, 
+				<div className="text-small text-muted text-right">{moment(log.created).fromNow()}</div>
+			]
+		}, this)
+
+		if (logValues.length === 0) {
+			logValues = [[<div className="text-center text-muted">No Activity</div>]];
+		}
+
+		return (
+			<Table
+					classes="hover m-table"
+					headers={["Event", "Status", "Initiator", <div className="m-th text-right">Created</div>]}
+					values={logValues}
+					footer={<div className="grid grid-2 vertical-align">
+								<div className="text-small text-muted">
+									showing {tableStart} to {tableEnd} of {this.state.logs.length} entries
+									{this.state.searchText && " (filtered from "+this.state.logs.length+")"}
+								</div>
+								<div className="pull-right">
+									{buttons.map(function(btn, index){
+										return (
+											btn
+										)
+									})}
+								</div>
+							</div>}
+				/>
+		)
+	}
+
+	render() {
+		var render = this.renderLogs();
 		var btns = this.getTablePageButtons();
 
 		return (
 			<div className="grid grid-1">
-				<Table
-					classes="hover"
-					values={logValues}
-				/>
-				<div className="flex center">
-					{btns}
-				</div>
+				{render}
 			</div>
 		  );
 	}
 }
 
 
-export default Logs;
+// redux
+function mapStateToProps(state) {
+	return {
+		slug: state.project_slug
+	};
+}
+  
+export default connect(mapStateToProps)(Logs);

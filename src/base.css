@@ -251,6 +251,19 @@ hr {
     font-size: 80%;
     border-radius: 2px;
 }
+.tag-2 {
+	background-color: var(--success);
+	color: #FFF;
+}
+.tag-4 {
+	background-color: var(--information);
+	color: #FFF;
+}
+.tag-5 {
+	background-color: var(--danger);
+	color: #FFF;
+}
+
 .font-md {
 	font-size: 18px;
 }
