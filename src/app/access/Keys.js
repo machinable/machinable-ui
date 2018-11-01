@@ -57,7 +57,7 @@ class Keys extends Component {
         var key = response.data.key
 		var html = document.getElementsByTagName('html')[0];
         html.style.cssText = "--root-overflow: hidden";
-		this.setState({showModal: true, newKey:{"key": key}});
+		this.setState({showModal: true, newKey:{"key": key, "read": true, "description": ""}});
     }
 
     openDeleteModal = (key) => {
@@ -85,6 +85,7 @@ class Keys extends Component {
 	    this.setState({
 	    	newKey: nk
 	    });
+        
     }
 
     createKey = () => {
@@ -150,7 +151,8 @@ class Keys extends Component {
         return (
             <React.Fragment>
                 <Table
-					classes="hover"
+                    classes="hover m-table"
+                    headers={["Description","Access",""]}
 					values={tableValues}
 				/>
 				<Button classes="accent page-btn" onClick={this.generateNewKey}>Generate API Token</Button>

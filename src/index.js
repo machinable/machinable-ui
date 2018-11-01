@@ -41,9 +41,9 @@ axios.interceptors.response.use(function (response) {
 			history.push('/login');
 		});
 	} 
-	else if (404 === error.response.status) {
-		history.replace('/error/404');
-	}
+	// else if (404 === error.response.status) {
+	// 	history.replace('/error/404');
+	// }
 	else {
 	  // return the actual error response and handle it explicitly
 	  return Promise.reject(error.response);

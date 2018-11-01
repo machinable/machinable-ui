@@ -12,24 +12,25 @@ import moment from 'moment';
 
 class Data extends Component {
 	constructor(props) {
-        super(props);
-        this.state = {
-			path: props.path,
+		super(props);
+		this.state = {
 			slug: props.slug,
-			items: []
+			path: props.path,
+			items: {}
 		}
 	}
 
 	dataError = (response) => {
-		console.log(response);
+		console.log(response)
 	}
 
 	dataSuccess = (response) => {
-		this.setState({items: response.data.items});
+		delete response.data["definition"];
+		this.setState({items: response.data});
 	}
 
 	getData = () => {
-		Machinable.collections(this.state.slug).data().list(this.state.path, this.dataSuccess, this.dataError);
+		Machinable.resources(this.state.slug).data().list(this.state.path, this.dataSuccess, this.dataError);
 	}
 
 	componentDidMount = () => {		
@@ -38,8 +39,13 @@ class Data extends Component {
 
 	render() {
 		return (
-			<ReactJson name={this.state.path} iconStyle="square" src={this.state.items} />
-		  );
+			<div>
+				<h3 className="no-margin text-400">/api/{this.state.path}</h3>
+				<div className="margin-top-more code">
+					<ReactJson name={this.state.path} iconStyle="square" src={this.state.items} />
+				</div>
+			</div>
+		);
 	}
 }
 
