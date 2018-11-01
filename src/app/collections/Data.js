@@ -10,22 +10,23 @@ import Statics from '../../Statics';
 import ReactJson from 'react-json-view';
 import moment from 'moment';
 
-class Dat extends Component {
+
+class Datum extends Component {
 	constructor(props) {
-        super(props);
-        this.state = {
-			path: props.path,
+		super(props);
+		this.state = {
 			slug: props.slug,
-			items: []
+			path: props.path,
+			items: {}
 		}
 	}
 
 	dataError = (response) => {
-		console.log(response);
+		console.log(response)
 	}
 
 	dataSuccess = (response) => {
-		this.setState({items: response.data.items});
+		this.setState({items: response.data});
 	}
 
 	getData = () => {
@@ -38,8 +39,13 @@ class Dat extends Component {
 
 	render() {
 		return (
-			<ReactJson name={this.state.path} iconStyle="square" src={this.state.items} />
-		  );
+			<div>
+				{this.props.title}
+				<div className="margin-top-more code">
+					<ReactJson name={false} iconStyle="square" src={this.state.items} />
+				</div>
+			</div>
+		);
 	}
 }
 
@@ -53,7 +59,8 @@ class Data extends Component {
 			data: {},
 			deleteCollection: {},
 			showDeleteModal: false,
-			loading: true
+			loading: true,
+			extraElement: <div>nothing selected</div>,
 		}
 	}
 
@@ -80,6 +87,18 @@ class Data extends Component {
 		var html = document.getElementsByTagName('html')[0];
         html.style.cssText = "--root-overflow: hidden";
 		this.setState({showDeleteModal: true, deleteCollection: collection});
+	}
+
+	closeExtraModal = () => {
+		var html = document.getElementsByTagName('html')[0];
+        html.style.cssText = "--root-overflow: auto";
+		this.setState({showExtraModal: false, showDeleteModal: false});
+	}
+
+	openExtraModal = (element) => {
+		var html = document.getElementsByTagName('html')[0];
+        html.style.cssText = "--root-overflow: hidden";
+		this.setState({showExtraModal: true, extraElement: element});
 	}
 
 	deleteCollection = () => {
@@ -112,13 +131,14 @@ class Data extends Component {
 	renderCollections = () => {
 		var collections = this.state.collections.map(function(col, idx){
 				var fullURL = Statics.GenerateAPIHost(this.state.slug) + "/collections/" + col.name;
+				var collectionTitle = <div>
+										<h3 className="text-400 no-margin margin-bottom-less">{col.name}</h3>
+										<div className="text-small text-information">
+											<a className="anchor" target="_blank" rel="noopener" href={fullURL} title={fullURL}>{fullURL}</a>
+										</div>
+									</div>;
 				return [
-					<div>
-						<h3 className="text-400 no-margin margin-bottom-less">{col.name}</h3>
-						<div className="text-small text-information">
-							<a className="anchor" target="_blank" rel="noopener" href={fullURL} title={fullURL}>{fullURL}</a>
-						</div>
-					</div>,
+					collectionTitle,
 					<div>
 						{col.items} {col.items > 1 ? "items" : "item"}
 					</div>,
@@ -132,10 +152,9 @@ class Data extends Component {
 							classes="align-items-right">
 							<div className="grid grid-1">
 								<List>
-									<ListItem title={"Data"}/>
-									<ListItem title={"Help"}/>
+									<ListItem title={<div className="text-center text-400">Data</div>}  onClick={() => this.openExtraModal(<Datum title={collectionTitle} slug={this.state.slug} path={col.name} />)}/>
 									<hr className="no-margin no-padding"/>
-									<ListItem title={<div className="text-center text-danger text-400" onClick={() => this.openDeleteModal(col)}>Delete</div>}/>
+									<ListItem title={<div className="text-center text-danger text-400">Delete</div>} onClick={() => this.openDeleteModal(col)}/>
 								</List>
 							</div>
 						</Dropdown>
@@ -158,6 +177,29 @@ class Data extends Component {
 			<div>
 				<Loader loading={this.state.loading} />
 				{!this.state.loading && renderCollections}
+
+				<Modal
+					classes="from-right"
+					close={this.closeExtraModal}
+					isOpen={this.state.showExtraModal}>
+					<div className="full-height grid grid-4">
+						<div className="col-2-5">
+							<div className="grid grid-1">
+								<Card 
+									classes="footer-plain no-border"
+									footer={
+										<div className="grid grid-2">
+											<div className="col-2 col-right">
+												<Button classes="plain text" onClick={this.closeExtraModal}>Close</Button>	
+											</div>
+										</div>
+									}>
+									{this.state.extraElement}
+								</Card>
+							</div>
+						</div>
+					</div>
+				</Modal>
 
 				<Modal 
 					close={this.closeModal}

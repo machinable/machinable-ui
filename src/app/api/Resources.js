@@ -37,7 +37,6 @@ class Data extends Component {
 	}
 
 	dataSuccess = (response) => {
-		delete response.data["definition"];
 		this.setState({items: response.data});
 	}
 
@@ -52,9 +51,9 @@ class Data extends Component {
 	render() {
 		return (
 			<div>
-				<h3 className="no-margin text-400">/api/{this.state.path}</h3>
+				{this.props.title}
 				<div className="margin-top-more code">
-					<ReactJson name={this.state.path} iconStyle="square" src={this.state.items} />
+					<ReactJson name={false} iconStyle="square" src={this.state.items} />
 				</div>
 			</div>
 		);
@@ -167,7 +166,7 @@ class Resources extends Component {
 										replacement: '-',
 										remove: null,  
 										lower: false
-									})
+									});
 
 	    this.setState({
 	    	newResource: newResource
@@ -180,6 +179,13 @@ class Resources extends Component {
 		const name = target.name;
 		
 		var newResource = this.state.newResource;
+		if (name === "key") {
+			value = slugify(value, {
+				replacement: '_',
+				remove: null,  
+				lower: false
+			});
+		}
 		newResource.properties[idx][name] = value;
 
 		this.setState({
@@ -304,11 +310,11 @@ class Resources extends Component {
 						classes="align-items-right">
 						<div className="grid grid-1">
 							<List>
-								<ListItem title={"Resource JSON"} onClick={() => this.openExtraModal(<div>{definitionTitle}<div className="margin-top-more code"><ReactJson name={false} iconStyle="square" src={def} /></div></div>)}/>
-								<ListItem title={"Data"} onClick={() => this.openExtraModal(<Data slug={this.state.slug} path={def.path_name} />)}/>
-								<ListItem title={"Help"} onClick={() => this.openExtraModal(<div></div>)}/>
+								{/* <ListItem title={"Resource JSON"} onClick={() => this.openExtraModal(<div>{definitionTitle}<div className="margin-top-more code"><ReactJson name={false} iconStyle="square" src={def} /></div></div>)}/> */}
+								<ListItem title={<div className="text-center text-400">Resource JSON</div>} onClick={() => this.openExtraModal(<Data title={definitionTitle} slug={this.state.slug} path={def.path_name} />)}/>
+								{/* <ListItem title={"Help"} onClick={() => this.openExtraModal(<div></div>)}/> */}
 								<hr className="no-margin no-padding"/>
-								<ListItem title={<div className="text-center text-danger text-400" onClick={() => this.openDeleteModal(def)}>Delete</div>}/>
+								<ListItem title={<div className="text-center text-danger text-400">Delete</div>} onClick={() => this.openDeleteModal(def)}/>
 							</List>
 						</div>
 					</Dropdown>
