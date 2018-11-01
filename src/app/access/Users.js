@@ -42,7 +42,7 @@ class Users extends Component {
     usersError = (response) => {
         console.log(response);
         var errors = [];
-        if(response.data.error) {
+        if(response.data && response.data.error) {
             errors.push(response.data.error);
         } else {
             errors.push("An unknown error occured trying to delete this user. Please try again later.")
