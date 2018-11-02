@@ -5,6 +5,7 @@ import ProjectIcon from '../../components/ProjectIcon';
 import IconSelect from '../../components/IconSelect';
 import Empty from '../../images/outer_space.svg';
 import Machinable from '../../client';
+import Statics from '../../Statics';
 import slugify from 'slugify';
 
 class Projects extends Component {
@@ -149,13 +150,14 @@ class Projects extends Component {
             <div className="grid grid-1">
                 <div className="grid grid-3">
                     {this.state.projects.map(function(project, idx){
+                        var fullURL = Statics.GenerateAPIHost(project.slug);
                         return(
                             <Card key={"project-"+idx} classes="project-hover" to={"/project/"+project.slug}>
                                 <h3 className="text-400 vertical-align no-margin-bottom" style={{"position": "relative"}}>
                                     <ProjectIcon source={project.icon}/>
                                     &nbsp;&nbsp;{project.name}
                                 </h3>
-                                <span className="margin-top text-information text-small" style={{"display": "block"}} href="#">https://{project.slug}.mchbl.app</span>
+                                <span className="margin-top text-information text-small" style={{"display": "block"}}>{fullURL}</span>
                                 <p>{project.description}</p>
                             </Card>
                         )
