@@ -74,6 +74,7 @@ class Logs extends Component {
 		if(tableEnd > this.state.logs.length - 1) tableEnd = this.state.logs.length;
         var buttons = this.getTablePageButtons(pages);
 
+		var headers = ["Event", "Status", "Initiator", <div className="m-th text-right">Created</div>];
 		var logValues = this.state.pageLogs.map(function(log, idx){
 			return [
 				<div className="text-small">
@@ -87,13 +88,14 @@ class Logs extends Component {
 		}, this)
 
 		if (logValues.length === 0) {
+			headers = [];
 			logValues = [[<div className="text-center text-muted">No Activity</div>]];
 		}
 
 		return (
 			<Table
 					classes="hover m-table"
-					headers={["Event", "Status", "Initiator", <div className="m-th text-right">Created</div>]}
+					headers={headers}
 					values={logValues}
 					footer={<div className="grid grid-2 vertical-align">
 								<div className="text-small text-muted">
@@ -112,9 +114,19 @@ class Logs extends Component {
 		)
 	}
 
+	emptyState = () => {
+        return (
+            <div className="grid grid-8">
+                <div className="col-2-8 flex-col">
+                    <h2 className="text-center">No Activity Logs for the last 24 hours</h2>
+                    <h3 className="text-center">Requests to your project resources and logs will appear here</h3>
+                </div>
+            </div>
+        );
+    }
+
 	render() {
-		var render = this.renderLogs();
-		var btns = this.getTablePageButtons();
+		var render = this.state.pageLogs.length > 0 ? this.renderLogs() : this.emptyState();
 
 		return (
 			<div className="grid grid-1">
