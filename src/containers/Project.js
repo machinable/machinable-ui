@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { Dropdown, List, ListItem } from 'turtle-ui';
 import Footer from '../components/Footer';
 import Header from '../components/Header';

@@ -61,12 +61,12 @@
 }
 
 .page-btn {
-	position: fixed;
-	right: 50px;
+	position: fixed !important;
+	right: 50px !important;
 	/* bottom: 50px; */
-	bottom: 240px;
-	border-radius: 100px;
-	box-shadow: 1px 2px 3px rgba(0,0,0,.4);
+	bottom: 240px !important;
+	border-radius: 100px !important;
+	box-shadow: 1px 2px 3px rgba(0,0,0,.4) !important;
 }
 
 * {
@@ -160,27 +160,27 @@ a.anchor {
 /* COPY TO TURTLEUI*/
 
 .m-table {
-	border: none;
-	border-bottom: 2px solid var(--card-border-color);
+	border: none !important;
+	border-bottom: 2px solid var(--card-border-color) !important;
 }
 
 .m-table>thead>tr {
-    background-color: #FFF;
-    text-transform: uppercase;
+    background-color: #FFF !important;
+    text-transform: uppercase !important;
 }
 
 .m-table>thead>tr>th {
-    text-align: left;
-    font-weight: 600;
-    padding: 8px 15px;
-    border-bottom: 2px solid var(--card-border-color);
-    color: var(--text-more-muted);
-    font-size: 12px;
+    text-align: left !important;
+    font-weight: 600 !important;
+    padding: 8px 15px !important;
+    border-bottom: 2px solid var(--card-border-color) !important;
+    color: var(--text-more-muted) !important;
+    font-size: 12px !important;
 }
 .m-th {
-	color: var(--text-more-muted);
-    font-size: 12px;
-    font-weight: 600;
+	color: var(--text-more-muted) !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
 }
 
 hr {
@@ -277,8 +277,8 @@ hr {
 	color: var(--text-more-muted) !important;
 }
 .vertical-align {
-	display: flex;
-    align-items: center;
+	display: flex !important;
+    align-items: center !important;
 }
 
 .center-self {
@@ -535,16 +535,16 @@ strong {
 
 /* CUSTOM NAV STYLES */
 .nav {
-	padding-bottom: 10px;
+	padding-bottom: 10px !important;
 }
 .nav.link-underline a {
-    padding-bottom: 11px;
+    padding-bottom: 11px !important;
 }
 
 .navlink-description{
-	margin: 5px 0px;
-    font-size: 12px;
-    line-height: 16px;
+	margin: 5px 0px !important;
+    font-size: 12px !important;
+    line-height: 16px !important;
 }
 
 .code {
@@ -592,8 +592,8 @@ strong {
 	margin-right: 0px;
 }
 .no-padding-side {
-	padding-left: 0px;
-	padding-right: 0px;
+	padding-left: 0px !important;
+	padding-right: 0px !important;
 }
 .padding-bottom-even-more{
 	padding-bottom: 30px;

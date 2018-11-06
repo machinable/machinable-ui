@@ -97,8 +97,8 @@ class Logs extends Component {
 					classes="hover m-table"
 					headers={headers}
 					values={logValues}
-					footer={<div className="grid grid-2 vertical-align">
-								<div className="text-small text-muted">
+					footer={<div className="grid grid-2">
+								<div className="text-small text-muted vertical-align">
 									showing {tableStart} to {tableEnd} of {this.state.logs.length} entries
 									{this.state.searchText && " (filtered from "+this.state.logs.length+")"}
 								</div>

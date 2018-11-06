@@ -111,7 +111,8 @@ class Data extends Component {
 	}
 
 	emptyState = () => {
-		var curl = "curl -d '{\"name\":\"Murphy\", \"age\":2, \"breed\": \"French Bulldog\"}' -X POST http://"+this.state.slug+".machinable.test:5001/collections/dogs";
+		var fullURL = Statics.GenerateAPIHost(this.state.slug);
+		var curl = "curl -d '{\"name\":\"Murphy\", \"age\":2, \"breed\": \"French Bulldog\"}' -X POST "+fullURL+"/collections/dogs";
 		return (
 			<div className="grid grid-1">
                 <div className="align-center flex-col">

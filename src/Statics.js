@@ -1,7 +1,8 @@
 class Statics {
-	//API_HOST = "https://api.keeplight.io/api";
-	MGMT_API_HOST = "http://manage.machinable.test:5001";
-	PROJECT_API_HOST = "http://{project-slug}.machinable.test:5001";
+	// MGMT_API_HOST = "http://manage.machinable.test:5001";
+	// PROJECT_API_HOST = "http://{project-slug}.machinable.test:5001";
+	MGMT_API_HOST = "https://manage.machinable.io";
+	PROJECT_API_HOST = "https://{project-slug}.machinable.io";
 
 	GenerateAPIHost = (slug) => {
 		return this.PROJECT_API_HOST.replace("{project-slug}", slug);
