@@ -6,7 +6,7 @@ import signOut from '@fortawesome/fontawesome-free-solid/faSignOutAlt';
 import cog from '@fortawesome/fontawesome-free-solid/faCog';
 import { Dropdown, List, ListItem } from 'turtle-ui';
 import Footer from '../components/Footer';
-import Logo from '../components/Logo';
+import HomeHeader from '../components/HomeHeader';
 import Projects from '../app/home/Projects';
 import './Home.css';
 import { Route, Switch, Redirect } from 'react-router-dom';
@@ -43,72 +43,20 @@ class Home extends Component {
 	render() {
         var prefix = this.props.match.url;
 		return (
-			<div>
+			<div className={"root container container-home" + this.state.body}>
 				<div className="back-drop"></div>
-				<div className={"root container container-home" + this.state.body}>
-					
-					<div className="home-header">
-						<div className="grid grid-2" style={{"height": "100%"}}>
-							<div className="vertical-align">
-								<h3 className="vertical-align text-400 text-white">
-									<Logo color={"#FFF"}/>
-									<span className="margin-left">Machinable</span>
-								</h3>
-							</div>
-							<div className="align-right vertical-align">
-								<Dropdown 
-									type="text plain"
-									width={200}
-									buttonText={<FontAwesomeIcon className="text-white" style={{fontSize: "24px"}} icon={faUser} />}
-									buttonClasses={"no-click"}
-									buttonStyle={{"paddingRight": "0"}}
-									classes="col-1 align-items-right">
-									<div className="grid grid-1">
-										<List>
-											<ListItem title="email@tld.io"/>
-											<ListItem icon={cog} title="Settings"/>
-											<ListItem icon={signOut} title="Logout" onClick={this.logout}/>
-										</List>
-									</div>
-								</Dropdown>
-								<input className="text-muted input" placeholder="search"/>
-							</div>
-						</div>
-					</div>				
 
-					<div className="content page">
-						<div className="page-content home-content">
-							<Switch>
-								<Route path={prefix+"/projects"} component={Projects} />
+				<HomeHeader {...this.props}/>		
 
-								<Redirect from="/" to={prefix+"/projects"} />
-							</Switch>
-						</div>
+				<div className="content">
+					<Switch>
+						<Route path={prefix+"/projects"} component={Projects} />
 
-						{/* DOCUMENTATION */}
-						<div className="page-docs">
-							<div>
-								<h4 className="text-more-muted text-600">DOCUMENTATION</h4>
-								<div className="grid grid-3">
-									<div>
-										<a className="link text-400 text-information">Overview</a>
-										<p className="text-muted">Machinable user documentation. Create and manage your projects.</p>
-									</div>
-									<div>
-										<a className="link text-400 text-information">API</a>
-										<p className="text-muted">Machinable RESTful API documentation.</p>
-									</div>
-									<div>
-										<a className="link text-400 text-information">Samples</a>
-										<p className="text-muted">View the Machinable Github page for sample applications.</p>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<Footer />
+						<Redirect from="/" to={prefix+"/projects"} />
+					</Switch>
 				</div>
+
+				<Footer />
 			</div>
 		  );
 	}

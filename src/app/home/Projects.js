@@ -180,58 +180,81 @@ class Projects extends Component {
         var render = this.state.projects.length > 0 ? this.renderProjects() : this.emptyState();
 
 		return (
-			<div>
-                <Loader loading={this.state.loading} />
-                {!this.state.loading && render}
-                <Modal 
-					close={this.closeModal}
-					isOpen={this.state.showModal}>
-                    <div className="align-center grid grid-3">
-                        <div className="col-3-2">
-                            <div className=" grid grid-1">
-                                <Card
-                                    classes="footer-plain no-border"
-                                    footer={
-                                        <div className="grid grid-2">
-                                            <div className="col-2 col-right">
-                                                <Button classes="plain text" onClick={this.closeModal}>Cancel</Button>	
-                                                <Button classes="brand margin-left" type="submit" loading={this.state.loading} onClick={this.createProject}>Create</Button>	
+			<div className="page">
+                <div className="page-content home-content">
+                    <Loader loading={this.state.loading} />
+                    {!this.state.loading && render}
+                    <Modal 
+                        close={this.closeModal}
+                        isOpen={this.state.showModal}>
+                        <div className="align-center grid grid-3">
+                            <div className="col-3-2">
+                                <div className=" grid grid-1">
+                                    <Card
+                                        classes="footer-plain no-border"
+                                        footer={
+                                            <div className="grid grid-2">
+                                                <div className="col-2 col-right">
+                                                    <Button classes="plain text" onClick={this.closeModal}>Cancel</Button>	
+                                                    <Button classes="brand margin-left" type="submit" loading={this.state.loading} onClick={this.createProject}>Create</Button>	
+                                                </div>
+                                            </div>
+                                        }>
+
+                                        <h2 className="text-center">New Project</h2>
+
+                                        { this.state.errors.length > 0 &&
+                                            <div className="text-danger text-center margin-bottom-more">
+                                                {this.state.errors.map(function(error){
+                                                    return (<div className="text-400 padding-bottom">{error}</div>)
+                                                })}
+                                            </div>
+                                        }
+
+                                        <div className="grid grid-1">
+                                            <IconSelect selected={this.state.newProject.icon} onSelect={this.selectIcon}/>
+                                            <Input placeholder="project name" label="Name" name="name" value={this.state.newProject.name} onChange={this.onChange}/>
+                                            <Input placeholder="unique slug" label="Slug" name="slug" value={this.state.newProject.slug} onChange={this.onChange}/>
+                                            <TextArea placeholder="project description" label="Description" name="description" value={this.state.newProject.description} onChange={this.onChange}/>
+                                            <div className="grid grid-1">
+                                                <strong>Authentication Required</strong>
+                                                <Switch name="authn" on={this.state.newProject.authn} onChange={this.onChange}/>
+                                                {this.state.newProject.authn && 
+                                                    <span>Requests to collections and resources will require authentication</span>
+                                                }
+                                                {!this.state.newProject.authn && 
+                                                    <span>Collections and resources are accessible to anyone with your project URL</span>
+                                                }
                                             </div>
                                         </div>
-                                    }>
+                                        
+                                    </Card>
+                                </div>
+                            </div>
+                        </div>
+                    </Modal>
+                </div>
 
-                                    <h2 className="text-center">New Project</h2>
-
-                                    { this.state.errors.length > 0 &&
-                                        <div className="text-danger text-center margin-bottom-more">
-                                            {this.state.errors.map(function(error){
-                                                return (<div className="text-400 padding-bottom">{error}</div>)
-                                            })}
-                                        </div>
-                                    }
-
-                                    <div className="grid grid-1">
-                                        <IconSelect selected={this.state.newProject.icon} onSelect={this.selectIcon}/>
-                                        <Input placeholder="project name" label="Name" name="name" value={this.state.newProject.name} onChange={this.onChange}/>
-                                        <Input placeholder="unique slug" label="Slug" name="slug" value={this.state.newProject.slug} onChange={this.onChange}/>
-                                        <TextArea placeholder="project description" label="Description" name="description" value={this.state.newProject.description} onChange={this.onChange}/>
-                                        <div className="grid grid-1">
-                                            <strong>Authentication Required</strong>
-                                            <Switch name="authn" on={this.state.newProject.authn} onChange={this.onChange}/>
-                                            {this.state.newProject.authn && 
-                                                <span>Requests to collections and resources will require authentication</span>
-                                            }
-                                            {!this.state.newProject.authn && 
-                                                <span>Collections and resources are accessible to anyone with your project URL</span>
-                                            }
-                                        </div>
-                                    </div>
-                                    
-                                </Card>
+                {/* DOCUMENTATION */}
+                <div className="page-docs">
+                    <div>
+                        <h4 className="text-more-muted text-600">DOCUMENTATION</h4>
+                        <div className="grid grid-3">
+                            <div>
+                                <a className="link text-400 text-information">Overview</a>
+                                <p className="text-muted">Machinable user documentation. Create and manage your projects.</p>
+                            </div>
+                            <div>
+                                <a className="link text-400 text-information">API</a>
+                                <p className="text-muted">Machinable RESTful API documentation.</p>
+                            </div>
+                            <div>
+                                <a className="link text-400 text-information">Samples</a>
+                                <p className="text-muted">View the Machinable Github page for sample applications.</p>
                             </div>
                         </div>
                     </div>
-                </Modal>
+                </div>
             </div>
 		  );
 	}

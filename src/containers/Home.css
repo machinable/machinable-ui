@@ -20,7 +20,6 @@
 }
 .container-home > .content {
 	grid-template: "content";
-	z-index: 1;
 }
 .footer {
 	grid-template: "footer";
@@ -37,6 +36,7 @@
 	height: 200px;
 	background-color: var(--brand);
 	border-bottom: inset 2px rgba(0,0,0, 0.1);
+	left: 0;
 }
 
 .project-hover {
