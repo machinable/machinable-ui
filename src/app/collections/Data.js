@@ -7,47 +7,9 @@ import faEllipsis from '@fortawesome/fontawesome-free-solid/faEllipsisV';
 import Empty from '../../images/empty_canvas.svg';
 import Machinable from '../../client';
 import Statics from '../../Statics';
-import ReactJson from 'react-json-view';
+import Datum from './Datum'
+
 import moment from 'moment';
-
-
-class Datum extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			slug: props.slug,
-			path: props.path,
-			items: {}
-		}
-	}
-
-	dataError = (response) => {
-		console.log(response)
-	}
-
-	dataSuccess = (response) => {
-		this.setState({items: response.data});
-	}
-
-	getData = () => {
-		Machinable.collections(this.state.slug).data().list(this.state.path, this.dataSuccess, this.dataError);
-	}
-
-	componentDidMount = () => {		
-		this.getData();
-	}
-
-	render() {
-		return (
-			<div>
-				{this.props.title}
-				<div className="margin-top-more code">
-					<ReactJson name={false} iconStyle="square" src={this.state.items} />
-				</div>
-			</div>
-		);
-	}
-}
 
 class Data extends Component {
 
@@ -131,6 +93,7 @@ class Data extends Component {
 
 	renderCollections = () => {
 		var collections = this.state.collections.map(function(col, idx){
+				const collection = col;
 				var fullURL = Statics.GenerateAPIHost(this.state.slug) + "/collections/" + col.name;
 				var collectionTitle = <div>
 										<h3 className="text-400 no-margin margin-bottom-less">{col.name}</h3>
@@ -153,7 +116,7 @@ class Data extends Component {
 							classes="align-items-right">
 							<div className="grid grid-1">
 								<List>
-									<ListItem title={<div className="text-center text-400">Data</div>}  onClick={() => this.openExtraModal(<Datum title={collectionTitle} slug={this.state.slug} path={col.name} />)}/>
+									<ListItem title={<div className="text-center text-400">Details</div>}  onClick={() => this.openExtraModal(<Datum title={collectionTitle} collection={collection} slug={this.state.slug}/>)}/>
 									<hr className="no-margin no-padding"/>
 									<ListItem title={<div className="text-center text-danger text-400">Delete</div>} onClick={() => this.openDeleteModal(col)}/>
 								</List>

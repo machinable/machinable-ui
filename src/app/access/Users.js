@@ -40,7 +40,8 @@ class Users extends Component {
             username: "",
             password: "",
             read: true,
-            write: false
+            write: false,
+            role: "user"
         };
     }
 
@@ -163,6 +164,7 @@ class Users extends Component {
                         <div className="text-muted text-small margin-top-less">{moment(user.created).fromNow()}</div>
                     </div>
                 </div>,
+                <div>{user.role}</div>,
                 <div>{accessList.join(" / ")}</div>,
                 <div className="align-right">
                     <span className="vertical-align">
@@ -191,7 +193,7 @@ class Users extends Component {
             <React.Fragment>
                 <Table
                     classes="m-table"
-                    headers={["Username", "Access", <div className="align-center m-th">ID</div>, <div className="align-right m-th">Options</div>]}
+                    headers={["Username", "Role", "Access", <div className="align-center m-th">ID</div>, <div className="align-right m-th">Options</div>]}
                     values={tableValues}
                 />
                 <Button classes="accent page-btn" onClick={this.openModal}>Add User</Button>
@@ -237,6 +239,11 @@ class Users extends Component {
                                     <div className="grid grid-1">
                                         <Input placeholder="username" label="Username" name="username" value={this.state.newUser.username} onChange={this.onChange}/>
                                         <Input placeholder="password" label="Password" type="password" name="password" value={this.state.newUser.password} onChange={this.onChange}/>
+                                        <Select label="Role & Access" placeholder="select role" name="role" value={this.state.newUser.role} options={roleOptions} onChange={this.onChange}/>
+                                        <div className="text-small text-muted text-center">
+                                            {this.state.newUser.role === "user" && <span><code>Users</code> will only have access to objects that they have created, depending on the collection/resource policy.</span>}
+                                            {this.state.newUser.role === "admin" && <span><code>Administrators</code> will have access to all created objects.</span>}
+                                        </div>
                                         <div className="grid grid-2">
                                             <div className="align-center vertical-align">
                                                 <strong className="margin-right">Read</strong>

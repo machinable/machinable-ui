@@ -1,0 +1,68 @@
+.display-nav {
+    text-decoration: none;
+    margin: 0px;
+    padding: 0px;
+    padding-bottom: 4px;
+}
+
+.display-nav.underline {
+	border-bottom: 2px solid var(--card-border-color);
+}
+
+.display-nav.align-right li {
+	text-align: right;
+}
+
+.display-nav.align-center li {
+	text-align: center;
+}
+
+.display-nav.horizontal li {
+    display: inline;
+}
+.display-nav li {
+	margin: 0px;
+	padding: 0px;
+	text-decoration: none;
+	color: var(--text-muted);
+	transition: color .2s, box-shadow .2s;
+    font-weight: 400;
+    font-size: 16px;
+	text-align: left;
+    list-style-type: none;
+}
+.display-nav.link-underline li {    
+    padding: 6px 15px;
+}
+.display-nav.underline li {
+	margin-bottom: -2px;
+}
+.display-nav.pull-right li {
+	margin-right: 0px;
+	margin-left: 25px;
+}
+
+.display-nav.vertical {
+	display: flex;
+	flex-direction: column;
+}
+
+.display-nav.vertical li {
+	padding: 5px 0px;
+}
+
+
+.display-nav li:hover {
+    color: var(--brand);
+    cursor: pointer;
+}
+.display-nav.link-underline li:hover {
+	box-shadow: inset 0px -2px 0px var(--brand);
+}
+
+.display-nav>li.active {
+	color: var(--brand);
+}
+.display-nav.link-underline li.active {
+	box-shadow: inset 0px -2px 0px var(--brand);
+}
