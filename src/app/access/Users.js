@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Table, Button, Card, Modal, Input, Switch, Dropdown, List, ListItem } from 'turtle-ui';
+import { Table, Button, Card, Modal, Input, Switch, Dropdown, List, ListItem, Select } from 'turtle-ui';
 import Loader from '../../components/Loader';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faUser from '@fortawesome/fontawesome-free-solid/faUserCircle';
@@ -8,6 +8,11 @@ import faEllipsis from '@fortawesome/fontawesome-free-solid/faEllipsisV';
 import Empty from '../../images/empty.svg';
 import Machinable from '../../client';
 import moment from 'moment';
+
+const roleOptions = [
+    {value: "user", text: "User"},
+    {value: "admin", text: "Administrator"}
+];
 
 class Users extends Component {
 
@@ -152,7 +157,7 @@ class Users extends Component {
             }
             return [
                 <div className="vertical-align">
-                    <FontAwesomeIcon className="margin-right text-muted" style={{"fontSize": "24px"}} icon={faUser} />
+                    <FontAwesomeIcon className="margin-right text-more-muted" style={{"fontSize": "24px"}} icon={faUser} />
                     <div>
                         <h3 className="text-400 no-margin">{user.username}</h3>
                         <div className="text-muted text-small margin-top-less">{moment(user.created).fromNow()}</div>

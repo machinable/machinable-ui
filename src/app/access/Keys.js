@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Button, Input, TextArea, Switch, Modal, Card, Dropdown, List, ListItem } from 'turtle-ui';
+import { Table, Button, Select, TextArea, Switch, Modal, Card, Dropdown, List, ListItem } from 'turtle-ui';
 import { connect } from 'react-redux';
 import Loader from '../../components/Loader';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
@@ -8,6 +8,11 @@ import faEllipsis from '@fortawesome/fontawesome-free-solid/faEllipsisV';
 import Empty from '../../images/safe.svg';
 import Machinable from '../../client';
 import moment from 'moment';
+
+const roleOptions = [
+    {value: "user", text: "User"},
+    {value: "admin", text: "Administrator"}
+];
 
 class Keys extends Component {
 
@@ -50,14 +55,14 @@ class Keys extends Component {
     closeModal = () => {
 		var html = document.getElementsByTagName('html')[0];
         html.style.cssText = "--root-overflow: auto";
-		this.setState({showModal: false});
+		this.setState({showModal: false, showDeleteModal: false});
 	}
 
 	openModal = (response) => {
         var key = response.data.key
 		var html = document.getElementsByTagName('html')[0];
         html.style.cssText = "--root-overflow: hidden";
-		this.setState({showModal: true, newKey:{"key": key, "read": true, "description": ""}});
+		this.setState({showModal: true, newKey:{"key": key, "read": true, "description": "", "role": "user"}});
     }
 
     openDeleteModal = (key) => {
@@ -85,7 +90,6 @@ class Keys extends Component {
 	    this.setState({
 	    	newKey: nk
 	    });
-        
     }
 
     createKey = () => {
@@ -122,13 +126,19 @@ class Keys extends Component {
             }
             return [
                 <div className="vertical-align">
-                    <FontAwesomeIcon className="margin-right text-muted" style={{"fontSize": "24px"}} icon={faKey} />
+                    <FontAwesomeIcon className="margin-right text-more-muted" style={{"fontSize": "24px"}} icon={faKey} />
                     <div>
                         <h3 className="text-400 no-margin">{key.description}</h3>
-                        <div className="text-muted">{moment(key.created).fromNow()}</div>
+                        <div className="text-muted text-small margin-top-less">{moment(key.created).fromNow()}</div>
                     </div>
                 </div>,
+                <div>{key.role}</div>,
                 <div>{accessList.join(" / ")}</div>,
+                <div className="align-right">
+                    <span className="vertical-align">
+                        {key.id} <Button classes="btn-small margin-left">Copy</Button>
+                    </span>
+                </div>,
                 <div className=" align-right">
                     <Dropdown 
                         showIcon={false}
@@ -152,7 +162,7 @@ class Keys extends Component {
             <React.Fragment>
                 <Table
                     classes="hover m-table"
-                    headers={["Description","Access",""]}
+                    headers={["Description", "Role", "Access", <div className="align-center m-th">ID</div>, <div className="align-right m-th">Options</div>]}
 					values={tableValues}
 				/>
 				<Button classes="accent page-btn" onClick={this.generateNewKey}>Generate API Token</Button>
@@ -211,6 +221,11 @@ class Keys extends Component {
                                         </div>
                                         <div className="text-small text-muted">Copy this API key and save it somewhere safe. You will not be able to view it here again.</div>
                                         <TextArea placeholder="what will this API Key be used for?" label="Description" name="description" value={this.state.newKey.description} onChange={this.onChange}/>
+                                        <Select label="Role & Access" placeholder="select role" name="role" value={this.state.newKey.role} options={roleOptions} onChange={this.onChange}/>
+                                        <div className="text-small text-muted text-center">
+                                            {this.state.newKey.role === "user" && <span><code>Users</code> will only have access to objects that they have created, depending on the collection/resource policy.</span>}
+                                            {this.state.newKey.role === "admin" && <span><code>Administrators</code> will have access to all created objects.</span>}
+                                        </div>
                                         <div className="grid grid-2">
                                             <div className="align-center vertical-align">
                                                 <strong className="margin-right">Read</strong>

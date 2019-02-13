@@ -3,6 +3,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import { Nav } from 'turtle-ui';
 import Users from './Users';
 import Keys from './Keys';
+import Examples from '../documentation/Examples';
 
 class Access extends Component {
 	render() {
@@ -43,10 +44,7 @@ class Access extends Component {
 								<a className="link text-400 text-information">API</a>
 								<p className="text-muted">Learn how to manage user JSON web tokens or make requests with API keys.</p>
 							</div>
-							<div>
-								<a className="link text-400 text-information">Examples</a>
-								<p className="text-muted">View the Machinable Github page to see example applications.</p>
-							</div>
+							<Examples/>
 						</div>
 					</div>
 				</div>
