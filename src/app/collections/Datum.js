@@ -48,9 +48,20 @@ class CollectionSettings extends Component {
 
 		this.state = {
 			read: props.collection.parallel_read,
-			write: props.collection.parallel_write
+            write: props.collection.parallel_write,
+            collection: props.collection
 		}
     }
+
+    componentDidUpdate = (previousProps, previousState) => {
+        if (previousProps.collection.id !== this.props.collection.id) {
+            this.setState({
+                read: this.props.collection.parallel_read, 
+                write: this.props.collection.parallel_write,
+                collection: this.props.collection});
+        }
+    }
+
     
     toggleReadState = () => {
         this.setState({read: !this.state.read})
@@ -62,30 +73,30 @@ class CollectionSettings extends Component {
 
     updateRead = () => {
         var update = {parallel_read: !this.state.read, parallel_write: this.state.write};
-		Machinable.collections(this.props.slug).update(this.props.collection.id, update, this.toggleReadState, function(){});
+		Machinable.collections(this.props.slug).update(this.state.collection.id, update, this.toggleReadState, function(){});
     }
     
     updateWrite = () => {
         var update = {parallel_read: this.state.read, parallel_write: !this.state.write};
-		Machinable.collections(this.props.slug).update(this.props.collection.id, update, this.toggleWriteState, function(){});
+		Machinable.collections(this.props.slug).update(this.state.collection.id, update, this.toggleWriteState, function(){});
 	}
 
     render() {
-        var fullURL = Statics.GenerateAPIHost(this.props.slug) + "/" + Statics.COLLECTIONS + "/" + this.props.collection.name;
+        var fullURL = Statics.GenerateAPIHost(this.props.slug) + "/" + Statics.COLLECTIONS + "/" + this.state.collection.name;
 		return (
 			<div className="margin-top-more">
                 {/* <ReactJson name={false} iconStyle="square" src={this.props.collection} /> */}
                 <div className="grid grid-2">
                     <h4 className="margin-vertical-5">Name</h4>
                     <h4 className="margin-vertical-5 vertical-align align-right text-muted">
-                        <span>{this.props.collection.name}</span>
+                        <span>{this.state.collection.name}</span>
                     </h4>
                 </div>
                 <hr className="thin"/>
                 <div className="grid grid-2">
                     <h4 className="margin-vertical-5">ID</h4>
                     <h4 className="margin-vertical-5 vertical-align align-right text-muted">
-                        <span>{this.props.collection.id}</span>
+                        <span>{this.state.collection.id}</span>
                     </h4>
                 </div>
                 <hr className="thin"/>
@@ -99,7 +110,7 @@ class CollectionSettings extends Component {
                 <div className="grid grid-2">
                     <h4 className="margin-vertical-5">Created</h4>
                     <h4 className="margin-vertical-5 vertical-align align-right text-muted">
-                        <span>{moment(this.props.collection.created).format('MMMM Do YYYY, h:mm a')}</span>
+                        <span>{moment(this.state.collection.created).format('MMMM Do YYYY, h:mm a')}</span>
                     </h4>
                 </div>
                 <hr className="thin"/>
@@ -139,21 +150,25 @@ class Datum extends Component {
         super(props);
 
 		this.state = {
-			slug: props.slug,
-			collection: props.collection,
             navSelection: {text: "Settings", render: this.renderSettings}
 		}
-	}
+    }
+
+    componentDidUpdate = (previousProps, previousState) => {
+        if (previousState.navSelection.text !== "Settings") {
+            this.setState({navSelection: {text: "Settings", render: this.renderSettings}});
+        }
+    }
 
 	renderData = () => {
 		return(
-			<CollectionData slug={this.state.slug} path={this.state.collection.name}/>
+			<CollectionData slug={this.props.slug} path={this.props.collection.name}/>
 		)
 	}
 
 	renderSettings = () => {
 		return(
-			<CollectionSettings slug={this.state.slug} collection={this.state.collection}/>
+			<CollectionSettings slug={this.props.slug} collection={this.props.collection}/>
 		)
 	}
 

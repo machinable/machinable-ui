@@ -93,7 +93,6 @@ class Data extends Component {
 
 	renderCollections = () => {
 		var collections = this.state.collections.map(function(col, idx){
-				const collection = col;
 				var fullURL = Statics.GenerateAPIHost(this.state.slug) + "/" + Statics.COLLECTIONS + "/" + col.name;
 				var collectionTitle = <div>
 										<h3 className="text-400 no-margin margin-bottom-less">{col.name}</h3>
@@ -101,6 +100,7 @@ class Data extends Component {
 											<a className="anchor" target="_blank" rel="noopener" href={fullURL} title={fullURL}>{fullURL}</a>
 										</div>
 									</div>;
+				var details = <Datum title={collectionTitle} collection={col} slug={this.state.slug}/>;
 				return [
 					collectionTitle,
 					<div>
@@ -116,7 +116,7 @@ class Data extends Component {
 							classes="align-items-right">
 							<div className="grid grid-1">
 								<List>
-									<ListItem title={<div className="text-center text-400">Details</div>}  onClick={() => this.openExtraModal(<Datum title={collectionTitle} collection={collection} slug={this.state.slug}/>)}/>
+									<ListItem title={<div className="text-center text-400">Details</div>}  onClick={() => this.openExtraModal(details)}/>
 									<hr className="no-margin no-padding"/>
 									<ListItem title={<div className="text-center text-danger text-400">Delete</div>} onClick={() => this.openDeleteModal(col)}/>
 								</List>
