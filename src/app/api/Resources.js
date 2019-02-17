@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Modal, Card, Input, Select, Dropdown, List, ListItem, Table } from 'turtle-ui';
+import { Button, Modal, Card, Input, Select, Dropdown, List, ListItem, Table, TextArea } from 'turtle-ui';
 import Loader from '../../components/Loader';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faPlus from '@fortawesome/fontawesome-free-solid/faPlusCircle';
@@ -75,7 +75,7 @@ class Resources extends Component {
 				errors: [],
 				title: "",
 				path_name: "",
-				properties: [{key: "", type: "string", description: ""}]
+				properties: undefined
 			},
 			extraElement: <div>nothing selected</div>,
 			deleteResource: {}
@@ -102,7 +102,7 @@ class Resources extends Component {
 			title: "",
 			path_name: "",
 			errors: [],
-			properties: [{key: "", type: "string", description: ""}]
+			properties: undefined
 		}});
 	}
 
@@ -159,6 +159,13 @@ class Resources extends Component {
 				value = value.split("/")[1];
 			}
 		}
+		else if (name === "properties") {
+			try{
+				var temp = JSON.parse(value);
+				temp = JSON.stringify(temp, undefined, 4);
+				value = temp;
+			}catch(err){}
+		}
 
 		newResource[name] = value;
 
@@ -172,26 +179,6 @@ class Resources extends Component {
 	    this.setState({
 	    	newResource: newResource
 	    });
-	}
-	  
-	onChangeProperty = (event, idx) => {
-		const target = event.target;
-		var value = target.value;
-		const name = target.name;
-		
-		var newResource = this.state.newResource;
-		if (name === "key") {
-			value = slugify(value, {
-				replacement: '_',
-				remove: null,  
-				lower: false
-			});
-		}
-		newResource.properties[idx][name] = value;
-
-		this.setState({
-			newResource: newResource
-		});
 	}
 
 	onDeleteProperty = (idx) => {
@@ -231,16 +218,24 @@ class Resources extends Component {
 		if (newResource.path_name === "") {
 			errors.push("Resource path cannot be empty.");
 		}
-		if (newResource.properties.length === 0) {
+		if (newResource.properties === undefined) {
 			errors.push("A resource must have at least one property.");
-		}
-
-		for (let index = 0; index < newResource.properties.length; index++) {
-			const element = newResource.properties[index];
-			if (element.key === "") {
-				errors.push("Property key cannot be empty.")
+		} else {
+			try {
+				var test = JSON.parse(newResource.properties);
+			} catch(err) {
+				errors.push(err.message);
 			}
 		}
+
+
+
+		// for (let index = 0; index < newResource.properties.length; index++) {
+		// 	const element = newResource.properties[index];
+		// 	if (element.key === "") {
+		// 		errors.push("Property key cannot be empty.")
+		// 	}
+		// }
 
 		if (errors.length > 0) {
 			newResource.errors = errors;
@@ -253,13 +248,13 @@ class Resources extends Component {
 		var payload = {
 			"title": newResource.title,
 			"path_name": newResource.path_name,
-			"properties": {}
+			"properties": JSON.parse(newResource.properties)
 		};
 
-		for (let index = 0; index < newResource.properties.length; index++) {
-			const element = newResource.properties[index];
-			payload.properties[element.key] = {type: element.type, description: element.description};
-		}
+		// for (let index = 0; index < newResource.properties.length; index++) {
+		// 	const element = newResource.properties[index];
+		// 	payload.properties[element.key] = {type: element.type, description: element.description};
+		// }
 
 		Machinable.resources(this.state.slug).create(payload, this.saveSuccess, this.saveError)
 	}
@@ -353,6 +348,29 @@ class Resources extends Component {
 	render() {
 		var renderResources = Object.keys(this.state.resources.items).length > 0 ? this.getResourceTable() : this.emptyState();
 
+		var sampleSchema = JSON.stringify({
+			"firstName": {
+				"type": "string",
+				"description": "The person's first name."
+			  },
+			  "lastName": {
+				"type": "string",
+				"description": "The person's last name."
+			  },
+			  "age": {
+				"description": "Age in years which must be equal to or greater than zero.",
+				"type": "integer",
+				"minimum": 0
+			  }
+		}, undefined, 4);
+
+		var newProperties = this.state.newResource.properties;
+
+		try {
+			newProperties = JSON.parse(newProperties);
+			newProperties = JSON.stringify(newProperties, undefined, 4);
+		} catch(err) {}
+
 		return (
 			<div>
 				<Loader loading={this.state.loading} />
@@ -444,37 +462,8 @@ class Resources extends Component {
 										
 										<Input placeholder="descriptive title of the resource" label="Title" name="title" value={this.state.newResource.title} onChange={this.onChange}/>
 										<Input placeholder="the url path of this resource" label="Path" name="path_name" value={"/" + this.state.newResource.path_name} onChange={this.onChange}/>
-										<div>
-											<strong>Properties</strong>
-											<div className="grid margin-top-more">
-												<span className="col-2 text-muted">Key</span>
-												<span className="col-4 text-muted">Type</span>
-												<span className="col-5 text-muted">Description</span>
-												<span></span>
-												{this.state.newResource.properties.map(function(item, idx){
-													return (
-														<React.Fragment key={"new_property_" + idx}>
-															<Input labelClasses="col-2" placeholder="key" name="key" value={this.state.newResource.properties[idx].key} onChange={(event) => this.onChangeProperty(event, idx)}/>
-															<div className="col-4 flex">
-																<Select labelClasses="flex-grow" placeholder="type" name="type" value={this.state.newResource.properties[idx].type} options={typeOptions} onChange={(event) => this.onChangeProperty(event, idx)}/>
-																
-																{/* {this.state.newResource.properties[idx].type == "string" && <Select labelClasses="flex-grow margin-left" placeholder="format" name="format"/>}
-																{this.state.newResource.properties[idx].type == "array" && <Select labelClasses="flex-grow" placeholder="item type" name="item type"/>} */}
-
-															</div>
-															<Input labelClasses="col-5" placeholder="description" name="description" value={this.state.newResource.properties[idx].description}  onChange={(event) => this.onChangeProperty(event, idx)}/>
-															<Button classes="text plain no-click" onClick={() => this.onDeleteProperty(idx)}>
-																<FontAwesomeIcon icon={faTrash} fixedWidth/>
-															</Button>	
-														</React.Fragment>
-													)
-												}, this)}
-
-											</div>
-											<Button classes="btn-small margin-top vertical-align" onClick={this.addProperty}>
-												<FontAwesomeIcon icon={faPlus} fixedWidth/>&nbsp;Add Property
-											</Button>	
-										</div>
+										<TextArea placeholder={sampleSchema} label="Schema" name="properties" rows={18} value={newProperties} onChange={this.onChange}/>
+										
 									</div>
 								</Card>
 							</div>
