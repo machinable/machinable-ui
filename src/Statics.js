@@ -4,6 +4,8 @@ class Statics {
 	// MGMT_API_HOST = "https://manage.machinable.io";
 	// PROJECT_API_HOST = "https://{project-slug}.machinable.io";
 
+	COLLECTIONS = "collections";
+
 	GenerateAPIHost = (slug) => {
 		return this.PROJECT_API_HOST.replace("{project-slug}", slug);
 	}

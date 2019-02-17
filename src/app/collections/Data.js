@@ -94,7 +94,7 @@ class Data extends Component {
 	renderCollections = () => {
 		var collections = this.state.collections.map(function(col, idx){
 				const collection = col;
-				var fullURL = Statics.GenerateAPIHost(this.state.slug) + "/collections/" + col.name;
+				var fullURL = Statics.GenerateAPIHost(this.state.slug) + "/" + Statics.COLLECTIONS + "/" + col.name;
 				var collectionTitle = <div>
 										<h3 className="text-400 no-margin margin-bottom-less">{col.name}</h3>
 										<div className="text-small text-information">

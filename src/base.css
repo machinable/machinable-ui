@@ -187,6 +187,10 @@ hr {
     border: 1px solid var(--card-border-color);
 }
 
+hr.thin {
+	border: .5px solid var(--card-border-color);
+}
+
 .copy-text {
     display: block;
     width: 0;
@@ -642,6 +646,9 @@ strong {
 }
 .margin {
 	margin: 10px;
+}
+.margin-vertical-5 {
+	margin: 5px 0px;
 }
 
 dl {

@@ -89,8 +89,8 @@ class Settings extends Component {
 						<div>
 							<h3 className="margin-bottom">Authentication Required</h3>
 							<p className="text-muted padding-bottom no-margin">
-								{"Requests to collections and resources will require authentication"}
-								{/* {"Collections and resources are accessible to anyone with your project URL"} */}
+								{this.state.project.authn && "Requests to collections and resources will require authentication"}
+								{!this.state.project.authn && "Collections and resources are accessible to anyone with your project URL"}
 							</p>
 						</div>
 						<div className="vertical-align align-right">
