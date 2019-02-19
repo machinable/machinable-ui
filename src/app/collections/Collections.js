@@ -19,7 +19,7 @@ class Collections extends Component {
 		return (
 			<React.Fragment>
 				<div className="padding-side content-header">
-					<h2 className="text-400 margin-bottom">Collections</h2>
+					<h3 className="text-400 margin-bottom">Collections</h3>
 					<p className="text-muted margin-top margin-bottom-even-more">Use collections to store your project's unstructured JSON data</p>
 					<Nav 
 						classes="horizontal link-underline"

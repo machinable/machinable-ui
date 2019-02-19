@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 import { Button, Modal, Card, Input, Select, Dropdown, List, ListItem, Table, TextArea } from 'turtle-ui';
 import Loader from '../../components/Loader';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import faPlus from '@fortawesome/fontawesome-free-solid/faPlusCircle';
-import faTrash from '@fortawesome/fontawesome-free-solid/faTrash';
 import faEllipsis from '@fortawesome/fontawesome-free-solid/faEllipsisV';
 import Empty from '../../images/empty_board.svg';
 import Machinable from '../../client';
@@ -88,7 +86,12 @@ class Resources extends Component {
 	}
 
 	resSuccess = (response) => {
-		this.setState({resources: response.data, loading: false}, this.closeModal);
+		this.setState({resources: response.data, loading: false, newResource: {
+			title: "",
+			path_name: "",
+			errors: [],
+			properties: undefined
+		}}, this.closeModal);
 	}
 
 	getResources = () => {
@@ -135,13 +138,6 @@ class Resources extends Component {
 		Machinable.resources(this.state.slug).delete(this.state.deleteResource.id, this.getResources, this.resError);
 	}
 
-	addProperty = () => {
-		var newResource = this.state.newResource;
-		newResource.properties.push({key: "", type: "string", description: ""});
-
-		this.setState({newResource: newResource});
-	}
-
 	onChange = (event) => {
 	    const target = event.target;
 	    var value = target.value;
@@ -179,15 +175,6 @@ class Resources extends Component {
 	    this.setState({
 	    	newResource: newResource
 	    });
-	}
-
-	onDeleteProperty = (idx) => {
-		var newResource = this.state.newResource;
-		newResource.properties.splice(idx, 1);
-
-		this.setState({
-			newResource: newResource
-		});
 	}
 
 	saveError = (response) => {
@@ -228,15 +215,6 @@ class Resources extends Component {
 			}
 		}
 
-
-
-		// for (let index = 0; index < newResource.properties.length; index++) {
-		// 	const element = newResource.properties[index];
-		// 	if (element.key === "") {
-		// 		errors.push("Property key cannot be empty.")
-		// 	}
-		// }
-
 		if (errors.length > 0) {
 			newResource.errors = errors;
 			this.setState({
@@ -250,11 +228,6 @@ class Resources extends Component {
 			"path_name": newResource.path_name,
 			"properties": JSON.parse(newResource.properties)
 		};
-
-		// for (let index = 0; index < newResource.properties.length; index++) {
-		// 	const element = newResource.properties[index];
-		// 	payload.properties[element.key] = {type: element.type, description: element.description};
-		// }
 
 		Machinable.resources(this.state.slug).create(payload, this.saveSuccess, this.saveError)
 	}

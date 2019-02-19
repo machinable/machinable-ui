@@ -58,7 +58,7 @@ class Settings extends Component {
 		return (
 			<div>
 				<div className="padding-side content-header">
-					<h2 className="text-400 margin-bottom">Settings</h2>
+					<h3 className="text-400 margin-bottom">Settings</h3>
 					<p className="text-muted padding-bottom no-margin">Project configuration and settings</p>
 				</div>
 

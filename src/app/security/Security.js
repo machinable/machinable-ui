@@ -24,7 +24,7 @@ class Security extends Component {
 		return (
 			<div>
 				<div className="padding-side content-header">
-					<h2 className="text-400 margin-bottom">Security</h2>
+					<h3 className="text-400 margin-bottom">Security</h3>
 					<p className="text-muted margin-top margin-bottom-even-more">View activity logs and manage user sessions</p>
 					<Nav 
 						classes="horizontal link-underline"
