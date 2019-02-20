@@ -34,10 +34,10 @@ axios.interceptors.response.use(function (response) {
 					}
 				  });
 	} 
-	else if (401 === error.response.status || 
-				(404 === error.response.status) && 
+	else if ((401 === error.response.status) || 
+				(404 === error.response.status && 
 				error.response.data.message && 
-				error.response.data.message === "error creating access token.") {
+				error.response.data.message === "error creating access token.")) {
 		Machinable.user().logout(function(){
 			history.push('/login');
 		}, function(){

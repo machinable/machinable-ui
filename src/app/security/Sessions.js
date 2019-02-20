@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Table, Button, Card } from 'turtle-ui';
+import { Table, Button } from 'turtle-ui';
 
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faMobile from '@fortawesome/fontawesome-free-solid/faMobileAlt';
@@ -54,7 +54,7 @@ class Sessions extends Component {
 		var currentSession = -1;
 		var sessions = this.state.sessions.reverse();
 		var values = sessions.map(function(session){
-			var isCurrent = currentSession == session.id ? <span style={{"float":"right"}} className="background-information text-400 tag">Active Session</span> : <Button style={{"float":"right"}} classes="btn-small" onClick={() => this.deleteSession(session.id)}>Revoke</Button>;
+			var isCurrent = currentSession === session.id ? <span style={{"float":"right"}} className="background-information text-400 tag">Active Session</span> : <Button style={{"float":"right"}} classes="btn-small" onClick={() => this.deleteSession(session.id)}>Revoke</Button>;
 			var icon = session.mobile ? faMobile : faComputer;
 			return [
 				<div>

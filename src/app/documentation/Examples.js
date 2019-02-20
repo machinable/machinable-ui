@@ -1,16 +1,6 @@
 import React, { Component } from 'react';
 
 class Examples extends Component {
-
-	constructor(props) {
-        super(props);
-        
-	}
-
-	componentDidMount = () => {		
-
-	}
-
 	render() {
 		return (
 			<div>

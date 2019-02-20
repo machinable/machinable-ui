@@ -5,16 +5,6 @@ import Logs from './Logs';
 import Sessions from './Sessions';
 
 class Security extends Component {
-
-	constructor(props) {
-        super(props);
-        
-	}
-
-	componentDidMount = () => {		
-
-	}
-
 	render() {
 		var prefix = this.props.match.url;
 		var collectionLinks = [

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Table, Button } from 'turtle-ui';
 import { connect } from 'react-redux';
-import Loader from '../../components/Loader';
 import Machinable from '../../client';
 import moment from 'moment';
 

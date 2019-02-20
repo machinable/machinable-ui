@@ -75,8 +75,8 @@ class SideBar extends Component {
                     </div>
                     <div className="sidebar-footer">
                         <ul className="links">
-                            <li><a href="#"><FontAwesomeIcon className="center-self" icon={faBook} fixedWidth/> Documentation</a></li>
-                            <li><a href="#"><FontAwesomeIcon className="center-self" icon={faLifeRing} fixedWidth/> Support</a></li>
+                            <li><a target="_blank" rel="noopener noreferrer" href="https://github.com/machinable/user-documentation"><FontAwesomeIcon className="center-self" icon={faBook} fixedWidth/> Documentation</a></li>
+                            <li><a target="_blank" rel="noopener noreferrer" href="https://github.com/machinable/user-documentation"><FontAwesomeIcon className="center-self" icon={faLifeRing} fixedWidth/> Support</a></li>
                         </ul>
                     </div>
                 </div>

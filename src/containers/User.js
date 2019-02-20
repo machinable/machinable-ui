@@ -5,7 +5,7 @@ import Logo from '../components/Logo';
 import Login from '../app/user/Login';
 import Register from '../app/user/Register';
 import './Home.css';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 
 class User extends Component {
@@ -41,7 +41,6 @@ class User extends Component {
 	}
 
 	render() {
-        var prefix = this.props.match.url;
 		return (
 			<React.Fragment>
 				<div className="back-drop"></div>

@@ -79,7 +79,7 @@ class Data extends Component {
 			<div className="grid grid-1">
                 <div className="align-center flex-col">
 					<h2 className="text-center">There aren't any Collections for this Project</h2>
-                    <img src={Empty} className="empty-state-sm"/>
+                    <img src={Empty} alt="" className="empty-state-sm"/>
                     <h3 className="text-center">POST some JSON to any <code>/collection</code> endpoint to create a new collection</h3>
 					<div className="code center-self" style={{"width":"450px"}}>
 						<div>

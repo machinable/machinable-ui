@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Modal, Card, Input, Select, Dropdown, List, ListItem, Table, TextArea } from 'turtle-ui';
+import { Button, Modal, Card, Input, Dropdown, List, ListItem, Table, TextArea } from 'turtle-ui';
 import Loader from '../../components/Loader';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faEllipsis from '@fortawesome/fontawesome-free-solid/faEllipsisV';
@@ -10,15 +10,6 @@ import Statics from '../../Statics';
 import ReactJson from 'react-json-view';
 import slugify from 'slugify';
 import moment from 'moment';
-
-
-const typeOptions = [
-	{value: "string", text:"string"}, 
-	{value: "integer", text:"integer"}, 
-	{value: "number", text:"number"}, 
-	{value: "boolean", text:"boolean"},
-	{value: "array", text:"array"},
-	{value: "object", text:"object"} ];
 
 class Data extends Component {
 	constructor(props) {
@@ -209,7 +200,7 @@ class Resources extends Component {
 			errors.push("A resource must have at least one property.");
 		} else {
 			try {
-				var test = JSON.parse(newResource.properties);
+				JSON.parse(newResource.properties);
 			} catch(err) {
 				errors.push(err.message);
 			}
@@ -308,7 +299,7 @@ class Resources extends Component {
 			<div className="grid grid-1">
                 <div className="align-center flex-col">
 					<h2 className="text-center">Get started with a new API Resource</h2>
-                    <img src={Empty} className="empty-state-sm"/>
+                    <img src={Empty} alt="" className="empty-state-sm"/>
                     <h3 className="text-center">Define an API Resource that will validate user submitted data</h3>
 					<div className="align-center">
                         <Button classes="accent" onClick={this.openModal}>Create A Resource</Button>

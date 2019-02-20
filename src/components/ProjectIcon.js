@@ -55,7 +55,7 @@ class Icon extends Component {
         var height = this.props.height ? this.props.height : "32px";
         var classes = this.props.classes + "";
 		return (
-			<img className={classes} src={imgSrc} style={{width: width, height: height}}/>
+			<img className={classes} alt="" src={imgSrc} style={{width: width, height: height}}/>
 		  );
 	}
 }

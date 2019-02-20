@@ -666,6 +666,11 @@ dl dd {
 	margin-left: 20px;
 }
 
+/* MODAL */
+.backdrop {
+    background: rgba(0, 0, 0, 0.6);
+}
+
 /**/
 .project-content {
 	padding: 20px;

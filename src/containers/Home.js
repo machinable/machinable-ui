@@ -1,10 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import faUser from '@fortawesome/fontawesome-free-solid/faUserCircle';
-import signOut from '@fortawesome/fontawesome-free-solid/faSignOutAlt';
-import cog from '@fortawesome/fontawesome-free-solid/faCog';
-import { Dropdown, List, ListItem } from 'turtle-ui';
 import Footer from '../components/Footer';
 import HomeHeader from '../components/HomeHeader';
 import Projects from '../app/home/Projects';
