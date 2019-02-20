@@ -95,7 +95,7 @@ class Data extends Component {
 		var collections = this.state.collections.map(function(col, idx){
 				var fullURL = Statics.GenerateAPIHost(this.state.slug) + "/" + Statics.COLLECTIONS + "/" + col.name;
 				var collectionTitle = <div>
-										<h3 className="text-400 no-margin margin-bottom-less">{col.name}</h3>
+										<h4 className="text-400 no-margin margin-bottom-less">{col.name}</h4>
 										<div className="text-small text-information">
 											<a className="anchor" target="_blank" rel="noopener" href={fullURL} title={fullURL}>{fullURL}</a>
 										</div>

@@ -7,47 +7,9 @@ import faEllipsis from '@fortawesome/fontawesome-free-solid/faEllipsisV';
 import Empty from '../../images/empty_board.svg';
 import Machinable from '../../client';
 import Statics from '../../Statics';
-import ReactJson from 'react-json-view';
+import Data from './Details';
 import slugify from 'slugify';
 import moment from 'moment';
-
-class Data extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			slug: props.slug,
-			path: props.path,
-			items: {}
-		}
-	}
-
-	dataError = (response) => {
-		console.log(response)
-	}
-
-	dataSuccess = (response) => {
-		this.setState({items: response.data});
-	}
-
-	getData = () => {
-		Machinable.resources(this.state.slug).data().list(this.state.path, this.dataSuccess, this.dataError);
-	}
-
-	componentDidMount = () => {		
-		this.getData();
-	}
-
-	render() {
-		return (
-			<div>
-				{this.props.title}
-				<div className="margin-top-more code">
-					<ReactJson name={false} iconStyle="square" src={this.state.items} />
-				</div>
-			</div>
-		);
-	}
-}
 
 class Resources extends Component {
 
@@ -231,11 +193,10 @@ class Resources extends Component {
 		var resourceValues = this.state.resources.items.map(function(def, idx){
 			var fullURL = Statics.GenerateAPIHost(this.state.slug) + "/api/" + def.path_name;
 			var definitionTitle = <div>
-										<h3 className="text-400 no-margin margin-bottom-less">{def.title}</h3>
+										<h4 className="text-400 no-margin margin-bottom-less">{def.title}</h4>
 										<div className="text-small text-information">
 											<a className="anchor" target="_blank" rel="noopener" href={fullURL} title={fullURL}>{fullURL}</a>
 										</div>
-										<div className="text-muted text-small margin-top-less">{def.id}</div>
 									</div>;
 			return [
 				definitionTitle,
@@ -270,9 +231,7 @@ class Resources extends Component {
 						classes="align-items-right">
 						<div className="grid grid-1">
 							<List>
-								{/* <ListItem title={"Resource JSON"} onClick={() => this.openExtraModal(<div>{definitionTitle}<div className="margin-top-more code"><ReactJson name={false} iconStyle="square" src={def} /></div></div>)}/> */}
-								<ListItem title={<div className="text-center text-400">Resource JSON</div>} onClick={() => this.openExtraModal(<Data title={definitionTitle} slug={this.state.slug} path={def.path_name} />)}/>
-								{/* <ListItem title={"Help"} onClick={() => this.openExtraModal(<div></div>)}/> */}
+								<ListItem title={<div className="text-center text-400">More</div>} onClick={() => this.openExtraModal(<Data title={definitionTitle} definition={def} slug={this.state.slug} path={def.path_name} />)}/>
 								<hr className="no-margin no-padding"/>
 								<ListItem title={<div className="text-center text-danger text-400">Delete</div>} onClick={() => this.openDeleteModal(def)}/>
 							</List>

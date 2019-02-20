@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Switch } from 'turtle-ui';
-import Nav from '../../components/DisplayNav';
+import { Switch} from 'turtle-ui';
 import Machinable from '../../client';
 import Statics from '../../Statics';
 import ReactJson from 'react-json-view';
+import Nav from '../../components/DisplayNav';
 import moment from 'moment';
 
-class CollectionData extends Component {
+class Data extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -26,7 +25,7 @@ class CollectionData extends Component {
 	}
 
 	getData = () => {
-		Machinable.collections(this.state.slug).data().list(this.state.path, this.dataSuccess, this.dataError);
+		Machinable.resources(this.state.slug).data().list(this.state.path, this.dataSuccess, this.dataError);
 	}
 
 	componentDidMount = () => {		
@@ -36,29 +35,39 @@ class CollectionData extends Component {
 	render() {
 		return (
 			<div className="margin-top-more code">
-				<ReactJson collapsed={2} name={false} iconStyle="square" src={this.state.items} />
+				<ReactJson collapsed={2} name={this.state.path} iconStyle="square" src={this.state.items} />
 			</div>
 		);
 	}
 }
 
-class CollectionSettings extends Component {
-    constructor(props) {
+class Schema extends Component {
+	render() {
+		return (
+			<div className="margin-top-more code">
+				<ReactJson name={"properties"} iconStyle="square" src={this.props.def.properties} />
+			</div>
+		);
+	}
+}
+
+class Settings extends Component {
+	constructor(props) {
         super(props);
 
 		this.state = {
-			read: props.collection.parallel_read,
-            write: props.collection.parallel_write,
-            collection: props.collection
+			read: props.def.parallel_read,
+            write: props.def.parallel_write,
+            def: props.def
 		}
     }
 
     componentDidUpdate = (previousProps, previousState) => {
-        if (previousProps.collection.id !== this.props.collection.id) {
+        if (previousProps.def.id !== this.props.def.id) {
             this.setState({
-                read: this.props.collection.parallel_read, 
-                write: this.props.collection.parallel_write,
-                collection: this.props.collection});
+                read: this.props.def.parallel_read, 
+                write: this.props.def.parallel_write,
+                def: this.props.def});
         }
     }
 
@@ -71,31 +80,33 @@ class CollectionSettings extends Component {
     }
 
     updateRead = () => {
-        var update = {parallel_read: !this.state.read, parallel_write: this.state.write};
-		Machinable.collections(this.props.slug).update(this.state.collection.id, update, this.toggleReadState, function(){});
+		this.toggleReadState();
+        //var update = {parallel_read: !this.state.read, parallel_write: this.state.write};
+		//Machinable.collections(this.props.slug).update(this.state.collection.id, update, this.toggleReadState, function(){});
     }
     
     updateWrite = () => {
-        var update = {parallel_read: this.state.read, parallel_write: !this.state.write};
-		Machinable.collections(this.props.slug).update(this.state.collection.id, update, this.toggleWriteState, function(){});
+		this.toggleWriteState();
+        // var update = {parallel_read: this.state.read, parallel_write: !this.state.write};
+		//Machinable.collections(this.props.slug).update(this.state.collection.id, update, this.toggleWriteState, function(){});
 	}
 
-    render() {
-        var fullURL = Statics.GenerateAPIHost(this.props.slug) + "/" + Statics.COLLECTIONS + "/" + this.state.collection.name;
+	render() {
+		var fullURL = Statics.GenerateAPIHost(this.props.slug) + "/" + Statics.API + "/" + this.props.def.path_name;
 		return (
 			<div className="margin-top-more">
                 {/* <ReactJson name={false} iconStyle="square" src={this.props.collection} /> */}
                 <div className="grid grid-2">
                     <h4 className="margin-vertical-5">Name</h4>
                     <h4 className="margin-vertical-5 vertical-align align-right text-muted">
-                        <span>{this.state.collection.name}</span>
+                        <span>{this.state.def.path_name}</span>
                     </h4>
                 </div>
                 <hr className="thin"/>
                 <div className="grid grid-2">
                     <h4 className="margin-vertical-5">ID</h4>
                     <h4 className="margin-vertical-5 vertical-align align-right text-muted">
-                        <span>{this.state.collection.id}</span>
+                        <span>{this.state.def.id}</span>
                     </h4>
                 </div>
                 <hr className="thin"/>
@@ -109,7 +120,7 @@ class CollectionSettings extends Component {
                 <div className="grid grid-2">
                     <h4 className="margin-vertical-5">Created</h4>
                     <h4 className="margin-vertical-5 vertical-align align-right text-muted">
-                        <span>{moment(this.state.collection.created).format('MMMM Do YYYY, h:mm a')}</span>
+                        <span>{moment(this.state.def.created).format('MMMM Do YYYY, h:mm a')}</span>
                     </h4>
                 </div>
                 <hr className="thin"/>
@@ -144,31 +155,31 @@ class CollectionSettings extends Component {
 	}
 }
 
-class Datum extends Component {
+class Details extends Component {
 	constructor(props) {
         super(props);
 
 		this.state = {
             navSelection: {text: "Settings", render: this.renderSettings}
 		}
-    }
-
-    componentDidUpdate = (previousProps, previousState) => {
-        if (previousState.navSelection.text !== "Settings") {
-            this.setState({navSelection: {text: "Settings", render: this.renderSettings}});
-        }
-    }
-
+	}
+	
 	renderData = () => {
-		return(
-			<CollectionData slug={this.props.slug} path={this.props.collection.name}/>
-		)
+		return (
+			<Data slug={this.props.slug} path={this.props.path}/>
+		);
 	}
 
 	renderSettings = () => {
-		return(
-			<CollectionSettings slug={this.props.slug} collection={this.props.collection}/>
-		)
+		return (
+			<Settings slug={this.props.slug} path={this.props.path} def={this.props.definition}/>
+		);
+	}
+
+	renderProperties = () => {
+		return (
+			<Schema slug={this.props.slug} path={this.props.path} def={this.props.definition}/>
+		);
 	}
 
 	toggleNav = (link) => {
@@ -186,6 +197,7 @@ class Datum extends Component {
                     selected={this.state.navSelection.text}
                     links={[
                         {text: "Settings", render: this.renderSettings},
+                        {text: "Properties", render: this.renderProperties},
                         {text: "Data", render: this.renderData}
                     ]}
                 />
@@ -195,11 +207,4 @@ class Datum extends Component {
 	}
 }
 
-// redux
-function mapStateToProps(state) {
-	return {
-		slug: state.project_slug
-	};
-}
-  
-export default connect(mapStateToProps)(Datum);
+export default Details;
