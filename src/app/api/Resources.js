@@ -385,7 +385,7 @@ class Resources extends Component {
 										
 										<Input placeholder="descriptive title of the resource" label="Title" name="title" value={this.state.newResource.title} onChange={this.onChange}/>
 										<Input placeholder="the url path of this resource" label="Path" name="path_name" value={"/" + this.state.newResource.path_name} onChange={this.onChange}/>
-										<TextArea placeholder={sampleSchema} label="Schema" name="properties" rows={18} value={newProperties} onChange={this.onChange}/>
+										<TextArea placeholder={sampleSchema} label="Properties" name="properties" rows={18} value={newProperties} onChange={this.onChange}/>
 										
 									</div>
 								</Card>

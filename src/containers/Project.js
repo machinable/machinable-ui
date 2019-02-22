@@ -101,7 +101,7 @@ class Project extends Component {
 			)
 		}, this);
 
-        var projectList = <div className="grid grid-3"><div><Dropdown 
+        var projectList = <div className="grid grid-1"><div><Dropdown 
                         showIcon={true}
                         type="brand"
                         width={250}
