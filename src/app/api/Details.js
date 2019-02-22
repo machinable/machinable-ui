@@ -80,22 +80,19 @@ class Settings extends Component {
     }
 
     updateRead = () => {
-		this.toggleReadState();
-        //var update = {parallel_read: !this.state.read, parallel_write: this.state.write};
-		//Machinable.collections(this.props.slug).update(this.state.collection.id, update, this.toggleReadState, function(){});
+        var update = {parallel_read: !this.state.read, parallel_write: this.state.write};
+		Machinable.resources(this.props.slug).update(this.state.def.id, update, this.toggleReadState, function(){});
     }
     
     updateWrite = () => {
-		this.toggleWriteState();
-        // var update = {parallel_read: this.state.read, parallel_write: !this.state.write};
-		//Machinable.collections(this.props.slug).update(this.state.collection.id, update, this.toggleWriteState, function(){});
+        var update = {parallel_read: this.state.read, parallel_write: !this.state.write};
+		Machinable.resources(this.props.slug).update(this.state.def.id, update, this.toggleWriteState, function(){});
 	}
 
 	render() {
 		var fullURL = Statics.GenerateAPIHost(this.props.slug) + "/" + Statics.API + "/" + this.props.def.path_name;
 		return (
 			<div className="margin-top-more">
-                {/* <ReactJson name={false} iconStyle="square" src={this.props.collection} /> */}
                 <div className="grid grid-2">
                     <h4 className="margin-vertical-5">Name</h4>
                     <h4 className="margin-vertical-5 vertical-align align-right text-muted">

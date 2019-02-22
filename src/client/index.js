@@ -107,6 +107,7 @@ class MachinableClient {
     resources(projectSlug) {
         var GET_RESOURCES = this.projectHost(projectSlug) + "/resources/";
         var GET_RESOURCE = this.projectHost(projectSlug) + "/resources/{id}";
+        var UPDATE_RESOURCE = this.projectHost(projectSlug) + "/resources/{id}";
         var GET_DATA = this.projectHost(projectSlug) + "/mgmt/api/{resource}";
         var authHeaders = this.getAuthHeaders();
 
@@ -129,6 +130,12 @@ class MachinableClient {
 
             create: function(data, success, error) {
                 axios.post(GET_RESOURCES, data, {headers: authHeaders})
+                    .then(success)
+                    .catch(error);
+            },
+
+            update: function(id, data, success, error) {
+                axios.put(UPDATE_RESOURCE.replace("{id}", id), data, {headers: authHeaders})
                     .then(success)
                     .catch(error);
             },
