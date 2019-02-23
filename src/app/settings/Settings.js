@@ -10,7 +10,11 @@ class Settings extends Component {
 	constructor(props) {
 		super(props);
         this.state = {
-			project: props.project
+			project: props.project,
+			copyText: {
+				projectName: "Copy",
+				projectHost: "Copy"
+			}
 		}
 	}
 
@@ -47,10 +51,26 @@ class Settings extends Component {
 		Machinable.projects().update(proj, this.updateResponse, this.updateResponse);
 	}
 
+	revertCopyText = (id) => {
+		setTimeout(function(){
+			var copyText = this.state.copyText;
+			copyText[id] = "Copy";
+			this.setState({
+				copyText: copyText
+			});
+		}.bind(this), 3000);
+	}
+
 	copyText = (id) => {
 		var copyText = document.getElementById(id);
 		copyText.select();
 		document.execCommand("Copy");
+
+		var copyText = this.state.copyText;
+		copyText[id] = "Copied";
+		this.setState({
+			copyText: copyText
+		}, () => this.revertCopyText(id));
 	}
 
 	render() {
@@ -69,7 +89,7 @@ class Settings extends Component {
 							<p className="text-muted padding-bottom no-margin">The name of this project.</p>
 						</div>
 						<h3 className="vertical-align align-right text-muted">
-							<Button classes="btn-small margin-left" onClick={() => this.copyText("projectName")}>Copy</Button><span>{this.state.project.name}</span>
+							<Button classes="btn-small margin-left" onClick={() => this.copyText("projectName")}>{this.state.copyText.projectName}</Button><span>{this.state.project.name}</span>
 							<textarea cols="1000" className="copy-text"  id="projectName" value={this.state.project.name} readOnly/>
 						</h3>
 					</div>
@@ -80,7 +100,7 @@ class Settings extends Component {
 							<p className="text-muted padding-bottom no-margin">The project hostname used for API access.</p>
 						</div>
 						<h3 className="vertical-align align-right text-muted">
-							<Button classes="btn-small margin-left" onClick={() => this.copyText("projectHost")}>Copy</Button><span>{hostName}</span>
+							<Button classes="btn-small margin-left" onClick={() => this.copyText("projectHost")}>{this.state.copyText.projectHost}</Button><span>{hostName}</span>
 							<textarea cols="1000" className="copy-text"  id="projectHost" value={hostName} readOnly/>
 						</h3>
 					</div>
