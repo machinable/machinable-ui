@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Table, Button } from 'turtle-ui';
-
+import Loader from '../../components/Loader';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faMobile from '@fortawesome/fontawesome-free-solid/faMobileAlt';
 import faComputer from '@fortawesome/fontawesome-free-solid/faDesktop';
@@ -14,16 +14,18 @@ class Sessions extends Component {
         super(props);
         this.state = {
 			sessions: [],
-			slug: props.slug
+			slug: props.slug,
+			loading: true,
 		}
 	}
 
 	sessionsError = (response) => {
 		console.log(response);
+		this.setState({loading: false});
 	}
 
 	handleSessions = (response) => {
-		this.setState({sessions: response.data.items});
+		this.setState({sessions: response.data.items, loading: false});
 	}
 
 	getSessions = () => {
@@ -74,7 +76,8 @@ class Sessions extends Component {
 
 		return (
 			<div className="grid grid-1">
-				{rndr}
+				<Loader loading={this.state.loading} />
+				{!this.state.loading && rndr}
 			</div>
 		  );
 	}

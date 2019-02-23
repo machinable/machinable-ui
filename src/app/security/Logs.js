@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Table, Button } from 'turtle-ui';
 import { connect } from 'react-redux';
 import Machinable from '../../client';
+import Loader from '../../components/Loader';
 import moment from 'moment';
 
 class Logs extends Component {
@@ -45,6 +46,7 @@ class Logs extends Component {
 
 	logError = (response) => {
 		console.log(response);
+		this.setState({loading: false});
 	}
 
 	logSuccess = (response) => {
@@ -129,7 +131,8 @@ class Logs extends Component {
 
 		return (
 			<div className="grid grid-1">
-				{render}
+				<Loader loading={this.state.loading} />
+				{!this.state.loading && render}
 			</div>
 		  );
 	}
