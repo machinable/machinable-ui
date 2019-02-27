@@ -39,10 +39,9 @@ class Home extends Component {
         var prefix = this.props.match.url;
 		return (
 			<div className={"root container container-home" + this.state.body}>
-				<div className="back-drop"></div>
-
-				<HomeHeader {...this.props}/>		
-
+				<div className="back-drop">
+					<HomeHeader {...this.props}/>		
+				</div>
 				<div className="content">
 					<Switch>
 						<Route path={prefix+"/projects"} component={Projects} />

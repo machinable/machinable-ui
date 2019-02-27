@@ -129,7 +129,7 @@ class Projects extends Component {
     emptyState = () => {
         return (
             <div className="grid grid-8">
-                <Card classes="project-hover col-2-8">
+                <Card classes="col-8">
                     <h2 className="text-center">You don't have any projects yet</h2>
                     <img src={Empty} alt="" className="empty-state"/>
                     <br/>
@@ -144,8 +144,20 @@ class Projects extends Component {
     }
     
     renderProjects = () => {
+        var newCardStyles = {
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            minHeight: "148px"
+        };
+        
         return (
             <div className="grid grid-1">
+                <div className="grid grid-2 margin-bottom">
+                    <h2 className="margin no-margin-left">Projects</h2>
+                    <div className="align-right">
+                    </div>
+                </div>
                 <div className="grid grid-3">
                     {this.state.projects.map(function(project, idx){
                         var fullURL = Statics.GenerateAPIHost(project.slug);
@@ -160,11 +172,11 @@ class Projects extends Component {
                             </Card>
                         )
                     })}
-                </div>
-                <br/>
-                <div className="grid grid-3">
-                    <div></div>
-                    <Button onClick={this.openModal}>New Project</Button>
+                    <Card key="create-project" style={newCardStyles} classes="project-hover no-padding background-content" onClick={this.openModal}>
+                        <div className="text-400 text-muted no-margin-bottom">
+                            Create New Project
+                        </div>
+                    </Card>
                 </div>
             </div>
         )

@@ -1,25 +1,26 @@
 .container-home {
 	grid-template-columns: repeat(1, 1fr);
-	grid-template-rows: 64px 1fr 50px;
+	grid-template-rows: auto 1fr 50px;
 	grid-gap: 0px;
 	grid-template-areas:
 	    "header"
 	    "content"
 		"footer";
-	max-width: 830px !important;
-	padding: 0px 15px;
 }
 
 .home-content {
-	padding-top: 60px;
+	padding-top: 15px;
+	max-width: 900px;
 }
-
 .home-header{
 	grid-template: "header";   
-	z-index: 1;
+	max-width: 900px;
+	margin: auto;
 }
 .container-home > .content {
 	grid-template: "content";
+	max-width: 900px;
+	justify-self: center;
 }
 .footer {
 	grid-template: "footer";
@@ -30,18 +31,11 @@
 }
 
 .back-drop {
-	z-index: -1;
-	position: absolute;
 	width: 100%;
-	height: 200px;
 	background-color: var(--brand);
 	border-bottom: inset 2px rgba(0,0,0, 0.1);
-	left: 0;
 }
 
-.project-hover {
-	box-shadow: 0px 2px 0px #CCC;
-}
 .project-hover.center-contents > .card-content {
 	display: -ms-flexbox;
     display: flex;
@@ -52,6 +46,7 @@
 }
 .project-hover:hover{
 	cursor: pointer;
+	box-shadow: 0px 1px 5px #CCC;
 	/* margin-top: -3px;
     margin-bottom: 3px; */
 }

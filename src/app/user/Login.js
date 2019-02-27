@@ -91,8 +91,8 @@ class Login extends Component {
 	render() {
 
 		return (
-            <div className="grid grid-8">
-                <div className="login-card col-2-8">
+            <div className="grid grid-10">
+                <div className="login-card col-3-9">
                     <form onSubmit={this.onSubmit}>
                         <Card
                             classes="footer-plain"

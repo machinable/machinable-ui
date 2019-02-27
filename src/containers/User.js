@@ -6,7 +6,6 @@ import Login from '../app/user/Login';
 import Register from '../app/user/Register';
 import { Route, Switch } from 'react-router-dom';
 
-
 class User extends Component {
 
 	constructor(props) {
@@ -42,7 +41,7 @@ class User extends Component {
 	render() {
 		return (
 			<React.Fragment>
-				<div className="back-drop"></div>
+				<div className="login-back-drop"></div>
 				<div className={"root container container-home" + this.state.body}>
 					
 					<div className="home-header">

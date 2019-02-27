@@ -32,10 +32,9 @@ class Header extends Component {
 			<div className="home-header">
                 <div className="grid grid-2" style={{"height": "100%"}}>
                     <div className="vertical-align">
-                        <h3 className="vertical-align text-400 text-white">
+                        <div className="vertical-align text-400 text-white">
                             <Logo color={"#FFF"}/>
-                            <span className="margin-left">Machinable</span>
-                        </h3>
+                        </div>
                     </div>
                     <div className="align-right vertical-align">
                         <Dropdown 
