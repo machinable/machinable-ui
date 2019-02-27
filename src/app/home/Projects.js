@@ -121,8 +121,6 @@ class Projects extends Component {
                                 lower: true
                             })
 
-        var np = this.state.newProject;
-        np[name] = value
 	    this.setState({
 	    	newProject: np
 	    });
@@ -133,7 +131,7 @@ class Projects extends Component {
             <div className="grid grid-8">
                 <Card classes="project-hover col-2-8">
                     <h2 className="text-center">You don't have any projects yet</h2>
-                    <img src={Empty} className="empty-state"/>
+                    <img src={Empty} alt="" className="empty-state"/>
                     <br/>
                     <h3 className="text-center">Define API resources, store data, and manage users for your project!</h3>
                     <br/>

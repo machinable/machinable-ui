@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import {Button, Card, Modal, Input} from 'turtle-ui';
+import {Button, Card, Input} from 'turtle-ui';
 import Machinable from '../../client';
+import { ReCaptcha } from 'react-recaptcha-google';
+import Statics from '../../Statics';
 
 const UserAPI = Machinable.user();
 
@@ -12,6 +14,7 @@ class Register extends Component {
 		  username: "",
 		  password: "",
 		  password_confirm: "",
+		  captchaResponse: "",
 		  errors: [],
 		  isOpen: false,
 		  loading: false
@@ -29,6 +32,7 @@ class Register extends Component {
 
 	handleError = (err) => {
 		var error = 'Issue registering, please try again.'
+		this.captcha.reset();
 		this.setState({
 		    loading: false,
 		    errors: [error]
@@ -46,8 +50,9 @@ class Register extends Component {
   	}
 
   	onSubmit = (event) => {
+		console.log(event);
     	event.preventDefault();
-    	var errors = [];
+		var errors = [];
 
 	    if(!this.state.username) {
 	      errors.push('Invalid username');
@@ -59,7 +64,11 @@ class Register extends Component {
 
 	    if(this.state.password !== this.state.password_confirm) {
 	      errors.push('Passwords must match');
-	    }
+		}
+		
+		if(this.state.captchaResponse === "") {
+		  errors.push("reCaptcha must be checked")
+		}
 
 	    this.setState({
 	      errors: errors
@@ -75,23 +84,25 @@ class Register extends Component {
 				password: '',
 				password_confirm: ''
 	      	});
-		 	UserAPI.register(un, pw).then(this.handleResponse).catch(this.handleError);
-	    }
+		 	UserAPI.register(un, pw, this.state.captchaResponse).then(this.handleResponse).catch(this.handleError);
+	    } else {
+			this.captcha.reset();
+		}
   	}
 
   	Login = () => {
         this.props.history.push('/login');
   	}
 
-  	componentDidMount = () => {
-
-  	}
+	verifyCallback = (response) => {
+		this.setState({captchaResponse: response});
+	}
 
 	render() {
 
 		return (
             <div className="grid grid-8">
-                <div className="project-hover col-2-8">
+                <div className="login-card col-2-8">
                     <form onSubmit={this.onSubmit}>
                         <Card
                             classes="footer-plain"
@@ -109,7 +120,7 @@ class Register extends Component {
                             { this.state.errors.length > 0 &&
 								<div className="text-danger text-center margin-bottom-more">
 									{this.state.errors.map(function(error){
-										return (<div className="text-400 padding-bottom">{error}</div>)
+										return (<div id={error} className="text-400 padding-bottom">{error}</div>)
 									})}
 								</div>
                             }
@@ -125,6 +136,14 @@ class Register extends Component {
                             <div className="margin-top-more">
                                 <Input placeholder="confirm password" type="password" label="Confirm Password" name="password_confirm" value={this.state.password_confirm} onChange={this.onChange}/>
                             </div>
+							
+							<br/>
+							<ReCaptcha
+            					ref={(el) => {this.captcha = el;}}
+								className="g-recaptcha"
+								sitekey={Statics.RECAPTCHA_SITE_KEY}
+								verifyCallback={this.verifyCallback}
+							/>
                         </Card>
                     </form>
                 </div>

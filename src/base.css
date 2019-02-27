@@ -213,10 +213,17 @@ hr.thin {
 .project-hover{
 	transition: margin 250ms ease;
 }
-.project-hover:hover{
-	cursor: pointer;
-	/* margin-top: -3px;
-    margin-bottom: 3px; */
+
+.login-card {
+	box-shadow: 0px 2px 0px #CCC;
+}
+.login-card.center-contents > .card-content {
+	display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: center;
+    justify-content: center;
 }
 
 .tile-hover {
@@ -287,6 +294,11 @@ hr.thin {
 
 .center-self {
 	align-self: center;
+}
+.g-recaptcha{
+	display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .center {
 	display: flex;

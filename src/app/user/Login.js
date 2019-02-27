@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Button, Card, Modal, Input} from 'turtle-ui';
+import {Button, Card, Input} from 'turtle-ui';
 import Machinable from '../../client';
 
 const UserAPI = Machinable.user();
@@ -92,7 +92,7 @@ class Login extends Component {
 
 		return (
             <div className="grid grid-8">
-                <div className="project-hover col-2-8">
+                <div className="login-card col-2-8">
                     <form onSubmit={this.onSubmit}>
                         <Card
                             classes="footer-plain"

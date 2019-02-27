@@ -109,7 +109,7 @@ class Users extends Component {
 
 	    this.setState({
           errors: errors,
-          loading: errors.length == 0
+          loading: errors.length === 0
         });
         
         if(errors.length === 0) {
@@ -137,7 +137,7 @@ class Users extends Component {
             <div className="grid grid-8">
                 <div className="col-2-8 flex-col">
                     <h2 className="text-center">There aren't any Users for this Project</h2>
-                    <img src={Empty} className="empty-state-sm"/>
+                    <img src={Empty} alt="" className="empty-state-sm"/>
                     <h3 className="text-center">Create users with read/write access to your project's API Resources and Collections</h3>
                     <div className="align-center">
                         <Button classes="accent" onClick={this.openModal}>Create A User</Button>

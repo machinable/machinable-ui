@@ -102,7 +102,7 @@ class Keys extends Component {
             <div className="grid grid-8">
                 <div className="col-2-8 flex-col">
                     <h2 className="text-center">No API Keys</h2>
-                    <img src={Empty} className="empty-state-sm"/>
+                    <img src={Empty} alt="" className="empty-state-sm"/>
                     <h3 className="text-center">Create API Keys with read/write access to your project's API Resources and Collections</h3>
                     <div className="align-center">
                         <Button classes="accent" onClick={this.generateNewKey}>Generate API Token</Button>
@@ -121,7 +121,7 @@ class Keys extends Component {
             if(key.write) {
                 accessList.push("write");
             }
-            if(accessList.length == 0) {
+            if(accessList.length === 0) {
                 accessList.push("none");
             }
             return [

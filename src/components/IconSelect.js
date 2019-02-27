@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dropdown, List, ListItem } from 'turtle-ui';
+import { Dropdown } from 'turtle-ui';
 import ProjectIcon from './ProjectIcon';
 
 const iconList = [

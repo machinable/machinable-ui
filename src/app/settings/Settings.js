@@ -20,7 +20,7 @@ class Settings extends Component {
 
 	updateResponse = (response) => {
 		console.log(response);
-		if(response.status == 200) {
+		if(response.status === 200) {
 			var updatedProject = response.data;
 			this.props.dispatch(setProjectObject(updatedProject));
 			this.setState({project: updatedProject});
@@ -62,8 +62,8 @@ class Settings extends Component {
 	}
 
 	copyText = (id) => {
-		var copyText = document.getElementById(id);
-		copyText.select();
+		var copyEl = document.getElementById(id);
+		copyEl.select();
 		document.execCommand("Copy");
 
 		var copyText = this.state.copyText;

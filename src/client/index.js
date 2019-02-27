@@ -38,8 +38,8 @@ class MachinableClient {
                 return axios.post(LOGIN, {}, {headers: headers});
             },
 
-            register: function(username, password) {
-                return axios.post(REGISTER, {username: username, password: password});
+            register: function(username, password, recaptcha) {
+                return axios.post(REGISTER, {username: username, password: password, recaptcha: recaptcha});
             },
 
             saveTokens: function(accessToken, refreshToken, sessionId) {

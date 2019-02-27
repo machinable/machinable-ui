@@ -4,6 +4,8 @@ class Statics {
 	// MGMT_API_HOST = "https://manage.machinable.io";
 	// PROJECT_API_HOST = "https://{project-slug}.machinable.io";
 
+	RECAPTCHA_SITE_KEY = "6LfyLpQUAAAAAKYUyeSO4PrUyjoMkjJb65w6Emvs";
+
 	COLLECTIONS = "collections";
 	API = "api";
 

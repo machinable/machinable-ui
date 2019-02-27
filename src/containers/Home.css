@@ -50,4 +50,8 @@
     -ms-flex-pack: center;
     justify-content: center;
 }
-
+.project-hover:hover{
+	cursor: pointer;
+	/* margin-top: -3px;
+    margin-bottom: 3px; */
+}

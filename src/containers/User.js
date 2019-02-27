@@ -4,7 +4,6 @@ import Footer from '../components/Footer';
 import Logo from '../components/Logo';
 import Login from '../app/user/Login';
 import Register from '../app/user/Register';
-import './Home.css';
 import { Route, Switch } from 'react-router-dom';
 
 

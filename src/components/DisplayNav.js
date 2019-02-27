@@ -19,7 +19,7 @@ class DisplayNav extends Component {
 			<ul className={classes}>
 				{this.state.links.map(function(link){
 					return (
-						<li className={this.props.selected == link.text ? "active" : ""} key={link.text} onClick={() => onClickCallback(link)}>{link.text}</li>
+						<li className={this.props.selected === link.text ? "active" : ""} key={link.text} onClick={() => onClickCallback(link)}>{link.text}</li>
 					)
 				}, this)}
 			</ul>
