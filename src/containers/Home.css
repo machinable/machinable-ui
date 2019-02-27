@@ -46,7 +46,11 @@
 }
 .project-hover:hover{
 	cursor: pointer;
-	box-shadow: 0px 1px 5px #CCC;
+	box-shadow: 0px 1px 1px #CCC;
 	/* margin-top: -3px;
     margin-bottom: 3px; */
+}
+
+.hover-pointer:hover{
+	cursor: pointer;
 }

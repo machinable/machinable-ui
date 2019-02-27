@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Footer from '../components/Footer';
 import HomeHeader from '../components/HomeHeader';
 import Projects from '../app/home/Projects';
+import Settings from '../app/home/settings/Settings';
 import './Home.css';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import Machinable from '../client';
@@ -38,13 +39,14 @@ class Home extends Component {
 	render() {
         var prefix = this.props.match.url;
 		return (
-			<div className={"root container container-home" + this.state.body}>
+			<div style={{"backgroundColor": "#F9F9F9"}} className={"root container container-home" + this.state.body}>
 				<div className="back-drop">
 					<HomeHeader {...this.props}/>		
 				</div>
 				<div className="content">
 					<Switch>
 						<Route path={prefix+"/projects"} component={Projects} />
+						<Route path={prefix+"/settings"} component={Settings} />
 
 						<Redirect from="/" to={prefix+"/projects"} />
 					</Switch>

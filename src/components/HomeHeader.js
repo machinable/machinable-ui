@@ -25,13 +25,23 @@ class Header extends Component {
 		Machinable.user().logout(function(response){
 			history.push('/login');
 		}, function(response) {});
-	}
+    }
+    
+    settings = () => {
+		const history = this.props.history;
+        history.push('/home/settings');
+    }
+
+    projects = () => {
+		const history = this.props.history;
+        history.push('/home/projects');
+    }
 
 	render() {
 		return (
 			<div className="home-header">
                 <div className="grid grid-2" style={{"height": "100%"}}>
-                    <div className="vertical-align">
+                    <div className="vertical-align hover-pointer" onClick={this.projects}>
                         <div className="vertical-align text-400 text-white">
                             <Logo color={"#FFF"}/>
                         </div>
@@ -46,8 +56,8 @@ class Header extends Component {
                             classes="col-1 align-items-right">
                             <div className="grid grid-1">
                                 <List>
-                                    <ListItem title="email@tld.io"/>
-                                    <ListItem icon={cog} title="Settings"/>
+                                    {/* <ListItem title="email@tld.io" onClick={this.settings}/> */}
+                                    <ListItem icon={cog} title="Settings" onClick={this.settings}/>
                                     <ListItem icon={signOut} title="Logout" onClick={this.logout}/>
                                 </List>
                             </div>

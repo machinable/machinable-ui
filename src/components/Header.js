@@ -27,6 +27,11 @@ class Header extends Component {
 		}, function(response) {});
 	}
 
+	settings = () => {
+		const history = this.props.history;
+        history.push('/home/settings');
+    }
+
 	render() {
 		return (
 			<div className={"header " + this.props.classes}>
@@ -44,8 +49,8 @@ class Header extends Component {
 							classes="col-1 align-items-right">
 							<div className="grid grid-1">
 								<List>
-									<ListItem title="email@tld.io"/>
-									<ListItem icon={cog} title="Settings"/>
+									{/* <ListItem title="email@tld.io" onClick={this.settings}/> */}
+									<ListItem icon={cog} title="Settings" onClick={this.settings}/>
 									<ListItem icon={signOut} title="Logout" onClick={this.logout}/>
 								</List>
 							</div>
