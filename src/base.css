@@ -211,7 +211,7 @@ hr.thin {
 }
 
 .project-hover{
-	transition: margin 250ms ease, box-shadow 200ms ease;
+	transition: margin 250ms ease, box-shadow 200ms ease !important;
 }
 
 .login-back-drop {
@@ -514,7 +514,7 @@ strong {
 }
 
 .background-content {
-	background-color: var(--card-border-color);
+	background-color: var(--card-border-color) !important;
 }
 
 .background-accent {
