@@ -14,7 +14,7 @@ class Logs extends Component {
 			loading: true,
 			logs: [],
             pageLogs: [],
-			tableLimit: 8,
+			tableLimit: 10,
             tablePage: 0,
 		}
 	}
@@ -77,6 +77,7 @@ class Logs extends Component {
 
 		var headers = ["Event", "Status", "Initiator", <div className="m-th text-right">Created</div>];
 		var logValues = this.state.pageLogs.map(function(log, idx){
+			console.log(log.created);
 			return [
 				<div className="text-small">
 					<span className="text-400">{log.event}</span>
@@ -84,7 +85,7 @@ class Logs extends Component {
 				</div>, 
 				<span className={"text-400 tag tag-" + (log.status_code+"")[0]}>{log.status_code}</span>,
 				<div className="text-small">{log.initiator}</div>, 
-				<div className="text-small text-muted text-right">{moment(log.created).fromNow()}</div>
+				<div className="text-small text-muted text-right">{moment(new Date(log.created * 1000)).fromNow()}</div>
 			]
 		}, this)
 
