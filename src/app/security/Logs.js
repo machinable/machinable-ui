@@ -13,35 +13,23 @@ class Logs extends Component {
 			slug: props.slug,
 			loading: true,
 			logs: [],
-            pageLogs: [],
+			count: 0,
+			links: {},
 			tableLimit: 10,
-            tablePage: 0,
+            page: -1,
 		}
 	}
 
 	nextPage = () => {
-		var pages = this.state.logs.length / this.state.tableLimit;
-		var page = this.state.tablePage + 1;
-
-		if(page < pages) {
-			this.updatePage(page);
+		if (this.state.links && this.state.links["next"]) {
+			this.getLogs(this.state.links.next, 1);
 		}
 	}
 
 	previousPage = () => {
-		var page = this.state.tablePage - 1;
-
-		if(page >= 0) {
-			this.updatePage(page);
+		if (this.state.links && this.state.links["prev"]) {
+			this.getLogs(this.state.links.prev, -1);
 		}
-	}
-	
-	updatePage = (p) => {
-		var tableStart = p * this.state.tableLimit;
-		var tableEnd = tableStart + this.state.tableLimit;
-
-		var pageValues = this.state.logs.slice(tableStart, tableEnd);
-		this.setState({pageLogs: pageValues, tablePage: p});
 	}
 
 	logError = (response) => {
@@ -49,34 +37,40 @@ class Logs extends Component {
 		this.setState({loading: false});
 	}
 
-	logSuccess = (response) => {
-		this.setState({logs: response.data.items, loading: false}, () => this.updatePage(0));
+	logSuccess = (response, pageDirection) => {
+		console.log(response.data);
+		this.setState({
+			page: this.state.page + pageDirection, 
+			logs: response.data.items, 
+			links: response.data.links, 
+			count: response.data.count, 
+			loading: false});
 	}
 
-	getLogs = () => {
-		Machinable.logs(this.state.slug).list(this.logSuccess, this.logError);
+	getLogs = (link, direction) => {
+		if (link) {
+			Machinable.logs(this.state.slug).listLink(link, (response) => this.logSuccess(response, direction), this.logError);
+		} else {
+			Machinable.logs(this.state.slug).list((response) => this.logSuccess(response, direction), this.logError);
+		}
 	}
 
 	componentDidMount = () => {		
-		this.getLogs();
+		this.getLogs(null, 1);
 	}
 
 	getTablePageButtons = () => {
 		var buttons = [];
-        buttons.push(<Button key={"table_btn_0"} classes="text plain btn-small" onClick={this.previousPage}>Previous</Button>)
-		buttons.push(<Button key={"table_btn_1"} classes="text plain btn-small" onClick={this.nextPage}>Next</Button>)
+        buttons.push(<Button key={"table_btn_0"} classes={"text plain btn-small " + (this.state.links && this.state.links["prev"] ? "" : "disabled")} onClick={this.previousPage}>Previous</Button>)
+		buttons.push(<Button key={"table_btn_1"} classes={"text plain btn-small " + (this.state.links && this.state.links["next"] ? "" : "disabled")} onClick={this.nextPage}>Next</Button>)
 		return buttons;
 	}
 
 	renderLogs = () => {
-		var tableStart = (this.state.tablePage) * this.state.tableLimit + 1;
-		var tableEnd = tableStart + this.state.tableLimit - 1;
-		var pages = this.state.logs.length / this.state.tableLimit;
-		if(tableEnd > this.state.logs.length - 1) tableEnd = this.state.logs.length;
-        var buttons = this.getTablePageButtons(pages);
+        var buttons = this.getTablePageButtons();
 
 		var headers = ["Event", "Status", "Initiator", <div className="m-th text-right">Created</div>];
-		var logValues = this.state.pageLogs.map(function(log, idx){
+		var logValues = this.state.logs.map(function(log, idx){
 			console.log(log.created);
 			return [
 				<div className="text-small">
@@ -87,13 +81,18 @@ class Logs extends Component {
 				<div className="text-small">{log.initiator}</div>, 
 				<div className="text-small text-muted text-right">{moment(new Date(log.created * 1000)).fromNow()}</div>
 			]
-		}, this)
+		}, this);
 
 		if (logValues.length === 0) {
 			headers = [];
 			logValues = [[<div className="text-center text-muted">No Activity</div>]];
 		}
 
+
+		var tableStart = (this.state.page) * this.state.tableLimit + 1;
+		var tableEnd = tableStart + this.state.tableLimit - 1;
+		if (tableEnd > this.state.count) tableEnd = this.state.count;
+		
 		return (
 			<Table
 					classes="hover m-table"
@@ -101,8 +100,7 @@ class Logs extends Component {
 					values={logValues}
 					footer={<div className="grid grid-2">
 								<div className="text-small text-muted vertical-align">
-									showing {tableStart} to {tableEnd} of {this.state.logs.length} entries
-									{this.state.searchText && " (filtered from "+this.state.logs.length+")"}
+									showing {tableStart} to {tableEnd} of {this.state.count} entries
 								</div>
 								<div className="pull-right">
 									{buttons.map(function(btn, index){
@@ -128,7 +126,7 @@ class Logs extends Component {
     }
 
 	render() {
-		var render = this.state.pageLogs.length > 0 ? this.renderLogs() : this.emptyState();
+		var render = this.state.logs.length > 0 ? this.renderLogs() : this.emptyState();
 
 		return (
 			<div className="grid grid-1">

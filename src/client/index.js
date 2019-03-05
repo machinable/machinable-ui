@@ -287,6 +287,12 @@ class MachinableClient {
                 axios.get(GET_LOGS, {headers: authHeaders})
                     .then(success)
                     .catch(error);
+            },
+
+            listLink: function(link, success, error) {
+                axios.get(link, {headers: authHeaders})
+                    .then(success)
+                    .catch(error);
             }
         }
     }
