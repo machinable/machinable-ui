@@ -386,7 +386,18 @@ class Resources extends Component {
 										
 										<Input placeholder="descriptive title of the resource" label="Title" name="title" value={this.state.newResource.title} onChange={this.onChange}/>
 										<Input placeholder="the url path of this resource" label="Path" name="path_name" value={"/" + this.state.newResource.path_name} onChange={this.onChange}/>
-										<TextArea placeholder={sampleSchema} label="Properties" name="properties" rows={18} value={newProperties} onChange={this.onChange}/>
+										<TextArea 
+											placeholder={sampleSchema} 
+											label="Properties" 
+											description={
+												<div className="margin-top-less text-medium text-muted">
+													Define your resource properties using <a className="link text-400 text-information" target="_blank" rel="noopener" href="https://json-schema.org/">JSON Schema</a>. 
+													Check out <a className="link text-400 text-information" target="_blank" rel="noopener" href="https://json-schema.org/learn/miscellaneous-examples.html">examples</a> to get an idea of how to structure your data.
+												</div>} 
+											name="properties" 
+											rows={18} 
+											value={newProperties} 
+											onChange={this.onChange}/>
 										
 									</div>
 								</Card>

@@ -294,6 +294,9 @@ hr.thin {
 .text-small {
 	font-size: 80%;
 }
+.text-medium {
+	font-size: 90%;
+}
 .text-muted {
 	color: var(--text-muted) !important;
 }
@@ -716,11 +719,6 @@ dl dd {
 	filter: alpha(opacity=65);
 	-webkit-box-shadow: none;
 	box-shadow: none;
-}
-
-/* MODAL */
-.backdrop {
-    background: rgba(0, 0, 0, 0.6) !important;
 }
 
 /* CARDS */
