@@ -79,7 +79,7 @@ class Logs extends Component {
 				</div>, 
 				<span className={"text-400 tag tag-" + (log.status_code+"")[0]}>{log.status_code}</span>,
 				<div className="text-small">{log.initiator}</div>, 
-				<div className="text-small text-muted text-right">{moment(new Date(log.created * 1000)).fromNow()}</div>
+				<div className="text-small text-right">{moment.utc(new Date(log.created * 1000)).format()}</div>
 			]
 		}, this);
 

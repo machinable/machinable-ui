@@ -66,13 +66,16 @@ class Sessions extends Component {
 						<span className="text-muted text-small">last accessed {moment(session.last_accessed).fromNow()}</span>
 					</div>
 				</div>, 
+				<div className="text-small">
+					{session.user_id}
+				</div>,
 				<div>
 					{isCurrent}
 				</div>
 			]
 		}, this);
 
-		var rndr = values.length > 0 ? <Table values={values} /> : this.emptyState();
+		var rndr = values.length > 0 ? <Table headers={["Client", "User ID", ""]} classes="m-table" values={values} /> : this.emptyState();
 
 		return (
 			<div className="grid grid-1">

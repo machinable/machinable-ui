@@ -128,7 +128,7 @@ class Keys extends Component {
                 <div className="vertical-align">
                     <FontAwesomeIcon className="margin-right text-more-muted" style={{"fontSize": "24px"}} icon={faKey} />
                     <div>
-                        <h3 className="text-400 no-margin">{key.description}</h3>
+                        <h4 className="text-400 no-margin">{key.description}</h4>
                         <div className="text-muted text-small margin-top-less">{moment(key.created).fromNow()}</div>
                     </div>
                 </div>,

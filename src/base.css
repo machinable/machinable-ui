@@ -727,6 +727,11 @@ dl dd {
     border: 1px solid var(--card-border-color) !important;
 }
 
+/* TABLE */
+.table>tbody>tr>td {
+    padding: 10px !important;
+}
+
 /**/
 .project-content {
 	padding: 20px;
