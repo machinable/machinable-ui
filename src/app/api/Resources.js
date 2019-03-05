@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Modal, Card, Input, Dropdown, List, ListItem, Table, TextArea } from 'turtle-ui';
 import Loader from '../../components/Loader';
+import Dismiss from '../../components/DismissModalButton';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faEllipsis from '@fortawesome/fontawesome-free-solid/faEllipsisV';
 import Empty from '../../images/empty_board.svg';
@@ -338,7 +339,7 @@ class Resources extends Component {
                                             </div>
                                         </div>
                                     }>
-
+									<Dismiss onClick={this.closeExtraModal}/>
                                     <h2 className="text-center">Delete Resource</h2>
 									<h3 className="text-center">Are you sure you want to delete <strong>{this.state.deleteResource.title}</strong>?</h3>
 									<p className="text-center">

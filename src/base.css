@@ -61,10 +61,11 @@
 }
 
 .page-btn {
-	position: fixed !important;
+	position: absolute !important;
 	right: 50px !important;
+	top: 85px;
 	/* bottom: 50px; */
-	bottom: 240px !important;
+	/* bottom: 240px !important; */
 	border-radius: 100px !important;
 	box-shadow: 1px 2px 3px rgba(0,0,0,.4) !important;
 }

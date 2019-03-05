@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Table, Button, Select, TextArea, Switch, Modal, Card, Dropdown, List, ListItem } from 'turtle-ui';
 import { connect } from 'react-redux';
 import Loader from '../../components/Loader';
+import Dismiss from '../../components/DismissModalButton';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faKey from '@fortawesome/fontawesome-free-solid/faKey';
 import faEllipsis from '@fortawesome/fontawesome-free-solid/faEllipsisV';
@@ -201,6 +202,7 @@ class Keys extends Component {
                                             </div>
                                         </div>
                                     }>
+                                    <Dismiss onClick={this.closeModal} />
 
                                     <h2 className="text-center">New API Key</h2>
 
@@ -260,6 +262,7 @@ class Keys extends Component {
                                             </div>
                                         </div>
                                     }>
+                                    <Dismiss onClick={this.closeModal} />
 
                                     <h2 className="text-center">Delete API Key</h2>
                                     { this.state.errors.length > 0 &&
