@@ -731,6 +731,11 @@ dl dd {
     padding: 10px !important;
 }
 
+/* DROPDOWN */
+.log-filters .dropdown-items.show {
+    margin-top: 5px !important;
+}
+
 /**/
 .project-content {
 	padding: 20px;

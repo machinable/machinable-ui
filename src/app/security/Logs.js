@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { Table, Button } from 'turtle-ui';
+import { Table, Button, Select, Dropdown } from 'turtle-ui';
 import { connect } from 'react-redux';
 import Machinable from '../../client';
 import Loader from '../../components/Loader';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import faSync from '@fortawesome/fontawesome-free-solid/faSync';
 import moment from 'moment';
 
 class Logs extends Component {
@@ -16,7 +18,12 @@ class Logs extends Component {
 			count: 0,
 			links: {},
 			tableLimit: 10,
-            page: -1,
+			page: -1,
+			currentLink: "",
+			filters: {
+				status_code: "all",
+				initiator_type: "all"
+			}
 		}
 	}
 
@@ -33,25 +40,35 @@ class Logs extends Component {
 	}
 
 	logError = (response) => {
-		console.log(response);
 		this.setState({loading: false});
 	}
 
-	logSuccess = (response, pageDirection) => {
-		console.log(response.data);
+	logSuccess = (response, pageDirection, link) => {
 		this.setState({
 			page: this.state.page + pageDirection, 
 			logs: response.data.items, 
 			links: response.data.links, 
 			count: response.data.count, 
-			loading: false});
+			loading: false,
+			currentLink: (link === "" ? this.state.currentLink : link)});
+	}
+
+	refresh = () => {
+		this.setState({page: 0});
+		this.getLogs(this.state.currentLink, 0)
 	}
 
 	getLogs = (link, direction) => {
+		var initiatorTypeFilter = this.state.filters.initiator_type;
+		initiatorTypeFilter = (initiatorTypeFilter === "all" ? "" : initiatorTypeFilter);
+		var statusCodeFilter = this.state.filters.status_code;
+		statusCodeFilter = (statusCodeFilter === "all" ? "" : statusCodeFilter);
+
+		this.setState({loading: true});
 		if (link) {
-			Machinable.logs(this.state.slug).listLink(link, (response) => this.logSuccess(response, direction), this.logError);
+			Machinable.logs(this.state.slug).listLink(link, (response, link) => this.logSuccess(response, direction, ""), this.logError);
 		} else {
-			Machinable.logs(this.state.slug).list((response) => this.logSuccess(response, direction), this.logError);
+			Machinable.logs(this.state.slug).list([initiatorTypeFilter, statusCodeFilter], (response, link) => this.logSuccess(response, direction, link), this.logError);
 		}
 	}
 
@@ -66,12 +83,24 @@ class Logs extends Component {
 		return buttons;
 	}
 
+	onChange = (event) => {
+        const target = event.target;
+	    const value = target.type === 'checkbox' ? target.checked : target.value;
+		const name = target.name;
+		
+		var filters = this.state.filters;
+		filters[name] = value;
+		
+		this.setState({
+			filters: filters
+		});
+    }
+
 	renderLogs = () => {
         var buttons = this.getTablePageButtons();
 
 		var headers = ["Event", "Status", "Initiator", <div className="m-th text-right">Created</div>];
 		var logValues = this.state.logs.map(function(log, idx){
-			console.log(log.created);
 			return [
 				<div className="text-small">
 					<span className="text-400">{log.event}</span>
@@ -92,25 +121,73 @@ class Logs extends Component {
 		var tableStart = (this.state.page) * this.state.tableLimit + 1;
 		var tableEnd = tableStart + this.state.tableLimit - 1;
 		if (tableEnd > this.state.count) tableEnd = this.state.count;
+
+		var initatorTypes = [
+			{value: "all", text: "All"},
+			{value: "initiator_type=admin", text: "Project Administrators"},
+			{value: "initiator_type=user", text: "Application Users"},
+			{value: "initiator_type=", text: "Anonymous Users"}
+		];
+		var statusCodes = [
+			{value: "all", text: "All"},
+			{value: "status_code=200", text: "200 OK"},
+			{value: "status_code=201", text: "201 Created"},
+			{value: "status_code=204", text: "204 No Content"},
+			{value: "status_code=400", text: "400 Bad Request"},
+			{value: "status_code=401", text: "401 Unauthorized"},
+			{value: "status_code=403", text: "403 Forbidden"},
+			{value: "status_code=404", text: "404 Not Found"},
+			{value: "status_code=500", text: "500 Internal Server Error"},
+		];
 		
 		return (
-			<Table
-					classes="hover m-table"
-					headers={headers}
-					values={logValues}
-					footer={<div className="grid grid-2">
-								<div className="text-small text-muted vertical-align">
-									showing {tableStart} to {tableEnd} of {this.state.count} entries
-								</div>
-								<div className="pull-right">
-									{buttons.map(function(btn, index){
-										return (
-											btn
-										)
-									})}
-								</div>
-							</div>}
-				/>
+			<React.Fragment>
+				<div className="log-filters align-right">
+					<Button onClick={this.refresh} classes="plain"><FontAwesomeIcon icon={faSync} /></Button>
+
+					<Dropdown 
+						width={300}
+						showIcon={true}
+						buttonText="Filters"
+						classes="col-1 align-items-right margin-right"
+						disableClickClose={true}
+						buttonClasses="plain">
+						<div className="padding">
+							<Select 
+								onChange={this.onChange} 
+								value={this.state.filters.initiator_type} 
+								name="initiator_type" 
+								classes="margin-bottom" 
+								label="Initiator Type" 
+								options={initatorTypes}/>
+							<Select 
+								onChange={this.onChange} 
+								value={this.state.filters.status_code} 
+								name="status_code" 
+								label="Status Code" 
+								options={statusCodes}/>
+						</div>
+					</Dropdown>
+				</div>
+				
+				<Table
+						classes="hover m-table"
+						headers={headers}
+						values={logValues}
+						footer={<div className="grid grid-2">
+									<div className="text-small text-muted vertical-align">
+										showing {tableStart} to {tableEnd} of {this.state.count} entries
+									</div>
+									<div className="pull-right">
+										{buttons.map(function(btn, index){
+											return (
+												btn
+											)
+										})}
+									</div>
+								</div>}
+					/>
+			</React.Fragment>
 		)
 	}
 
@@ -126,11 +203,11 @@ class Logs extends Component {
     }
 
 	render() {
-		var render = this.state.logs.length > 0 ? this.renderLogs() : this.emptyState();
+		var render = this.renderLogs()
 
 		return (
 			<div className="grid grid-1">
-				<Loader loading={this.state.loading} />
+				{this.state.loading && <Loader loading={this.state.loading} />}
 				{!this.state.loading && render}
 			</div>
 		  );

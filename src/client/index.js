@@ -279,12 +279,16 @@ class MachinableClient {
     }
 
     logs(projectSlug) {
-        var GET_LOGS = this.projectHost(projectSlug) + "/logs/";
+        var GET_LOGS = this.projectHost(projectSlug) + "/logs/?_sort=-created";
         var authHeaders = this.getAuthHeaders();
 
         return {
-            list: function(success, error) {
-                axios.get(GET_LOGS, {headers: authHeaders})
+            list: function(filters, success, error) {
+                var f = "";
+                if(filters.length > 0) {
+                    f = "&" + filters.join("&");
+                }
+                axios.get(GET_LOGS + f, {headers: authHeaders})
                     .then(success)
                     .catch(error);
             },
