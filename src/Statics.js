@@ -1,4 +1,5 @@
 class Statics {
+	APP_NAME = "Machinable";
 	MGMT_API_HOST = "http://manage.machinable.test:5001";
 	PROJECT_API_HOST = "http://{project-slug}.machinable.test:5001";
 	//MGMT_API_HOST = "https://manage.machinable.io";
@@ -9,11 +10,14 @@ class Statics {
 	COLLECTIONS = "collections";
 	API = "api";
 
+	DOCS = {
+		JSON_SCHEMA_SAMPLES: "https://machinable.github.io/documentation/reference/#json-schema" 
+	};
+
 	GenerateAPIHost = (slug) => {
 		return this.PROJECT_API_HOST.replace("{project-slug}", slug);
 	}
 
-	APP_NAME = "Machinable";
 }
 
 export default new Statics();

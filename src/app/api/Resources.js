@@ -392,7 +392,7 @@ class Resources extends Component {
 											description={
 												<div className="margin-top-less text-medium text-muted">
 													Define your resource properties using <a className="link text-400 text-information" target="_blank" rel="noopener" href="https://json-schema.org/">JSON Schema</a>. 
-													Check out <a className="link text-400 text-information" target="_blank" rel="noopener" href="https://json-schema.org/learn/miscellaneous-examples.html">examples</a> to get an idea of how to structure your data.
+													Check out our <a className="link text-400 text-information" target="_blank" rel="noopener" href={Statics.DOCS.JSON_SCHEMA_SAMPLES}>samples schemas</a> to get an idea of how to structure your data.
 												</div>} 
 											name="properties" 
 											rows={18} 
