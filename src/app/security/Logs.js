@@ -143,7 +143,7 @@ class Logs extends Component {
 		return (
 			<React.Fragment>
 				<div className="log-filters align-right">
-					<Button onClick={this.refresh} classes="plain"><FontAwesomeIcon icon={faSync} /></Button>
+					<Button onClick={this.refresh} classes="plain btn-small"><FontAwesomeIcon icon={faSync} /></Button>
 
 					<Dropdown 
 						width={300}
@@ -151,7 +151,7 @@ class Logs extends Component {
 						buttonText="Filters"
 						classes="col-1 align-items-right margin-right"
 						disableClickClose={true}
-						buttonClasses="plain">
+						buttonClasses="plain btn-small">
 						<div className="padding">
 							<Select 
 								onChange={this.onChange} 
