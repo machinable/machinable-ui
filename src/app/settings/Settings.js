@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Switch } from 'turtle-ui';
+import { Button, Switch, Modal, Card } from 'turtle-ui';
 import { connect } from 'react-redux';
 import Statics from '../../Statics';
 import Machinable from '../../client';
@@ -14,7 +14,9 @@ class Settings extends Component {
 			copyText: {
 				projectName: "Copy",
 				projectHost: "Copy"
-			}
+			},
+			loading: false,
+			showDeleteModal: false
 		}
 	}
 
@@ -73,6 +75,29 @@ class Settings extends Component {
 		}, () => this.revertCopyText(id));
 	}
 
+	closeDeleteModal = () => {
+		this.setState({showDeleteModal: false});
+	}
+
+	openDeleteModal = () => {
+		this.setState({showDeleteModal: true});
+	}
+
+	deleteProject = () => {
+		this.setState({loading: true});
+		Machinable.projects().delete(this.state.project.slug, this.viewProjects, this.deleteError);
+	}
+	
+	deleteError = (response) => {
+		console.log(response); 
+		this.setState({loading: false});
+	}
+
+	viewProjects = () => {
+		const history = this.props.history;
+        history.push('/home/projects');
+    }
+
 	render() {
 		var hostName = Statics.GenerateAPIHost(this.state.project.slug);
 		return (
@@ -124,11 +149,42 @@ class Settings extends Component {
 							<p className="text-muted padding-bottom no-margin">Once you delete a project, it cannot be undone. Please be certain.</p>
 						</div>
 						<div className="vertical-align align-right">
-							<Button classes="danger plain">Delete Project</Button>
+							<Button classes="danger plain" onClick={this.openDeleteModal}>Delete Project</Button>
 						</div>
 					</div>
 					<hr/>
 				</div>
+
+				<Modal 
+					close={this.closeDeleteModal}
+					isOpen={this.state.showDeleteModal}>
+                    <div className="align-center grid grid-3">
+                        <div className="col-3-2">
+                            <div className=" grid grid-1">
+                                <Card
+                                    classes="footer-plain no-border"
+                                    footer={
+                                        <div className="grid grid-2">
+                                            <div className="col-2 col-right">
+                                                <Button classes="plain text" onClick={this.closeDeleteModal}>Cancel</Button>	
+                                                <Button classes="danger margin-left" type="submit" loading={this.state.loading} onClick={this.deleteProject}>Yes, I'm sure</Button>	
+                                            </div>
+                                        </div>
+                                    }>
+
+                                    <h2 className="text-center">Delete Project '{this.state.project.name}'</h2>
+									<h3 className="text-center">Are you sure you want to delete <strong>{this.state.project.name}</strong>?</h3>
+									<p className="text-center">
+										This will delete all data stored in this project.
+									</p>
+									<p className="text-center">
+										<strong>This cannot be undone, please be sure you want this project and all associated data to be permanently deleted.</strong>
+									</p>
+                                </Card>
+                            </div>
+                        </div>
+                    </div>
+                </Modal>
 			</div>
 		  );
 	}

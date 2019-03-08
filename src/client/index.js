@@ -76,6 +76,7 @@ class MachinableClient {
     projects() {
         var GET_PROJECTS = MGMT_API_HOST + "/projects/";
         var UPDATE_PROJECT =  MGMT_API_HOST + "/projects/{id}";
+        var DELETE_PROJECT =  MGMT_API_HOST + "/projects/{slug}";
         var authHeaders = this.getAuthHeaders();
 
         return {
@@ -95,7 +96,13 @@ class MachinableClient {
                 axios.get(GET_PROJECTS, {headers: authHeaders})
                 .then(success)
                 .catch(error);
-            }
+            },
+
+            delete: function(slug, success, error) {
+                axios.delete(DELETE_PROJECT.replace("{slug}", slug), {headers: authHeaders})
+                    .then(success)
+                    .catch(error);
+            },
         }
     }
 
