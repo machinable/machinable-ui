@@ -13,8 +13,11 @@ import Graph from '../images/project/graph.svg';
 import Group from '../images/project/group.svg';
 import Internet from '../images/project/internet.svg';
 import Rocket from '../images/project/rocket.svg';
-import Statse from '../images/project/stats.svg';
+import Stats from '../images/project/stats.svg';
 import Structures from '../images/project/structure.svg';
+import Dog from '../images/project/dog.svg';
+import Cat from '../images/project/cat.svg';
+import Robot from '../images/project/robot.svg';
 
 // TODO
 const SOURCES = {
@@ -31,8 +34,11 @@ const SOURCES = {
     "group": Group,
     "internet": Internet,
     "rocket": Rocket,
-    "stats": Statse,
-    "structures": Structures
+    "stats": Stats,
+    "structures": Structures,
+    "dog": Dog,
+    "cat": Cat,
+    "robot": Robot
 };
 
 class Icon extends Component {

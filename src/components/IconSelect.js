@@ -17,7 +17,10 @@ const iconList = [
     "internet",
     "rocket",
     "stats",
-    "structures"
+    "structures",
+    "dog",
+    "cat",
+    "robot"
 ];
 
 class IconSelect extends Component {

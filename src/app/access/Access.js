@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { Nav } from 'turtle-ui';
+import Querying from '../documentation/API';
+import AccessDocs from '../documentation/Access';
+import Examples from '../documentation/Examples';
 import Users from './Users';
 import Keys from './Keys';
-import Examples from '../documentation/Examples';
 
 class Access extends Component {
 	render() {
@@ -36,15 +38,9 @@ class Access extends Component {
 					<div className="page-docs">
 						<h4 className="text-more-muted text-600">DOCUMENTATION</h4>
 						<div className="grid grid-3">
-							<div>
-								<a className="link text-400 text-information">Overview</a>
-								<p className="text-muted">Read more about users and API keys.</p>
-							</div>
-							<div>
-								<a className="link text-400 text-information">API</a>
-								<p className="text-muted">Learn how to manage user JSON web tokens or make requests with API keys.</p>
-							</div>
-							<Examples/>
+							<AccessDocs />
+							<Querying />
+							<Examples />
 						</div>
 					</div>
 				</div>

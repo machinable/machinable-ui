@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { Nav } from 'turtle-ui';
+import Querying from '../documentation/API';
+import CollectionDocs from '../documentation/Collections';
+import Examples from '../documentation/Examples';
 import Data from './Data';
 import Usage from './Usage';
 
@@ -40,18 +43,9 @@ class Collections extends Component {
 					<div className="page-docs">
 						<h4 className="text-more-muted text-600">DOCUMENTATION</h4>
 						<div className="grid grid-3">
-							<div>
-								<a className="link text-400 text-information">Overview</a>
-								<p className="text-muted">Understand what Collections are and how to manage them.</p>
-							</div>
-							<div>
-								<a className="link text-400 text-information">Collections API</a>
-								<p className="text-muted">Read and write to collections with our RESTful API.</p>
-							</div>
-							<div>
-								<a className="link text-400 text-information">Examples</a>
-								<p className="text-muted">View the Machinable Github page to see example applications.</p>
-							</div>
+							<CollectionDocs />
+							<Querying />
+							<Examples />
 						</div>
 					</div>
 				</div>

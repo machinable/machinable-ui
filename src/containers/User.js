@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Footer from '../components/Footer';
 import Logo from '../components/Logo';
+import API from '../app/documentation/API';
+import Examples from '../app/documentation/Examples';
+import Overview from '../app/documentation/Overview';
 import Login from '../app/user/Login';
 import Register from '../app/user/Register';
 import { Route, Switch } from 'react-router-dom';
@@ -68,18 +71,9 @@ class User extends Component {
 							<div>
 								<h4 className="text-more-muted text-600"><br/>DOCUMENTATION</h4>
 								<div className="grid grid-3">
-									<div>
-										<a className="link text-400 text-information">Overview</a>
-										<p className="text-muted">Machinable user documentation. Create and manage your projects.</p>
-									</div>
-									<div>
-										<a className="link text-400 text-information">API</a>
-										<p className="text-muted">Machinable RESTful API documentation.</p>
-									</div>
-									<div>
-										<a className="link text-400 text-information">Samples</a>
-										<p className="text-muted">View the Machinable Github page for sample applications.</p>
-									</div>
+									<Overview />
+									<API />
+									<Examples />
 								</div>
 							</div>
 						</div>

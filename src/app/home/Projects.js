@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { TextArea, Modal, Input, Button, Card, Switch } from 'turtle-ui';
+import API from '../documentation/API';
+import Examples from '../documentation/Examples';
+import Overview from '../documentation/Overview';
 import Loader from '../../components/Loader';
 import ProjectIcon from '../../components/ProjectIcon';
 import IconSelect from '../../components/IconSelect';
@@ -250,18 +253,9 @@ class Projects extends Component {
                     <div>
                         <h4 className="text-more-muted text-600">DOCUMENTATION</h4>
                         <div className="grid grid-3">
-                            <div>
-                                <a className="link text-400 text-information">Overview</a>
-                                <p className="text-muted">Machinable user documentation. Create and manage your projects.</p>
-                            </div>
-                            <div>
-                                <a className="link text-400 text-information">API</a>
-                                <p className="text-muted">Machinable RESTful API documentation.</p>
-                            </div>
-                            <div>
-                                <a className="link text-400 text-information">Samples</a>
-                                <p className="text-muted">View the Machinable Github page for sample applications.</p>
-                            </div>
+                            <Overview />
+                            <API />
+                            <Examples />
                         </div>
                     </div>
                 </div>

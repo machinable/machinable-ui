@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { Nav, Button } from 'turtle-ui';
+import Querying from '../documentation/API';
+import ResourceDocs from '../documentation/Resources';
+import Examples from '../documentation/Examples';
 import Resources from './Resources';
 import Usage from './Usage';
 
@@ -49,18 +52,9 @@ class API extends Component {
 					<div className="page-docs">
 						<h4 className="text-more-muted text-600">DOCUMENTATION</h4>
 						<div className="grid grid-3">
-							<div>
-								<a className="link text-400 text-information">Overview</a>
-								<p className="text-muted">Understand what API Resource Definitions are and how to manage them.</p>
-							</div>
-							<div>
-								<a className="link text-400 text-information">Resources API</a>
-								<p className="text-muted">Configure definitions with our RESTful API.</p>
-							</div>
-							<div>
-								<a className="link text-400 text-information">Examples</a>
-								<p className="text-muted">View the Machinable Github page to see example applications.</p>
-							</div>
+							<ResourceDocs />
+							<Querying />
+							<Examples />
 						</div>
 					</div>
 					

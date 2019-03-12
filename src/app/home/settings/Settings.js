@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { Nav } from 'turtle-ui';
-
+import API from '../../documentation/API';
+import Examples from '../../documentation/Examples';
+import Overview from '../../documentation/Overview';
 import Account from './Account';
 import Password from './Password';
 import Billing from './Billing';
@@ -88,18 +90,9 @@ class Settings extends Component {
                     <div>
                         <h4 className="text-more-muted text-600">DOCUMENTATION</h4>
                         <div className="grid grid-3">
-                            <div>
-                                <a className="link text-400 text-information">Overview</a>
-                                <p className="text-muted">Machinable user documentation. Create and manage your projects.</p>
-                            </div>
-                            <div>
-                                <a className="link text-400 text-information">API</a>
-                                <p className="text-muted">Machinable RESTful API documentation.</p>
-                            </div>
-                            <div>
-                                <a className="link text-400 text-information">Samples</a>
-                                <p className="text-muted">View the Machinable Github page for sample applications.</p>
-                            </div>
+                            <Overview />
+                            <API />
+                            <Examples />
                         </div>
                     </div>
                 </div>

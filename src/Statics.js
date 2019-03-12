@@ -11,7 +11,14 @@ class Statics {
 	API = "api";
 
 	DOCS = {
-		JSON_SCHEMA_SAMPLES: "https://machinable.github.io/documentation/reference/#json-schema" 
+		JSON_SCHEMA_SAMPLES: "https://machinable.github.io/documentation/reference/json_schema/",
+		SAMPLE_PROJECTS: "https://machinable.github.io/documentation/reference/sample_projects/",
+		QUERYING: "https://machinable.github.io/documentation/querying_data/crud/",
+		PROJECTS: "https://machinable.github.io/documentation/projects/introduction/",
+		RESOURCES: "https://machinable.github.io/documentation/projects/resources/",
+		COLLECTIONS: "https://machinable.github.io/documentation/projects/collections/",
+		ACCESS: "https://machinable.github.io/documentation/projects/access/",
+		OVERVIEW: "https://machinable.github.io/documentation/"
 	};
 
 	GenerateAPIHost = (slug) => {
