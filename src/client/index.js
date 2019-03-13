@@ -229,6 +229,7 @@ class MachinableClient {
     users(projectSlug) {
         var GET_USERS = this.projectHost(projectSlug) + "/users/";
         var DELETE_USER = this.projectHost(projectSlug) + "/users/{id}";
+        var UPDATE_USER = this.projectHost(projectSlug) + "/users/{id}";
         var authHeaders = this.getAuthHeaders();
 
         return {
@@ -248,6 +249,12 @@ class MachinableClient {
                 axios.delete(DELETE_USER.replace("{id}", id), {headers: authHeaders})
                     .then(success)
                     .catch(error);
+            },
+
+            update: function(user, success, error){
+                axios.put(DELETE_USER.replace("{id}", user.id), user,{headers: authHeaders})
+                    .then(success)
+                    .catch(error);
             }
         }
     }
@@ -256,6 +263,7 @@ class MachinableClient {
         var GET_APIKEYS = this.projectHost(projectSlug) + "/keys/";
         var GENERATE_KEY = this.projectHost(projectSlug) + "/keys/generate";
         var DELETE_KEY = this.projectHost(projectSlug) + "/keys/{id}";
+        var UPDATE_KEY = this.projectHost(projectSlug) + "/keys/{id}";
         var authHeaders = this.getAuthHeaders();
 
         return {
@@ -279,6 +287,12 @@ class MachinableClient {
 
             delete: function(id, success, error) {
                 axios.delete(DELETE_KEY.replace("{id}", id), {headers: authHeaders})
+                    .then(success)
+                    .catch(error);
+            },
+
+            update: function(key, success, error) {
+                axios.put(UPDATE_KEY.replace("{id}", key.id), key, {headers: authHeaders})
                     .then(success)
                     .catch(error);
             }

@@ -24,10 +24,13 @@ class Keys extends Component {
             keys: [],
             showModal: false,
             showDeleteModal: false,
+            showUpdateModal: false,
             slug: props.slug, 
             errors: [],
             newKey: {},
-            deleteKey: {description:""}
+            updateKey: {},
+            deleteKey: {description:""},
+            copied: {}
 		}
 	}
 
@@ -42,7 +45,7 @@ class Keys extends Component {
     }
 
     keySuccess = (response) => {
-        this.setState({keys: response.data.items, loading: false, showModal: false, showDeleteModal: false});
+        this.setState({keys: response.data.items, loading: false, showModal: false, showDeleteModal: false, showUpdateModal: false});
     }
 
     getKeys = () => {
@@ -56,7 +59,7 @@ class Keys extends Component {
     closeModal = () => {
 		var html = document.getElementsByTagName('html')[0];
         html.style.cssText = "--root-overflow: auto";
-		this.setState({showModal: false, showDeleteModal: false});
+		this.setState({showModal: false, showDeleteModal: false, showUpdateModal: false});
 	}
 
 	openModal = (response) => {
@@ -70,7 +73,13 @@ class Keys extends Component {
 		var html = document.getElementsByTagName('html')[0];
         html.style.cssText = "--root-overflow: hidden";
 		this.setState({showDeleteModal: true, deleteKey: key});
-	}
+    }
+    
+    openUpdateModal = (key) => {
+		var html = document.getElementsByTagName('html')[0];
+        html.style.cssText = "--root-overflow: hidden";
+		this.setState({showUpdateModal: true, updateKey:{"id": key.id, "write": key.write, "read": key.read, "description": key.description, "role": key.role}});
+    }
 
 	deleteKey = () => {
 		this.setState({loading: true});
@@ -93,10 +102,50 @@ class Keys extends Component {
 	    });
     }
 
+    onUpdateChange = (event) => {
+        const target = event.target;
+	    const value = target.type === 'checkbox' ? target.checked : target.value;
+	    const name = target.name;
+        var uk = this.state.updateKey;
+        uk[name] = value;
+        
+	    this.setState({
+	    	updateKey: uk
+	    });
+    }
+
     createKey = () => {
         this.setState({loading: true, errors: []});
-        Machinable.keys(this.state.slug).create(this.state.newKey, this.getKeys, this.createKeyError)
+        Machinable.keys(this.state.slug).create(this.state.newKey, this.getKeys, this.createKeyError);
     }
+
+    updateKey = () => {
+        this.setState({loading: true, errors: []});
+        Machinable.keys(this.state.slug).update(this.state.updateKey, this.getKeys, this.createKeyError);
+    }
+
+	revertCopyText = (id) => {
+		setTimeout(function(){
+            var copied = this.state.copied;
+			delete copied[id];
+			this.setState({
+				copied: copied
+			});
+		}.bind(this), 3000);
+	}
+
+	copyText = (id) => {
+		var copyEl = document.getElementById(id);
+		copyEl.select();
+		document.execCommand("Copy");
+
+		var copied = this.state.copied;
+		copied[id] = "Copied";
+		this.setState({
+			copied: copied
+		}, () => this.revertCopyText(id));
+	}
+
     
     emptyState = () => {
         return (
@@ -116,6 +165,7 @@ class Keys extends Component {
     renderKeys = () => {
         var tableValues = this.state.keys.map(function(key, idx){
             var accessList = [];
+            var copyId = "keyid-"+key.id;
             if(key.read) {
                 accessList.push("read");
             }
@@ -137,7 +187,8 @@ class Keys extends Component {
                 <div>{accessList.join(" / ")}</div>,
                 <div className="align-right">
                     <span className="vertical-align">
-                        {key.id} <Button classes="btn-small margin-left">Copy</Button>
+                        {key.id} <Button classes="btn-small margin-left" onClick={() => this.copyText(copyId)}>{this.state.copied[copyId] ? "Copied" : "Copy"}</Button>
+                        <textarea cols="1000" className="copy-text" id={copyId} value={key.id} readOnly/>
                     </span>
                 </div>,
                 <div className=" align-right">
@@ -149,9 +200,9 @@ class Keys extends Component {
                         classes="align-items-right">
                         <div className="grid grid-1">
                             <List>
-                                <ListItem title={<div className="text-center">Edit Access</div>}/>
+                                <ListItem onClick={() => this.openUpdateModal(key)} title={<div className="text-center">Edit Access</div>}/>
                                 <hr className="no-margin no-padding"/>
-                                <ListItem title={<div className="text-center text-danger text-400" onClick={() => this.openDeleteModal(key)}>Delete</div>}/>
+                                <ListItem onClick={() => this.openDeleteModal(key)} title={<div className="text-center text-danger text-400">Delete</div>}/>
                             </List>
                         </div>
                     </Dropdown>
@@ -171,12 +222,6 @@ class Keys extends Component {
         )
     }
 
-	copyText = (id) => {
-		var copyText = document.getElementById(id);
-		copyText.select();
-		document.execCommand("Copy");
-    }
-    
 	render() {
 
         var renderKeys = this.state.keys.length > 0 ? this.renderKeys() : this.emptyState();
@@ -236,6 +281,63 @@ class Keys extends Component {
                                             <div className="align-center vertical-align">
                                                 <strong className="margin-right">Write</strong>
                                                 <Switch name="write" on={this.state.newKey.write} onChange={this.onChange}/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </Card>
+                            </div>
+                        </div>
+                    </div>
+                </Modal>
+
+                <Modal 
+					close={this.closeModal}
+					isOpen={this.state.showUpdateModal}>
+                    <div className="align-center grid grid-3">
+                        <div className="col-3-2">
+                            <div className=" grid grid-1">
+                                <Card
+                                    classes="footer-plain no-border"
+                                    footer={
+                                        <div className="grid grid-2">
+                                            <div className="col-2 col-right">
+                                                <Button classes="plain text" onClick={this.closeModal}>Cancel</Button>	
+                                                <Button classes="brand margin-left" type="submit" loading={this.state.loading} onClick={this.updateKey}>Update</Button>	
+                                            </div>
+                                        </div>
+                                    }>
+                                    <Dismiss onClick={this.closeModal} />
+
+                                    <h2 className="text-center">Update API Key</h2>
+
+                                    { this.state.errors.length > 0 &&
+                                        <div className="text-danger text-center margin-bottom-more">
+                                            {this.state.errors.map(function(error){
+                                                return (<div className="text-400 padding-bottom">{error}</div>)
+                                            })}
+                                        </div>
+                                    }
+
+                                    <div className="grid grid-1">
+                                        
+                                        <strong>Key Description</strong>
+                                        <div className="background-content padding-bit-less vertical-align">
+                                            <span>{this.state.updateKey.description}</span>
+                                        </div>
+                                        <Select label="Role & Access" placeholder="select role" name="role" value={this.state.updateKey.role} options={roleOptions} onChange={this.onUpdateChange}/>
+                                        <div className="text-small text-muted text-center">
+                                            {this.state.updateKey.role === "user" && <span><code>Users</code> will only have access to objects that they have created, depending on the collection/resource policy.</span>}
+                                            {this.state.updateKey.role === "admin" && <span><code>Administrators</code> will have access to all created objects.</span>}
+                                        </div>
+                                        <div className="grid grid-2">
+                                            <div className="align-center vertical-align">
+                                                <strong className="margin-right">Read</strong>
+                                                <Switch name="read" on={this.state.updateKey.read} onChange={this.onUpdateChange}/>
+                                            </div>
+                                            <div className="align-center vertical-align">
+                                                <strong className="margin-right">Write</strong>
+                                                <Switch name="write" on={this.state.updateKey.write} onChange={this.onUpdateChange}/>
                                             </div>
                                         </div>
                                     </div>

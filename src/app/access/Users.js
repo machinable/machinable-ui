@@ -23,6 +23,8 @@ class Users extends Component {
             loading: true,
             users: [],
             showModal: false,
+            showDeleteModal: false,
+            showUpdateModal: false,
             slug: props.slug,
             newUser: {
                 username: "",
@@ -30,9 +32,10 @@ class Users extends Component {
                 read: true,
                 write: false
             },
+            updateUser: {},
             errors: [],
-			showDeleteModal: false,
-            deleteUser: {username:""}
+            deleteUser: {username:""},
+            copied: {}
 		}
     }
     
@@ -59,7 +62,14 @@ class Users extends Component {
     }
 
     usersSuccess = (response) => {
-        this.setState({users: response.data.items, loading: false, showModal: false, showDeleteModal: false, newUser: this.userReset()});
+        this.setState({
+            users: response.data.items, 
+            loading: false, 
+            showModal: false, 
+            showDeleteModal: false, 
+            showUpdateModal: false, 
+            newUser: this.userReset()
+        });
     }
 
     getUsers = () => {
@@ -73,7 +83,7 @@ class Users extends Component {
     closeModal = () => {
 		var html = document.getElementsByTagName('html')[0];
         html.style.cssText = "--root-overflow: auto";
-		this.setState({showModal: false, showDeleteModal: false});
+		this.setState({showModal: false, showDeleteModal: false, showUpdateModal: false});
 	}
 
 	openModal = () => {
@@ -86,12 +96,23 @@ class Users extends Component {
 		var html = document.getElementsByTagName('html')[0];
         html.style.cssText = "--root-overflow: hidden";
 		this.setState({showDeleteModal: true, deleteUser: user});
+    }
+    
+    openUpdateModal = (user) => {
+		var html = document.getElementsByTagName('html')[0];
+        html.style.cssText = "--root-overflow: hidden";
+		this.setState({showUpdateModal: true, updateUser: {read: user.read, write: user.write, role: user.role, id: user.id, username: user.username}});
 	}
 
 	deleteUser = () => {
 		this.setState({loading: true});
 		Machinable.users(this.state.slug).delete(this.state.deleteUser.id, this.getUsers, this.usersError);
-	}
+    }
+    
+    updateUser = () => {
+		this.setState({loading: true});
+		Machinable.users(this.state.slug).update(this.state.updateUser, this.getUsers, this.usersError);
+    }
 
     createUser = () => {
 	    this.setState({
@@ -132,6 +153,40 @@ class Users extends Component {
 	    	newUser: nu
 	    });
     }
+        
+    onUpdateChange = (event) => {
+        const target = event.target;
+	    const value = target.type === 'checkbox' ? target.checked : target.value;
+	    const name = target.name;
+        var uu = this.state.updateUser;
+        uu[name] = value;
+        
+	    this.setState({
+	    	updateUser: uu
+	    });
+    }
+
+	revertCopyText = (id) => {
+		setTimeout(function(){
+            var copied = this.state.copied;
+			delete copied[id];
+			this.setState({
+				copied: copied
+			});
+		}.bind(this), 3000);
+	}
+
+	copyText = (id) => {
+		var copyEl = document.getElementById(id);
+		copyEl.select();
+		document.execCommand("Copy");
+
+		var copied = this.state.copied;
+		copied[id] = "Copied";
+		this.setState({
+			copied: copied
+		}, () => this.revertCopyText(id));
+	}
 
     emptyState = () => {
         return (
@@ -151,6 +206,7 @@ class Users extends Component {
     renderTable = () => {
         var tableValues = this.state.users.map(function(user, idx){
             var accessList = [];
+            var copyId = "userid-"+user.id;
             if(user.read) {
                 accessList.push("read");
             }
@@ -169,7 +225,8 @@ class Users extends Component {
                 <div>{accessList.join(" / ")}</div>,
                 <div className="align-right">
                     <span className="vertical-align">
-                        {user.id} <Button classes="btn-small margin-left">Copy</Button>
+                        {user.id} <Button classes="btn-small margin-left" onClick={() => this.copyText(copyId)}>{this.state.copied[copyId] ? "Copied" : "Copy"}</Button>
+                        <textarea cols="1000" className="copy-text"  id={copyId} value={user.id} readOnly/>
                     </span>
                 </div>,
                 <div className=" align-right">
@@ -181,9 +238,9 @@ class Users extends Component {
                         classes="align-items-right">
                         <div className="grid grid-1">
                             <List>
-                                <ListItem title={<div className="text-center">Edit Access</div>}/>
+                                <ListItem onClick={() => this.openUpdateModal(user)} title={<div className="text-center">Edit Access</div>}/>
                                 <hr className="no-margin no-padding"/>
-                                <ListItem title={<div className="text-center text-danger text-400" onClick={() => this.openDeleteModal(user)}>Delete</div>}/>
+                                <ListItem onClick={() => this.openDeleteModal(user)} title={<div className="text-center text-danger text-400">Delete</div>}/>
                             </List>
                         </div>
                     </Dropdown>
@@ -254,6 +311,62 @@ class Users extends Component {
                                             <div className="align-center vertical-align">
                                                 <strong className="margin-right">Write</strong>
                                                 <Switch name="write" on={this.state.newUser.write} onChange={this.onChange}/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </Card>
+                            </div>
+                        </div>
+                    </div>
+                </Modal>
+
+                <Modal 
+					close={this.closeModal}
+					isOpen={this.state.showUpdateModal}>
+                    <div className="align-center grid grid-3">
+                        <div className="col-3-2">
+                            <div className=" grid grid-1">
+                                <Card
+                                    classes="footer-plain no-border"
+                                    footer={
+                                        <div className="grid grid-2">
+                                            <div className="col-2 col-right">
+                                                <Button classes="plain text" onClick={this.closeModal}>Cancel</Button>	
+                                                <Button classes="brand margin-left" type="submit" loading={this.state.loading} onClick={this.updateUser}>Update</Button>	
+                                            </div>
+                                        </div>
+                                    }>
+                                    <Dismiss onClick={this.closeModal} />
+
+                                    <h2 className="text-center">Update Project User</h2>
+
+                                    { this.state.errors.length > 0 &&
+                                        <div className="text-danger text-center margin-bottom-more">
+                                            {this.state.errors.map(function(error){
+                                                return (<div className="text-400 padding-bottom">{error}</div>)
+                                            })}
+                                        </div>
+                                    }
+
+                                    <div className="grid grid-1">
+                                        <strong>Username</strong>
+                                        <div className="background-content padding-bit-less vertical-align">
+                                            <span>{this.state.updateUser.username}</span>
+                                        </div>
+                                        <Select label="Role & Access" placeholder="select role" name="role" value={this.state.updateUser.role} options={roleOptions} onChange={this.onUpdateChange}/>
+                                        <div className="text-small text-muted text-center">
+                                            {this.state.updateUser.role === "user" && <span><code>Users</code> will only have access to objects that they have created, depending on the collection/resource policy.</span>}
+                                            {this.state.updateUser.role === "admin" && <span><code>Administrators</code> will have access to all created objects.</span>}
+                                        </div>
+                                        <div className="grid grid-2">
+                                            <div className="align-center vertical-align">
+                                                <strong className="margin-right">Read</strong>
+                                                <Switch name="read" on={this.state.updateUser.read} onChange={this.onUpdateChange}/>
+                                            </div>
+                                            <div className="align-center vertical-align">
+                                                <strong className="margin-right">Write</strong>
+                                                <Switch name="write" on={this.state.updateUser.write} onChange={this.onUpdateChange}/>
                                             </div>
                                         </div>
                                     </div>

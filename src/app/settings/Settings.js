@@ -32,10 +32,6 @@ class Settings extends Component {
 		}
 	}
 
-	componentDidMount = () => {		
-
-	}
-
 	componentDidUpdate = (prevProps) => {
 		var newSlug = this.props.project.slug;
 		var oldSlug = prevProps.project.slug;
