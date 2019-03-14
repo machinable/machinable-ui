@@ -1,67 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Empty from '../../images/usage.svg';
-import Machinable from '../../client';
-import ReactJson from 'react-json-view';
+import Timings from './usage/Timings';
+import Codes from './usage/Codes';
+import Stats from './usage/Stats';
 
 class Usage extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			loadingStats: true,
-			loadingTimings: true,
-			loadingCodes: true,
-			slug: props.slug,
-			stats: undefined,
-			timings: undefined,
-			codes: undefined
+			slug: props.slug
 		}
-	}
-
-	statsError = (response) => {
-		console.log(response);
-		this.setState({loadingStats: false});
-	}
-
-	statsSuccess = (response) => {
-		this.setState({loadingStats: false, stats: response.data});
-	}
-
-	loadStats = () => {
-		Machinable.collections(this.state.slug).stats(this.statsSuccess, this.statsError)
-	}
-
-	timingsError = (response) => {
-		console.log(response);
-		this.setState({loadingTimings: false});
-	}
-
-	timingsSuccess = (response) => {
-		this.setState({loadingTimings: false, timings: response.data});
-	}
-
-	loadTimings = () => {
-		Machinable.collections(this.state.slug).timings(this.timingsSuccess, this.timingsError)
-	}
-
-	codesError = (response) => {
-		console.log(response);
-		this.setState({loadingCodes: false});
-	}
-
-	codesSuccess = (response) => {
-		this.setState({loadingCodes: false, codes: response.data});
-	}
-
-	loadCodes = () => {
-		Machinable.collections(this.state.slug).codes(this.codesSuccess, this.codesError)
-	}
-
-	componentDidMount = () => {
-		this.loadStats();
-		this.loadTimings();
-		this.loadCodes();
 	}
 
 	emptyState = () => {
@@ -75,11 +25,13 @@ class Usage extends Component {
 	}
 
 	render() {
+		var c = <Codes />;
+		c = (c === 0) ? <div>empty</div> : c;
 		return (
 			<div className="grid grid-2">
-				<div className="code"><ReactJson collapsed={2} name={false} iconStyle="square" src={this.state.codes} /></div>
-				<div className="code"><ReactJson collapsed={2} name={false} iconStyle="square" src={this.state.stats} /></div>
-				<div className="code"><ReactJson collapsed={2} name={false} iconStyle="square" src={this.state.timings} /></div>
+				{c}
+				<Stats />
+				<Timings />
 			</div>
 		  );
 	}
