@@ -6,8 +6,8 @@ import ReactJson from 'react-json-view';
 import moment from 'moment';
 import {Line} from 'react-chartjs-2';
 
-// https://cdn-images-1.medium.com/max/800/1*B29h3NSglI42HGhWZA-5Mg.png
-const COLORS = ["#1C2463", "#5BB8D0", "#2A4B91", "#B6DECA", "#3C83B5"];
+// https://superdevresources.com/tools/color-shades#1c2463
+const COLORS = ["#39cde0", "#1fb3c6", "#188c9a", "#11646e"];
 
 class Timings extends Component {
 	constructor(props) {
@@ -70,15 +70,19 @@ class Timings extends Component {
                 data.push(null);
             } 
             else {
-                data.push(dataMap[t]);
+                data.push(dataMap[t].toFixed(2));
             }
         }
 
         var chartData = {
-            label: "Avg Response Time", 
+            label: "Avg Response Time (ms)", 
             data: data,
             borderWidth: 0,
             backgroundColor: COLORS[0],
+            borderColor: COLORS[0], 
+            pointBorderColor: "#FFF",
+            pointBorderWidth: 2,
+            pointRadius: 5,
             fill: false,
             borderWidth: 3,
             spanGaps: true
@@ -113,7 +117,7 @@ class Timings extends Component {
 		return (
             // <div className="code"><ReactJson collapsed={2} name={false} iconStyle="square" src={this.state.timings} /></div>
             <div>
-                <h4 className="text-muted text-400">Average Response Times</h4>
+                <h4 className="text-muted text-400">Average Response Times <span className="text-muted text-small">(ms)</span></h4>
                 <Line
                     data={this.state.chartData}
                     options={{

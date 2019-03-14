@@ -6,8 +6,27 @@ import ReactJson from 'react-json-view';
 import moment from 'moment';
 import {Bar} from 'react-chartjs-2';
 
-// https://cdn-images-1.medium.com/max/800/1*B29h3NSglI42HGhWZA-5Mg.png
-const COLORS = ["#1C2463", "#5BB8D0", "#2A4B91", "#B6DECA", "#3C83B5"];
+// https://superdevresources.com/tools/color-shades#1c2463
+// const COLORS = ["#11163c", "#1c2463", "#27338b", "#3341b3", "#4c5bcc", "#747fd8", "#9ca4e3"];
+
+// https://superdevresources.com/tools/color-shades#06d6a0
+const GOOD_COLORS = ["#06dfa7", "#05ae82", "#037c5d"];
+// https://superdevresources.com/tools/color-shades#1b9aaa
+const NOTGOOD_COLORS = ["#39cde0", "#1fb3c6", "#188c9a", "#11646e"];
+// 
+const BAD_COLORS = ["#f15b7e", "#5d5d5d"];
+
+const CODEZ = {
+    "200": {label: "200 OK", color: GOOD_COLORS[0]},
+    "201": {label: "201 Created", color: GOOD_COLORS[1]},
+    "204": {label: "204 No Content", color: GOOD_COLORS[2]},
+    "400": {label: "400 Bad Request", color: NOTGOOD_COLORS[0]},
+    "401": {label: "401 Unauthorized", color: NOTGOOD_COLORS[1]},
+    "403": {label: "403 Forbidden", color: NOTGOOD_COLORS[2]},
+    "404": {label: "404 Not Found", color: NOTGOOD_COLORS[3]},
+    "500": {label: "500 Internal Server Error", color: BAD_COLORS[0]},
+    "unknown": {label: "Unknown", color: BAD_COLORS[1]}
+};
 
 class Codes extends Component {
 	constructor(props) {
@@ -74,11 +93,22 @@ class Codes extends Component {
                     data.push(codeData[t]);
                 }
             }
+
+            var label = "";
+            var color = "";
+            if (!CODEZ.hasOwnProperty(code)) {
+                label = CODEZ["unknown"].label;
+                color = CODEZ["unknown"].color;
+            }
+            else {
+                label = CODEZ[code].label;
+                color = CODEZ[code].color;
+            }
             chartData.push({
-                label: code, 
+                label: label, 
                 data: data,
                 borderWidth: 0,
-                backgroundColor: COLORS[colorIndex]
+                backgroundColor: color
             });
             colorIndex++;
         }
@@ -125,6 +155,9 @@ class Codes extends Component {
                     data={this.state.chartData}
                     options={{
                         maintainAspectRatio: false,
+                        legend: {
+                            position: "bottom"
+                        },
                         scales:{
                             yAxes:[{
                                 type: 'linear',

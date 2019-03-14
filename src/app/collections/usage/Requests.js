@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Loader from '../../../components/Loader';
 import Machinable from '../../../client';
+import {Doughnut} from 'react-chartjs-2';
+import './Usage.css';
 
 class Requests extends Component {
 	constructor(props) {
@@ -15,10 +17,39 @@ class Requests extends Component {
 	}
     
     renderStats = () => {
+		const data = {
+            labels: [
+                'Used', 'Free'],
+            datasets: [{
+                data: [582, 418],
+                backgroundColor: [
+                    '#1fb3c6',
+                    'transparent'
+                ],
+                borderColor: [
+                    '#1fb3c6',
+                    '#EFEFEF'
+                ],
+                hoverBackgroundColor: [
+                    '#1fb3c6',
+                    'transparent'
+                ]
+            }]
+		};
+		
         return (
             <div>
                 <h4 className="text-muted text-400">Requests</h4>
-                <div className="code"></div>
+				<div className="doughnut-wrapper">
+					<div className="text-wrapper">
+						<h4 className="text-muted text-400 text-center">
+							14
+							<br/>
+							<span className="text-small text-muted">of 1000 requests</span>
+						</h4>
+					</div>
+                	<Doughnut data={data} options={{legend: false, cutoutPercentage: 70}}/>
+				</div>
             </div>
         );
     }

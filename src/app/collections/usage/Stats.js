@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Loader from '../../../components/Loader';
 import Machinable from '../../../client';
-import ReactJson from 'react-json-view';
+import { Table } from 'turtle-ui';
+import {Doughnut} from 'react-chartjs-2';
 
 class Stats extends Component {
 	constructor(props) {
@@ -33,10 +34,68 @@ class Stats extends Component {
     }
     
     renderStats = () => {
+        var rows = [];
+        var totalSizeInMB = 0;
+        if(this.state.stats) {
+            totalSizeInMB = (this.state.stats.total.size / 1024 / 1024).toFixed(5);
+            var collections = this.state.stats.collections;
+            for(var col in collections) {
+                rows.push([
+                    col,
+                    <div className="text-right">{(collections[col].size / 1024 / 1024).toFixed(5)} MB</div>
+                ])
+            }
+        }
+
+        var percentageUsed = (totalSizeInMB / 1024) * 100;
+        var percentageLeft = percentageUsed - 100;
+
+        const data = {
+            labels: [
+                'Used', 'Free'],
+            datasets: [{
+                data: [percentageUsed, percentageLeft],
+                backgroundColor: [
+                    '#06dfa7',
+                    'transparent'
+                ],
+                borderColor: [
+                    '#06dfa7',
+                    '#EFEFEF'
+                ],
+                hoverBackgroundColor: [
+                    '#06dfa7',
+                    'transparent'
+                ]
+            }]
+        };
+
+
         return (
-            <div>
-                <h4 className="text-muted text-400">Storage</h4>
-                <div className="code"><ReactJson collapsed={2} name={false} iconStyle="square" src={this.state.stats} /></div>
+            <div className="col-2">
+                <div className="grid grid-1" style={{"gridGap": "0px"}}>
+                    <h4 className="text-muted text-400">Storage</h4>
+                    <div className="grid grid-2">
+                        
+                        <div className=" doughnut-wrapper">
+                            <div className="text-wrapper">
+                                <h4 className="text-muted text-center">
+                                    <span className="text-400">{totalSizeInMB} MB</span>
+                                    <br/>
+                                    <span className="text-small text-muted">of 1 GB</span>
+                                </h4>
+                            </div>
+                            <div><Doughnut data={data} options={{legend: false, cutoutPercentage: 70}}/></div>
+                        </div>
+
+                        <Table 
+                            classes="hover m-table"
+                            headers={["Collection Name", "Size"]}
+                            values={rows}
+                            />
+
+                    </div>      
+                </div>        
             </div>
         );
     }

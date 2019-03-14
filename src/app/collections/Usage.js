@@ -27,11 +27,13 @@ class Usage extends Component {
 
 	render() {
 		return (
-			<div className="grid grid-2">
+			<div className="grid grid-1">
+				<div className="grid grid-3">
+					<Requests />
+					<Stats />
+				</div>
 				<Codes />
-				<Requests />
 				<Timings />
-				<Stats />
 			</div>
 		  );
 	}
