@@ -23,7 +23,7 @@ class Stats extends Component {
         var totalSizeInMB = 0;
         if(this.state.stats) {
             totalSizeInMB = (this.state.stats.total.size / 1024 / 1024).toFixed(5);
-            var collections = this.state.stats.collections;
+            var collections = this.state.stats.resources;
             for(var col in collections) {
                 rows.push([
                     col,
@@ -75,7 +75,7 @@ class Stats extends Component {
 
                         <Table 
                             classes="hover m-table"
-                            headers={["Collection Name", "Size"]}
+                            headers={["Resource Name", "Size"]}
                             values={rows}
                             />
 
@@ -86,7 +86,7 @@ class Stats extends Component {
     }
 
 	render() {
-        var result = (this.state.stats && Object.keys(this.state.stats.collections).length > 0) ? this.renderStats() : this.renderStats();
+        var result = (this.state.stats && Object.keys(this.state.stats.resources).length > 0) ? this.renderStats() : this.renderStats();
 		return result;
 	}
 }

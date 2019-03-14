@@ -136,7 +136,7 @@ class Codes extends Component {
 	}
 
 	loadCodes = () => {
-		Machinable.collections(this.state.slug).codes(this.codesSuccess, this.codesError)
+		Machinable.resources(this.state.slug).codes(this.codesSuccess, this.codesError)
 	}
 
 	componentDidMount = () => {

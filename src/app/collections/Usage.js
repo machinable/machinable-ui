@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Loader from '../../components/Loader';
+import Machinable from '../../client';
 import Empty from '../../images/usage.svg';
 import Timings from './usage/Timings';
 import Codes from './usage/Codes';
@@ -11,10 +13,29 @@ class Usage extends Component {
 		super(props);
 
 		this.state = {
-			slug: props.slug
+			loading: true,
+			slug: props.slug,
+			stats: undefined
 		}
 	}
 
+	statsError = (response) => {
+		console.log(response);
+		this.setState({loading: false});
+	}
+
+	statsSuccess = (response) => {
+		this.setState({loading: false, stats: response.data});
+	}
+
+	loadStats = () => {
+		Machinable.collections(this.state.slug).stats(this.statsSuccess, this.statsError)
+	}
+
+	componentDidMount = () => {
+		this.loadStats();
+	}
+	
 	emptyState = () => {
 		return (
 			<div className="text-center">
@@ -25,17 +46,25 @@ class Usage extends Component {
 		);
 	}
 
-	render() {
+	renderUsage = () => {
 		return (
 			<div className="grid grid-1">
+				<span className="text-small text-400 text-more-muted">Usage metrics for the last 1 hour</span>
 				<div className="grid grid-3">
 					<Requests />
-					<Stats />
+					<Stats stats={this.state.stats} />
 				</div>
 				<Codes />
-				<Timings />
+				<Timings /> 
+				<br/>
 			</div>
-		  );
+		);
+	}
+
+	render() {
+		var result = (this.state.stats && Object.keys(this.state.stats.collections).length) ? this.renderUsage() : this.emptyState();
+		result = this.state.loading ? <Loader loading={this.state.loading} /> : result;
+		return result;
 	}
 }
 

@@ -116,6 +116,9 @@ class MachinableClient {
         var GET_RESOURCE = this.projectHost(projectSlug) + "/resources/{id}";
         var UPDATE_RESOURCE = this.projectHost(projectSlug) + "/resources/{id}";
         var GET_DATA = this.projectHost(projectSlug) + "/mgmt/api/{resource}";
+        var GET_RESOURCE_STATS = this.projectHost(projectSlug) + "/mgmt/resourceUsage/stats";
+        var GET_RESOURCE_TIMINGS = this.projectHost(projectSlug) + "/mgmt/resourceUsage/responseTimes";
+        var GET_RESOURCE_CODES = this.projectHost(projectSlug) + "/mgmt/resourceUsage/statusCodes";
         var authHeaders = this.getAuthHeaders();
 
         return {
@@ -149,6 +152,24 @@ class MachinableClient {
 
             delete: function(id, success, error) {
                 axios.delete(GET_RESOURCE.replace("{id}", id), {headers: authHeaders})
+                    .then(success)
+                    .catch(error);
+            },
+
+            stats: function(success, error) {
+                axios.get(GET_RESOURCE_STATS, {headers: authHeaders})
+                    .then(success)
+                    .catch(error);
+            },
+
+            timings: function(success, error) {
+                axios.get(GET_RESOURCE_TIMINGS, {headers: authHeaders})
+                    .then(success)
+                    .catch(error);
+            },
+
+            codes: function(success, error) {
+                axios.get(GET_RESOURCE_CODES, {headers: authHeaders})
                     .then(success)
                     .catch(error);
             }
