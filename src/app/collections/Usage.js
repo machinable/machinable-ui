@@ -4,6 +4,7 @@ import Empty from '../../images/usage.svg';
 import Timings from './usage/Timings';
 import Codes from './usage/Codes';
 import Stats from './usage/Stats';
+import Requests from './usage/Requests';
 
 class Usage extends Component {
 	constructor(props) {
@@ -25,13 +26,12 @@ class Usage extends Component {
 	}
 
 	render() {
-		var c = <Codes />;
-		c = (c === 0) ? <div>empty</div> : c;
 		return (
 			<div className="grid grid-2">
-				{c}
-				<Stats />
+				<Codes />
+				<Requests />
 				<Timings />
+				<Stats />
 			</div>
 		  );
 	}

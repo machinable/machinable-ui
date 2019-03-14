@@ -34,7 +34,10 @@ class Stats extends Component {
     
     renderStats = () => {
         return (
-            <div className="code"><ReactJson collapsed={2} name={false} iconStyle="square" src={this.state.stats} /></div>
+            <div>
+                <h4 className="text-muted text-400">Storage</h4>
+                <div className="code"><ReactJson collapsed={2} name={false} iconStyle="square" src={this.state.stats} /></div>
+            </div>
         );
     }
 
