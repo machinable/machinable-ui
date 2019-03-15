@@ -157,10 +157,7 @@ class Codes extends Component {
                         },
                         scales:{
                             yAxes:[{
-                                type: 'linear',
-                                ticks:{
-                                    stepSize: 1
-                                }
+                                type: 'linear'
                             }],
                             xAxes:[{
                                 stacked:false
