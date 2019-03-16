@@ -684,6 +684,7 @@ strong {
 .margin-bottom-less {
 	margin-bottom: 5px;
 }
+
 .margin {
 	margin: 10px;
 }
@@ -707,6 +708,18 @@ dl dt {
 }
 dl dd {
 	margin-left: 20px;
+}
+
+/* MONACO-EDITOR */
+.react-monaco-editor-container {
+	border: 2px solid var(--card-border-color);
+    border-radius: 2px;
+}
+.monaco-editor .margin {
+	margin: 0px;
+}
+.monaco-editor .slider:before {
+    background-color: transparent;
 }
 
 /* TURTLE-UI OVERRIDES */

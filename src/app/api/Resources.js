@@ -11,6 +11,7 @@ import Statics from '../../Statics';
 import Data from './Details';
 import slugify from 'slugify';
 import moment from 'moment';
+import MonacoEditor from 'react-monaco-editor';
 
 class Resources extends Component {
 
@@ -386,7 +387,7 @@ class Resources extends Component {
 										
 										<Input placeholder="descriptive title of the resource" label="Title" name="title" value={this.state.newResource.title} onChange={this.onChange}/>
 										<Input placeholder="the url path of this resource" label="Path" name="path_name" value={"/" + this.state.newResource.path_name} onChange={this.onChange}/>
-										<TextArea 
+										{/* <TextArea 
 											placeholder={sampleSchema} 
 											label="Properties" 
 											description={
@@ -397,8 +398,13 @@ class Resources extends Component {
 											name="properties" 
 											rows={18} 
 											value={newProperties} 
-											onChange={this.onChange}/>
+											onChange={this.onChange}/> */}
 										
+										<MonacoEditor
+											width="100%"
+											height="400"
+											theme="vs"
+											language="json"/>
 									</div>
 								</Card>
 							</div>
