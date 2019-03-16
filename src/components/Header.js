@@ -50,7 +50,7 @@ class Header extends Component {
 							<div className="grid grid-1">
 								<List>
 									{/* <ListItem title="email@tld.io" onClick={this.settings}/> */}
-									<ListItem icon={cog} title="Settings" onClick={this.settings}/>
+									<ListItem icon={faUser} title="account" onClick={this.settings}/>
 									<ListItem icon={signOut} title="Logout" onClick={this.logout}/>
 								</List>
 							</div>

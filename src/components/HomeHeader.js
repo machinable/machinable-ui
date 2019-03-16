@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faUser from '@fortawesome/fontawesome-free-solid/faUserCircle';
 import signOut from '@fortawesome/fontawesome-free-solid/faSignOutAlt';
-import cog from '@fortawesome/fontawesome-free-solid/faCog';
 import { Dropdown, List, ListItem } from 'turtle-ui';
 import Machinable from '../client';
 import Logo from './Logo';
@@ -57,7 +56,7 @@ class Header extends Component {
                             <div className="grid grid-1">
                                 <List>
                                     {/* <ListItem title="email@tld.io" onClick={this.settings}/> */}
-                                    <ListItem icon={cog} title="Settings" onClick={this.settings}/>
+                                    <ListItem icon={faUser} title="Account" onClick={this.settings}/>
                                     <ListItem icon={signOut} title="Logout" onClick={this.logout}/>
                                 </List>
                             </div>

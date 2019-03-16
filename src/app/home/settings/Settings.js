@@ -5,7 +5,6 @@ import API from '../../documentation/API';
 import Examples from '../../documentation/Examples';
 import Overview from '../../documentation/Overview';
 import Account from './Account';
-import Password from './Password';
 import Billing from './Billing';
 import Security from './Security';
 import Support from './Support';
@@ -16,10 +15,9 @@ class Settings extends Component {
 		var prefix = this.props.match.url;
 		var siteLinks = [
 			{to: `${prefix}/account`, text: 'Account'},
-			{to: `${prefix}/password`, text: 'Password'},
-			{to: `${prefix}/billing`, text: 'Billing'},
+			{to: `${prefix}/plan`, text: 'Plan'},
 			{to: `${prefix}/security`, text: 'Security'},
-			{to: `${prefix}/apikeys`, text: 'API Keys'},
+			// {to: `${prefix}/apikeys`, text: 'API Keys'},
 			{to: `${prefix}/support`, text: 'Support'}
 		];
 
@@ -50,13 +48,7 @@ class Settings extends Component {
 									/>
 
 								<Route 
-									path="/home/settings/password" 
-									exact 
-									component={() => <Password />}
-									/>
-
-								<Route 
-									path="/home/settings/billing" 
+									path="/home/settings/plan" 
 									exact 
 									component={() => <Billing />}
 									/>
