@@ -6,6 +6,7 @@ ENV PATH /usr/src/app/node_modules/.bin:$PATH
 COPY package.json /usr/src/app/package.json
 RUN npm install --silent
 RUN npm install -D extract-text-webpack-plugin@next
+RUN npm install -D loader-utils@latest
 COPY . /usr/src/app
 RUN npm run build
 

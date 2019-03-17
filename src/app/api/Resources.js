@@ -35,6 +35,10 @@ class Resources extends Component {
 		}
 	}
 
+	editorDidMount = (editor, monaco) => {
+
+	}
+
 	resError = (response) => {
 		console.log(response);
 		this.setState({loading: false});
@@ -93,6 +97,19 @@ class Resources extends Component {
 		Machinable.resources(this.state.slug).delete(this.state.deleteResource.id, this.getResources, this.resError);
 	}
 
+	onPropertiesChange = (newValue, event) => {
+		// console.log("properties changed");
+		// console.log(newValue);
+		// console.log(event);
+		// console.log(this.refs.editor.editor.getModelMarkers());
+		var newResource = this.state.newResource;
+		newResource["properties"] = newValue;
+
+		this.setState({
+			newResource: newResource
+		});
+	}
+
 	onChange = (event) => {
 	    const target = event.target;
 	    var value = target.value;
@@ -100,7 +117,6 @@ class Resources extends Component {
 
 		var newResource = this.state.newResource;
 		
-
 		if (name === "title") {
 			newResource["path_name"] = value;
 		} 
@@ -274,7 +290,7 @@ class Resources extends Component {
 		var renderResources = Object.keys(this.state.resources.items).length > 0 ? this.getResourceTable() : this.emptyState();
 
 		var sampleSchema = JSON.stringify({
-			"firstName": {
+			  "firstName": {
 				"type": "string",
 				"description": "The person's first name."
 			  },
@@ -288,13 +304,6 @@ class Resources extends Component {
 				"minimum": 0
 			  }
 		}, undefined, 4);
-
-		var newProperties = this.state.newResource.properties;
-
-		try {
-			newProperties = JSON.parse(newProperties);
-			newProperties = JSON.stringify(newProperties, undefined, 4);
-		} catch(err) {}
 
 		return (
 			<div>
@@ -399,11 +408,20 @@ class Resources extends Component {
 											rows={18} 
 											value={newProperties} 
 											onChange={this.onChange}/> */}
-										
+										<strong>Properties</strong>
+										<div className="margin-top-less text-medium text-muted">
+											Define your resource properties using <a className="link text-400 text-information" target="_blank" rel="noopener" href="https://json-schema.org/">JSON Schema</a>. 
+											Check out our <a className="link text-400 text-information" target="_blank" rel="noopener" href={Statics.DOCS.JSON_SCHEMA_SAMPLES}>sample schemas</a> to get an idea of how to structure your data.
+										</div>
 										<MonacoEditor
+											ref="editor"
+											name="properties"
 											width="100%"
-											height="400"
+											height="300"
 											theme="vs"
+											value={this.state.newResource.properties}
+											defaultValue={sampleSchema}
+											onChange={this.onPropertiesChange}
 											language="json"/>
 									</div>
 								</Card>
