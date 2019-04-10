@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Loader from '../../../components/Loader';
-import Machinable from '../../../client';
-import ReactJson from 'react-json-view';
+import Loader from '../Loader';
 import moment from 'moment';
 import {Bar} from 'react-chartjs-2';
 
@@ -32,7 +30,7 @@ class Codes extends Component {
 		this.state = {
 			loading: true,
 			slug: props.slug,
-            codes: undefined,
+            codes: props.codes,
             chartData: []
 		}
     }
@@ -48,8 +46,6 @@ class Codes extends Component {
             times.push(i);
         }
 
-        console.log(times);
-
         return times;
     }
 
@@ -64,19 +60,19 @@ class Codes extends Component {
     formatData = () => {
         var expectedTimes = this.lastHourTimes();
         var dataMap = {};
-        var codes = this.state.codes.status_codes;
-        for(var i = 0; i < codes.length; i++) {
-            var ts = codes[i];
-            for (var code in ts["codes"]) {
+        var requests = this.state.codes;
+        //inside out man
+        for (var timestamp in requests) {
+            var data = requests[timestamp];
+            for (var code in data["status_codes"]) {
                 if (!dataMap.hasOwnProperty(code)) {
                     dataMap[code] = {};
                 }
-                dataMap[code][ts["timestamp"]] = ts["codes"][code];
+                dataMap[code][timestamp] = data["status_codes"][code];
             }
         }
 
         var chartData = [];
-        var colorIndex = 0;
         for (var code in dataMap) {
             var data = [];
             var codeData = dataMap[code];
@@ -107,7 +103,6 @@ class Codes extends Component {
                 borderWidth: 0,
                 backgroundColor: color
             });
-            colorIndex++;
         }
 
         var labels = [];
@@ -117,35 +112,27 @@ class Codes extends Component {
             labels.push(fs);
         }
 
-        console.log(chartData);
         this.setState({
             chartData: {
                 labels:labels, 
                 datasets: chartData
-            }
+            },
+            loading: false
         });
     }
 
-	codesError = (response) => {
-		console.log(response);
-		this.setState({loading: false});
-	}
-
-	codesSuccess = (response) => {
-		this.setState({loading: false, codes: response.data}, this.formatData);
-	}
-
-	loadCodes = () => {
-		Machinable.resources(this.state.slug).codes(this.codesSuccess, this.codesError)
-	}
-
 	componentDidMount = () => {
-		this.loadCodes();
+        if(this.state.codes) {
+            this.formatData();
+        } else {
+            this.setState({
+                loading: false
+            });
+        }
 	}
 
     renderCodes = () => {
 		return (
-            // <div className="code"><ReactJson collapsed={2} name={false} iconStyle="square" src={this.state.codes} /></div>
             <div>
                 <h4 className="text-muted text-400">Status Codes</h4>
                 <Bar
@@ -157,7 +144,10 @@ class Codes extends Component {
                         },
                         scales:{
                             yAxes:[{
-                                type: 'linear'
+                                type: 'linear',
+                                ticks:{
+                                    stepSize: 1
+                                }
                             }],
                             xAxes:[{
                                 stacked:false
@@ -170,7 +160,7 @@ class Codes extends Component {
     }
     
 	render() {
-        var result = (this.state.codes && this.state.codes.status_codes.length > 0) ? this.renderCodes() : this.renderCodes();
+        var result = (this.state.codes) ? this.renderCodes() : this.renderCodes();
         result = this.state.loading ? <Loader loading={this.state.loading} /> : result;
 		return result;
 	}

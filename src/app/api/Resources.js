@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Modal, Card, Input, Dropdown, List, ListItem, Table, TextArea } from 'turtle-ui';
+import { Button, Modal, Card, Input, Dropdown, List, ListItem, Table } from 'turtle-ui';
 import Loader from '../../components/Loader';
 import Dismiss from '../../components/DismissModalButton';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
@@ -213,33 +213,12 @@ class Resources extends Component {
 			var definitionTitle = <div>
 										<h4 className="text-400 no-margin margin-bottom-less">{def.title}</h4>
 										<div className="text-small text-information">
-											<a className="anchor" target="_blank" rel="noopener" href={fullURL} title={fullURL}>{fullURL}</a>
+											<a className="anchor" target="_blank" rel="noopener noreferrer" href={fullURL} title={fullURL}>{fullURL}</a>
 										</div>
 									</div>;
 			return [
 				definitionTitle,
 				<div>{moment(def.created).fromNow()}</div>,
-				<Dropdown 
-					showIcon={true}
-					width={250}
-					buttonText={Object.keys(def.properties).length + " Properties"}
-					buttonClasses="text plain text-information vertical-align">
-					<div className="grid grid-1">
-						<List>
-							{Object.keys(def.properties).map(function(key, pidx){
-								var prop = def.properties[key];
-								var desc = prop.description === undefined ? null : <div>&nbsp;&nbsp;{prop.description}</div>;
-								var title = <div><span className="text-400">{key}</span>&nbsp;-&nbsp;<i className={"text-" + prop.type}>{prop.type}</i></div>
-								return (
-									<ListItem 
-										key={"res-prop-" + idx + pidx}
-										title={title}
-										description={desc}/>
-								)
-							})}
-						</List>
-					</div>
-				</Dropdown>,
 				<div className="align-right vertical-align">
 					<Dropdown 
 						showIcon={false}
@@ -263,7 +242,7 @@ class Resources extends Component {
 			<React.Fragment>
 				<Table 
 					classes="m-table"
-					headers={["Name", "Created", <div className="align-center m-th">Properties</div>, ""]}
+					headers={["Name", "Created", ""]}
 					values={resourceValues} />
 
 				<Button classes="accent page-btn" onClick={this.openModal}>New Resource</Button>
@@ -410,8 +389,8 @@ class Resources extends Component {
 											onChange={this.onChange}/> */}
 										<strong>Properties</strong>
 										<div className="margin-top-less text-medium text-muted">
-											Define your resource properties using <a className="link text-400 text-information" target="_blank" rel="noopener" href="https://json-schema.org/">JSON Schema</a>. 
-											Check out our <a className="link text-400 text-information" target="_blank" rel="noopener" href={Statics.DOCS.JSON_SCHEMA_SAMPLES}>sample schemas</a> to get an idea of how to structure your data.
+											Define your resource properties using <a className="link text-400 text-information" target="_blank" rel="noopener noreferrer" href="https://json-schema.org/">JSON Schema</a>. 
+											Check out our <a className="link text-400 text-information" target="_blank" rel="noopener noreferrer" href={Statics.DOCS.JSON_SCHEMA_SAMPLES}>sample schemas</a> to get an idea of how to structure your data.
 										</div>
 										<MonacoEditor
 											ref="editor"

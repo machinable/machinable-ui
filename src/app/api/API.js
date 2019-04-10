@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import { Nav, Button } from 'turtle-ui';
+import { Nav } from 'turtle-ui';
 import Querying from '../documentation/API';
 import ResourceDocs from '../documentation/Resources';
 import Examples from '../documentation/Examples';

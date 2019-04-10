@@ -116,9 +116,8 @@ class MachinableClient {
         var GET_RESOURCE = this.projectHost(projectSlug) + "/resources/{id}";
         var UPDATE_RESOURCE = this.projectHost(projectSlug) + "/resources/{id}";
         var GET_DATA = this.projectHost(projectSlug) + "/mgmt/api/{resource}";
+        var GET_RESOURCE_USAGE = this.projectHost(projectSlug) + "/mgmt/resourceUsage/";
         var GET_RESOURCE_STATS = this.projectHost(projectSlug) + "/mgmt/resourceUsage/stats";
-        var GET_RESOURCE_TIMINGS = this.projectHost(projectSlug) + "/mgmt/resourceUsage/responseTimes";
-        var GET_RESOURCE_CODES = this.projectHost(projectSlug) + "/mgmt/resourceUsage/statusCodes";
         var authHeaders = this.getAuthHeaders();
 
         return {
@@ -162,14 +161,8 @@ class MachinableClient {
                     .catch(error);
             },
 
-            timings: function(success, error) {
-                axios.get(GET_RESOURCE_TIMINGS, {headers: authHeaders})
-                    .then(success)
-                    .catch(error);
-            },
-
-            codes: function(success, error) {
-                axios.get(GET_RESOURCE_CODES, {headers: authHeaders})
+            usage: function(success, error) {
+                axios.get(GET_RESOURCE_USAGE, {headers: authHeaders})
                     .then(success)
                     .catch(error);
             }
@@ -179,9 +172,8 @@ class MachinableClient {
     collections(projectSlug) {
         var GET_COLLECTIONS = this.projectHost(projectSlug) + "/mgmt/collections/"
         var GET_COLLECTION = this.projectHost(projectSlug) + "/mgmt/collections/{name}";
+        var GET_COLLECTION_USAGE = this.projectHost(projectSlug) + "/mgmt/collectionUsage/";
         var GET_COLLECTION_STATS = this.projectHost(projectSlug) + "/mgmt/collectionUsage/stats";
-        var GET_COLLECTION_TIMINGS = this.projectHost(projectSlug) + "/mgmt/collectionUsage/responseTimes";
-        var GET_COLLECTION_CODES = this.projectHost(projectSlug) + "/mgmt/collectionUsage/statusCodes";
         var DELETE_COLLECTION = this.projectHost(projectSlug) + "/mgmt/collections/{id}";
         var UPDATE_COLLECTION = this.projectHost(projectSlug) + "/mgmt/collections/{id}";
         var authHeaders = this.getAuthHeaders();
@@ -227,14 +219,8 @@ class MachinableClient {
                     .catch(error);
             },
 
-            timings: function(success, error) {
-                axios.get(GET_COLLECTION_TIMINGS, {headers: authHeaders})
-                    .then(success)
-                    .catch(error);
-            },
-
-            codes: function(success, error) {
-                axios.get(GET_COLLECTION_CODES, {headers: authHeaders})
+            usage: function(success, error) {
+                axios.get(GET_COLLECTION_USAGE, {headers: authHeaders})
                     .then(success)
                     .catch(error);
             }
@@ -264,7 +250,6 @@ class MachinableClient {
     users(projectSlug) {
         var GET_USERS = this.projectHost(projectSlug) + "/users/";
         var DELETE_USER = this.projectHost(projectSlug) + "/users/{id}";
-        var UPDATE_USER = this.projectHost(projectSlug) + "/users/{id}";
         var authHeaders = this.getAuthHeaders();
 
         return {

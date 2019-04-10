@@ -102,7 +102,7 @@ class CollectionSettings extends Component {
                 <div className="grid grid-2">
                     <h4 className="margin-vertical-5">URL</h4>
                     <h4 className="margin-vertical-5 vertical-align align-right text-muted">
-                        <a className="anchor" target="_blank" rel="noopener" href={fullURL} title={fullURL}>{fullURL}</a>
+                        <a className="anchor" target="_blank" rel="noopener noreferrer" href={fullURL} title={fullURL}>{fullURL}</a>
                     </h4>
                 </div>
                 <hr className="thin"/>

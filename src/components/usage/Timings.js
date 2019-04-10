@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Loader from '../../../components/Loader';
-import Machinable from '../../../client';
-import ReactJson from 'react-json-view';
+import Loader from '../Loader';
 import moment from 'moment';
 import {Line} from 'react-chartjs-2';
 
@@ -16,7 +14,7 @@ class Timings extends Component {
 		this.state = {
 			loading: true,
 			slug: props.slug,
-			timings: undefined,
+			timings: props.timings,
             chartData: []
 		}
     }
@@ -32,8 +30,6 @@ class Timings extends Component {
             times.push(i);
         }
 
-        console.log(times);
-
         return times;
     }
 
@@ -48,36 +44,24 @@ class Timings extends Component {
     formatData = () => {
         var expectedTimes = this.lastHourTimes();
         var labels = [];
-        var dataMap = {};
         var data = [];
-        var responseTimes = this.state.timings.response_times;
-
-        for (var time in responseTimes) {
-            var times = responseTimes[time].response_times;
-            var avg = 0;
-            for(var i = 0; i < times.length; i++) {
-                avg += times[i].response_time;
-            }
-            avg = avg / times.length;
-            dataMap[responseTimes[time].timestamp] = avg
-        }
+        var responseTimes = this.state.timings;
 
         for(var i = 0; i < expectedTimes.length; i++) {
             var t = expectedTimes[i];
             var fs = moment(new Date(t*1000)).format('h:mm a');
             labels.push(fs);
-            if (!dataMap.hasOwnProperty(t)) {
+            if (!responseTimes.hasOwnProperty(t)) {
                 data.push(null);
             } 
             else {
-                data.push(dataMap[t].toFixed(2));
+                data.push(responseTimes[t].avg_response.toFixed(2));
             }
         }
 
         var chartData = {
             label: "Avg Response Time (ms)", 
             data: data,
-            borderWidth: 0,
             backgroundColor: COLORS[0],
             borderColor: COLORS[0], 
             pointBorderColor: "#FFF",
@@ -92,30 +76,23 @@ class Timings extends Component {
             chartData: {
                 labels:labels, 
                 datasets: [chartData]
-            }
+            },
+            loading: false
         });
     }
 
-	timingsError = (response) => {
-		console.log(response);
-		this.setState({loading: false});
-	}
-
-	timingsSuccess = (response) => {
-		this.setState({loading: false, timings: response.data}, this.formatData);
-	}
-
-	loadTimings = () => {
-		Machinable.resources(this.state.slug).timings(this.timingsSuccess, this.timingsError)
-    }
-    
 	componentDidMount = () => {
-		this.loadTimings();
-	}
+        if(this.state.timings) {
+            this.formatData();
+        } else {
+            this.setState({
+                loading: false
+            });
+        }
+    }
 
     renderTimings = () => {
 		return (
-            // <div className="code"><ReactJson collapsed={2} name={false} iconStyle="square" src={this.state.timings} /></div>
             <div>
                 <h4 className="text-muted text-400">Average Response Times <span className="text-muted text-small">(ms)</span></h4>
                 <Line
@@ -135,7 +112,7 @@ class Timings extends Component {
     }
     
 	render() {
-        var result = (this.state.timings && this.state.timings.response_times.length > 0) ? this.renderTimings() : this.renderTimings();
+        var result = (this.state.timings) ? this.renderTimings() : this.renderTimings();
         result = this.state.loading ? <Loader loading={this.state.loading} /> : result;
 		return result;
 	}

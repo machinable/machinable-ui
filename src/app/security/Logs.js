@@ -99,15 +99,16 @@ class Logs extends Component {
 	renderLogs = () => {
         var buttons = this.getTablePageButtons();
 
-		var headers = ["Event", "Status", "Initiator", <div className="m-th text-right">Created</div>];
+		var headers = ["Event", <div className="m-th text-center">Status</div>, <div className="m-th text-right">Response Time</div>, <div className="m-th text-center">Initiator</div>, <div className="m-th text-right">Created</div>];
 		var logValues = this.state.logs.map(function(log, idx){
 			return [
 				<div className="text-small">
-					<span className="text-400">{log.event}</span>
+					<span className="text-400">{log.verb + " " + log.path}</span>
 					<span className="text-muted"></span>
 				</div>, 
-				<span className={"text-400 tag tag-" + (log.status_code+"")[0]}>{log.status_code}</span>,
-				<div className="text-small">{log.initiator}</div>, 
+				<div className="align-center"><span className={"text-400 text-center tag tag-" + (log.status_code+"")[0]}>{log.status_code}</span></div>,
+				<div className="text-small text-right">{log.response_time} ms</div>, 
+				<div className="text-small text-center">{log.initiator}</div>, 
 				<div className="text-small text-right">{moment.utc(new Date(log.created * 1000)).format()}</div>
 			]
 		}, this);

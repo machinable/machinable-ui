@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Loader from '../../../components/Loader';
-import Machinable from '../../../client';
 import { Table } from 'turtle-ui';
 import {Doughnut} from 'react-chartjs-2';
 
