@@ -215,6 +215,18 @@ hr.thin {
 	transition: margin 250ms ease, box-shadow 200ms ease !important;
 }
 
+.new-project {
+	border: 2px dashed var(--text-more-muted) !important;
+	background-color: transparent;
+	border-radius: 2px;
+	cursor: pointer;
+	transition: margin 250ms ease, box-shadow 200ms ease;
+}
+
+.new-project:hover{
+	box-shadow: 0px 1px 3px #CCC;
+}
+
 .login-back-drop {
 	z-index: -1;
     position: absolute;

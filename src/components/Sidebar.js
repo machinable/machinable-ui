@@ -31,7 +31,7 @@ class SideBar extends Component {
                                         <div className="margin-left-more">
                                             <div className="vertical-align margin-right">
                                                 <span>API</span>
-                                                <span className="tag background-accent margin-left" style={{"padding": "1px 5px"}}>new</span>
+                                                <span className="tag background-accent margin-left" style={{"padding": "1px 5px"}}>beta</span>
                                             </div>
                                             <p className="navlink-description">Manage defined API resources</p>
                                         </div>
@@ -78,8 +78,8 @@ class SideBar extends Component {
                     </div>
                     <div className="sidebar-footer">
                         <ul className="links">
-                            <li><a target="_blank" rel="noopener noreferrer" href="https://github.com/machinable/user-documentation"><FontAwesomeIcon className="center-self" icon={faBook} fixedWidth/> Documentation</a></li>
-                            <li><a target="_blank" rel="noopener noreferrer" href="https://github.com/machinable/user-documentation"><FontAwesomeIcon className="center-self" icon={faLifeRing} fixedWidth/> Support</a></li>
+                            <li><a target="_blank" rel="noopener noreferrer" href="https://machinable.github.io/documentation/"><FontAwesomeIcon className="center-self" icon={faBook} fixedWidth/> Documentation</a></li>
+                            <li><a target="_blank" rel="noopener noreferrer" href="/home/settings/support"><FontAwesomeIcon className="center-self" icon={faLifeRing} fixedWidth/> Support</a></li>
                         </ul>
                     </div>
                 </div>

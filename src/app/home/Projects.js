@@ -175,11 +175,11 @@ class Projects extends Component {
                             </Card>
                         )
                     })}
-                    <Card key="create-project" style={newCardStyles} classes="project-hover no-padding background-content" onClick={this.openModal}>
-                        <div className="text-400 text-muted no-margin-bottom">
+                    <div key="create-project" style={newCardStyles} className="no-padding new-project" onClick={this.openModal}>
+                        <div className="text-400 text-more-muted no-margin-bottom">
                             Create New Project
                         </div>
-                    </Card>
+                    </div>
                 </div>
             </div>
         )

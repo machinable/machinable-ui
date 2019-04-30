@@ -18,7 +18,7 @@ class Footer extends Component {
 		return (
 			<div className="footer">
 
-				<span>&copy; {new Date().getFullYear()} Machinable.io </span>
+				<span>&copy; 2018 - {new Date().getFullYear()} Machinable.io </span>
 			</div>
 		  );
 	}
