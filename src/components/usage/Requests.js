@@ -43,7 +43,9 @@ class Requests extends Component {
 		
         return (
             <div>
-                <h4 className="text-muted text-400">Requests</h4>
+                <h4 className="text-muted text-400">
+                    Requests
+                </h4>
 				<div className="doughnut-wrapper">
 					<div className="text-wrapper">
 						<h4 className="text-muted text-400 text-center">

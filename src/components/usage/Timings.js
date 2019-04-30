@@ -60,7 +60,7 @@ class Timings extends Component {
         }
 
         var chartData = {
-            label: "Avg Response Time (ms)", 
+            label: "Process Time (ms)", 
             data: data,
             backgroundColor: COLORS[0],
             borderColor: COLORS[0], 
@@ -94,7 +94,10 @@ class Timings extends Component {
     renderTimings = () => {
 		return (
             <div>
-                <h4 className="text-muted text-400">Average Response Times <span className="text-muted text-small">(ms)</span></h4>
+                <h4 className="text-muted text-400">
+                    Average Request Process Times <span className="text-muted text-small">(ms)</span><br/>
+                    <span className="text-muted text-small">The amount of time for Machinable servers to process the request, does not include DNS, TLS/Connect time, or time to bytes.</span>
+                </h4>
                 <Line
                     data={this.state.chartData}
                     options={{

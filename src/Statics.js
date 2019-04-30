@@ -1,10 +1,8 @@
 class Statics {
 	APP_NAME = "Machinable";
-	MGMT_API_HOST = "http://manage.machinable.test:5001";
-	PROJECT_API_HOST = "http://{project-slug}.machinable.test:5001";
-	// MGMT_API_HOST = "https://manage.machinable.io";
-	// PROJECT_API_HOST = "https://{project-slug}.machinable.io";
-
+	MGMT_API_HOST = process.env.REACT_APP_MGMT_API_HOST;
+	PROJECT_API_HOST = process.env.REACT_APP_PROJECT_API_HOST;
+	
 	RECAPTCHA_SITE_KEY = "6LfyLpQUAAAAAKYUyeSO4PrUyjoMkjJb65w6Emvs";
 
 	COLLECTIONS = "collections";

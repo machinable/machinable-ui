@@ -134,7 +134,10 @@ class Codes extends Component {
     renderCodes = () => {
 		return (
             <div>
-                <h4 className="text-muted text-400">Status Codes</h4>
+                <h4 className="text-muted text-400">
+                    Status Codes<br/>
+                    <span className="text-muted text-small">HTTP Status codes returned over the last 1 hour</span>
+                </h4>
                 <Bar
                     data={this.state.chartData}
                     options={{
@@ -144,10 +147,7 @@ class Codes extends Component {
                         },
                         scales:{
                             yAxes:[{
-                                type: 'linear',
-                                ticks:{
-                                    stepSize: 1
-                                }
+                                type: 'linear'
                             }],
                             xAxes:[{
                                 stacked:false
