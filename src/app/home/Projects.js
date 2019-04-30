@@ -61,6 +61,8 @@ class Projects extends Component {
     }
 
     handleProjects = (response) => {
+		var html = document.getElementsByTagName('html')[0];
+        html.style.cssText = "--root-overflow: auto";
         this.setState({
             projects: response.data.items,
             loading: false,
