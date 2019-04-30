@@ -63,22 +63,22 @@ class Codes extends Component {
         var requests = this.state.codes;
         //inside out man
         for (var timestamp in requests) {
-            var data = requests[timestamp];
-            for (var code in data["status_codes"]) {
-                if (!dataMap.hasOwnProperty(code)) {
-                    dataMap[code] = {};
+            let data = requests[timestamp];
+            for (let sc in data["status_codes"]) {
+                if (!dataMap.hasOwnProperty(sc)) {
+                    dataMap[sc] = {};
                 }
-                dataMap[code][timestamp] = data["status_codes"][code];
+                dataMap[sc][timestamp] = data["status_codes"][sc];
             }
         }
 
         var chartData = [];
-        for (var code in dataMap) {
-            var data = [];
+        for (let code in dataMap) {
+            let data = [];
             var codeData = dataMap[code];
-            for(var i = 0; i < expectedTimes.length; i++) {
-                var t = expectedTimes[i];
-                var fs = moment(new Date(t*1000)).format('h:mm a');
+            for(let i = 0; i < expectedTimes.length; i++) {
+                let t = expectedTimes[i];
+                //let fs = moment(new Date(t*1000)).format('h:mm a');
                 if (!codeData.hasOwnProperty(t)) {
                     data.push(0);
                 } 
@@ -147,7 +147,11 @@ class Codes extends Component {
                         },
                         scales:{
                             yAxes:[{
-                                type: 'linear'
+                                type: 'linear',
+                                ticks: {
+                                  beginAtZero: true,
+                                  callback: function(value) {if (value % 1 === 0) {return value;}}
+                                }
                             }],
                             xAxes:[{
                                 stacked:false
