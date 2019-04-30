@@ -4,7 +4,7 @@ import faUser from '@fortawesome/fontawesome-free-solid/faUserCircle';
 import signOut from '@fortawesome/fontawesome-free-solid/faSignOutAlt';
 import { Dropdown, List, ListItem } from 'turtle-ui';
 import Machinable from '../client';
-import Logo from './Logo';
+import Logo from './LogoTitle';
 
 class Header extends Component {
 
@@ -40,9 +40,9 @@ class Header extends Component {
 		return (
 			<div className="home-header">
                 <div className="grid grid-2" style={{"height": "100%"}}>
-                    <div className="vertical-align hover-pointer" onClick={this.projects}>
-                        <div className="vertical-align text-400 text-white">
-                            <Logo color={"#FFF"}/>
+                    <div className="vertical-align hover-pointer">
+                        <div className="logo-title-wrap vertical-align text-400 text-white" onClick={this.projects}>
+                            <Logo color={"#FFF"} classes="logo-title" viewLeft="128"/>
                         </div>
                     </div>
                     <div className="align-right vertical-align">

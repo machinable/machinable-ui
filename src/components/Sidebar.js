@@ -9,7 +9,7 @@ import faLifeRing from '@fortawesome/fontawesome-free-solid/faLifeRing';
 import faUserLock from '@fortawesome/fontawesome-free-solid/faUserLock';
 import faShield from '@fortawesome/fontawesome-free-solid/faShieldAlt';
 
-import Logo from './Logo';
+import Logo from './LogoTitle';
 import './Sidebar.css';
 
 class SideBar extends Component {
@@ -21,7 +21,7 @@ class SideBar extends Component {
                 <div className="sidebar-content">
                     <div>
                         <div className="title center">
-                            <NavLink className="full-height align-center vertical-align" to="/home"><Logo color={"#FFF"}/></NavLink>
+                            <NavLink className="full-height align-center vertical-align" to="/home"><Logo color={"#FFF"} classes={"logo-title"}/></NavLink>
                         </div>
                         <div className="links">
                             <ul>

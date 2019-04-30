@@ -3,7 +3,20 @@
 }
 
 .logo-large{
-	height: 64px;
+	height: 82px;
+}
+
+.logo-xlarge {
+    height: 158px;
+}
+
+.logo-title {
+	height: 200px;
+	pointer-events: none;
+}
+
+.logo-title-wrap {
+	height:32px;
 }
 
 .logo-element {

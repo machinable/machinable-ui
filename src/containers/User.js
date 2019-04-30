@@ -50,8 +50,8 @@ class User extends Component {
 					<div className="home-header">
 						<div className="grid grid-1" style={{"height": "100%"}}>
 							<div className="vertical-align">
-								<h3 className="vertical-align align-center text-400 text-white">
-									<Logo color={"#FFF"} classes="logo-large"/>
+								<h3 className="vertical-align align-center text-400 text-white no-margin" style={{"marginBottom": "-20px"}}>
+									<Logo color={"#FFF"} classes="logo-xlarge"/>
 									{/* <span className="margin-left">Machinable</span> */}
 								</h3>
 							</div>
