@@ -57,7 +57,6 @@ const history = createHistory();
 
 const App = () => (
 	<div>
-		{/* <div className="text-warning padding-less text-center text-small">Machinable is in Alpha. Data will be cleared regularly.</div> */}
 		<Router history={history}>
 			<Switch>
 				<Route path="/login" component={User} />
