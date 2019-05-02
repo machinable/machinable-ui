@@ -8,7 +8,7 @@ import faEllipsis from '@fortawesome/fontawesome-free-solid/faEllipsisV';
 import Empty from '../../images/empty_board.svg';
 import Machinable from '../../client';
 import Statics from '../../Statics';
-import Data from './Details';
+import Details from './Details';
 import slugify from 'slugify';
 import moment from 'moment';
 import MonacoEditor from 'react-monaco-editor';
@@ -77,7 +77,7 @@ class Resources extends Component {
 	closeExtraModal = () => {
 		var html = document.getElementsByTagName('html')[0];
         html.style.cssText = "--root-overflow: auto";
-		this.setState({showExtraModal: false, showDeleteModal: false});
+		this.setState({showExtraModal: false, showDeleteModal: false, extraElement: <div></div>});
 	}
 
 	openExtraModal = (element) => {
@@ -98,10 +98,6 @@ class Resources extends Component {
 	}
 
 	onPropertiesChange = (newValue, event) => {
-		// console.log("properties changed");
-		// console.log(newValue);
-		// console.log(event);
-		// console.log(this.refs.editor.editor.getModelMarkers());
 		var newResource = this.state.newResource;
 		newResource["properties"] = newValue;
 
@@ -228,7 +224,7 @@ class Resources extends Component {
 						classes="align-items-right">
 						<div className="grid grid-1">
 							<List>
-								<ListItem title={<div className="text-center text-400">More</div>} onClick={() => this.openExtraModal(<Data title={definitionTitle} definition={def} slug={this.state.slug} path={def.path_name} />)}/>
+								<ListItem title={<div className="text-center text-400">More</div>} onClick={() => this.openExtraModal(<Details title={definitionTitle} definition={def} slug={this.state.slug} path={def.path_name} />)}/>
 								<hr className="no-margin no-padding"/>
 								<ListItem title={<div className="text-center text-danger text-400">Delete</div>} onClick={() => this.openDeleteModal(def)}/>
 							</List>
@@ -375,18 +371,6 @@ class Resources extends Component {
 										
 										<Input placeholder="descriptive title of the resource" label="Title" name="title" value={this.state.newResource.title} onChange={this.onChange}/>
 										<Input placeholder="the url path of this resource" label="Path" name="path_name" value={"/" + this.state.newResource.path_name} onChange={this.onChange}/>
-										{/* <TextArea 
-											placeholder={sampleSchema} 
-											label="Properties" 
-											description={
-												<div className="margin-top-less text-medium text-muted">
-													Define your resource properties using <a className="link text-400 text-information" target="_blank" rel="noopener" href="https://json-schema.org/">JSON Schema</a>. 
-													Check out our <a className="link text-400 text-information" target="_blank" rel="noopener" href={Statics.DOCS.JSON_SCHEMA_SAMPLES}>samples schemas</a> to get an idea of how to structure your data.
-												</div>} 
-											name="properties" 
-											rows={18} 
-											value={newProperties} 
-											onChange={this.onChange}/> */}
 										<strong>Properties</strong>
 										<div className="margin-top-less text-medium text-muted">
 											Define your resource properties using <a className="link text-400 text-information" target="_blank" rel="noopener noreferrer" href="https://json-schema.org/">JSON Schema</a>. 
