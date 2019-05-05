@@ -248,8 +248,8 @@ class MachinableClient {
     }
 
     users(projectSlug) {
-        var GET_USERS = this.projectHost(projectSlug) + "/users/";
-        var DELETE_USER = this.projectHost(projectSlug) + "/users/{id}";
+        var GET_USERS = this.projectHost(projectSlug) + "/mgmt/users/";
+        var DELETE_USER = this.projectHost(projectSlug) + "/mgmt/users/{id}";
         var authHeaders = this.getAuthHeaders();
 
         return {

@@ -23,7 +23,7 @@ class Projects extends Component {
                 "name": "",
                 "description": "",
                 "slug": "",
-                "authn": true
+                "user_registration": true
             },
             errors: [],
             showModal: false
@@ -36,7 +36,7 @@ class Projects extends Component {
             "name": "",
             "description": "",
             "slug": "",
-            "authn": true
+            "user_registration": true
         }
     }
 
@@ -232,13 +232,13 @@ class Projects extends Component {
                                             <Input placeholder="unique slug" label="Slug" name="slug" value={this.state.newProject.slug} onChange={this.onChange}/>
                                             <TextArea placeholder="project description" label="Description" name="description" value={this.state.newProject.description} onChange={this.onChange}/>
                                             <div className="grid grid-1">
-                                                <strong>Authentication Required</strong>
-                                                <Switch name="authn" on={this.state.newProject.authn} onChange={this.onChange}/>
-                                                {this.state.newProject.authn && 
-                                                    <span>Requests to collections and resources will require authentication</span>
+                                                <strong>User Registration</strong>
+                                                <Switch name="user_registration" on={this.state.newProject.user_registration} onChange={this.onChange}/>
+                                                {this.state.newProject.user_registration && 
+                                                    <span className="text-small text-muted">Users can register to your project at the <a className="link text-400 text-information" target="_blank" rel="noopener noreferrer" href={Statics.DOCS.ACCESS}>/users/register endpoint</a>.</span>
                                                 }
-                                                {!this.state.newProject.authn && 
-                                                    <span>Collections and resources are accessible to anyone with your project URL</span>
+                                                {!this.state.newProject.user_registration && 
+                                                    <span className="text-small text-muted">Users will not be able to openly register to your project.</span>
                                                 }
                                             </div>
                                         </div>

@@ -23,6 +23,10 @@ class Statics {
 		return this.PROJECT_API_HOST.replace("{project-slug}", slug);
 	}
 
+	GenerateUserRegistration = (slug) => {
+		return this.PROJECT_API_HOST.replace("{project-slug}", slug) + "/users/register";
+	}
+
 }
 
 export default new Statics();

@@ -7,11 +7,11 @@ import faEllipsis from '@fortawesome/fontawesome-free-solid/faEllipsisV';
 import Empty from '../../images/empty_canvas.svg';
 import Machinable from '../../client';
 import Statics from '../../Statics';
-import Datum from './Datum'
+import Details from './Details'
 
 import moment from 'moment';
 
-class Data extends Component {
+class CollectionList extends Component {
 
 	constructor(props) {
         super(props);
@@ -100,7 +100,7 @@ class Data extends Component {
 											<a className="anchor" target="_blank" rel="noopener noreferrer" href={fullURL} title={fullURL}>{fullURL}</a>
 										</div>
 									</div>;
-				var details = <Datum title={collectionTitle} collection={col} slug={this.state.slug}/>;
+				var details = <Details title={collectionTitle} collection={col} slug={this.state.slug}/>;
 				return [
 					collectionTitle,
 					<div>
@@ -204,4 +204,4 @@ function mapStateToProps(state) {
 	};
 }
   
-export default connect(mapStateToProps)(Data);
+export default connect(mapStateToProps)(CollectionList);

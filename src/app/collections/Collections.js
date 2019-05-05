@@ -4,7 +4,7 @@ import { Nav } from 'turtle-ui';
 import Querying from '../documentation/API';
 import CollectionDocs from '../documentation/Collections';
 import Examples from '../documentation/Examples';
-import Data from './Data';
+import List from './List';
 import Usage from './Usage';
 
 class Collections extends Component {
@@ -16,7 +16,7 @@ class Collections extends Component {
 	render() {
 		var prefix = this.props.match.url;
 		var collectionLinks = [
-			{to: `${prefix}/data`, text: 'Collections'},
+			{to: `${prefix}/list`, text: 'Collections'},
 			{to: `${prefix}/usage`, text: 'Usage'}
 		];
 		return (
@@ -33,9 +33,9 @@ class Collections extends Component {
 				<div className="project-content page">
 					<div className="page-content">
 						<Switch>
-							<Route path={prefix+"/data"} component={Data} />
+							<Route path={prefix+"/list"} component={List} />
 							<Route path={prefix+"/usage"} component={Usage} />
-							<Redirect from="/" to={prefix+"/data"} />
+							<Redirect from="/" to={prefix+"/list"} />
 						</Switch>
 					</div>
 

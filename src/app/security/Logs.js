@@ -125,9 +125,9 @@ class Logs extends Component {
 
 		var initatorTypes = [
 			{value: "all", text: "All"},
-			{value: "initiator_type=admin", text: "Project Administrators"},
-			{value: "initiator_type=user", text: "Application Users"},
-			{value: "initiator_type=", text: "Anonymous Users"}
+			{value: "initiator_type=user", text: "Authenticated Users"},
+			{value: "initiator_type=apikey", text: "Authenticated API Keys"},
+			{value: "initiator_type=anonymous", text: "Anonymous Requests"}
 		];
 		var statusCodes = [
 			{value: "all", text: "All"},

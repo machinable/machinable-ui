@@ -43,9 +43,9 @@ class Settings extends Component {
 		}
 	}
 
-	updateAuthn = () => {
+	updateRegistration = () => {
 		var proj = this.state.project;
-		proj.authn = !proj.authn;
+		proj.user_registration = !proj.user_registration;
 		Machinable.projects().update(proj, this.updateResponse, this.updateResponse);
 	}
 
@@ -96,6 +96,7 @@ class Settings extends Component {
 
 	render() {
 		var hostName = Statics.GenerateAPIHost(this.state.project.slug);
+		var userRegisterURL = Statics.GenerateUserRegistration(this.state.project.slug)
 		return (
 			<div>
 				<div className="padding-side content-header">
@@ -128,14 +129,14 @@ class Settings extends Component {
 					<hr/>
 					<div className="grid grid-2">
 						<div>
-							<h3 className="margin-bottom">Authentication Required</h3>
+							<h3 className="margin-bottom">User Registration</h3>
 							<p className="text-muted padding-bottom no-margin">
-								{this.state.project.authn && "Requests to collections and resources will require authentication"}
-								{!this.state.project.authn && "Collections and resources are accessible to anyone with your project URL"}
+								{this.state.project.user_registration && <span><a className="link text-400 text-information" target="_blank" rel="noopener noreferrer" href={userRegisterURL}>{userRegisterURL}</a></span>}
+								{!this.state.project.user_registration && "Users will not be able to openly register to your project."}
 							</p>
 						</div>
 						<div className="vertical-align align-right">
-							<Switch on={this.state.project.authn} onChange={this.updateAuthn}/>
+							<Switch on={this.state.project.user_registration} onChange={this.updateRegistration}/>
 						</div>
 					</div>
 					<hr/>
