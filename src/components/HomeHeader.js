@@ -61,7 +61,7 @@ class Header extends Component {
                                 </List>
                             </div>
                         </Dropdown>
-                        <input className="text-muted input" placeholder="search"/>
+                        <input className="text-muted input searchbox" placeholder="search"/>
                     </div>
                 </div>
             </div>		

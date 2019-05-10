@@ -29,20 +29,19 @@
     text-align: center;
     color: #CCC;
     display: block;
-    font-size: 14px;
+    font-size: 15px;
 }
 
 .sidebar .links ul {
     padding: 0px;
     margin: 0px;
     text-decoration: none;
-    font-size: 18px;
 }
 .sidebar .links ul li {
 }
 
 .sidebar .links ul li a {
-    padding: 15px 20px;
+    padding: 15px;
     color: #CCC;
     display: block;
     font-weight: 400;
@@ -58,4 +57,18 @@
 .sidebar .links ul li a.active {
     background-color: rgba(255,255,255,.1);
     box-shadow: inset 4px 0 0 #CCC;
+}
+
+.sidebar .nav-title {
+    font-weight: 400 !important;
+    font-size: 16px;
+}
+
+.sidebar .nav-icon {
+    padding: 8px;
+    border-radius: 100px;
+    background-color: #CCC;
+    color: var(--real-brand);
+    height: 36px;
+    width: 36px;
 }

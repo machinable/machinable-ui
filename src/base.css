@@ -115,6 +115,13 @@ a.anchor {
 	grid-area: header;
 }
 
+.home-header .searchbox {
+    border: 0px;
+	background-color: rgba(0,0,0,.1);
+	color: #FFF !important;
+	font-weight: 400;
+}
+
 .content {
 	grid-area: content;
 	display: grid;
@@ -239,11 +246,11 @@ hr.thin {
     transform-origin: top left;
 }
 .login-card {
-	box-shadow: 0px 2px 3px rgba(0,0,0,.2);
+	box-shadow: 0px 2px 3px rgba(0,0,0,.3);
 	border-radius: 2px;
 }
 .login-card .card {
-	border: 1px solid var(--card-border-color) !important;
+	border: 0px !important;
 }
 .login-card.center-contents > .card-content {
 	display: -ms-flexbox;
@@ -586,7 +593,7 @@ strong {
 /**/
 .content-header{
 	/* background-color: var(--card-border-color); */
-    box-shadow: 0px 2px 2px #CCC;
+    box-shadow: 0px 2px 2px rgba(0,0,0,.3);
 }
 
 /* CUSTOM NAV STYLES */
@@ -599,7 +606,7 @@ strong {
 
 .navlink-description{
 	margin: 5px 0px !important;
-    font-size: 12px !important;
+    font-size: 13px !important;
     line-height: 16px !important;
 }
 

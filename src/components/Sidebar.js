@@ -27,10 +27,10 @@ class SideBar extends Component {
                             <ul>
                                 <li>
                                     <NavLink to={"/project/"+slug+"/api"} style={{display: "flex"}}>
-                                        <FontAwesomeIcon className="center-self" style={{fontSize: "24px"}} icon={faProject} fixedWidth/>
+                                        <FontAwesomeIcon className="center-self nav-icon" style={{fontSize: "18px"}} icon={faProject} fixedWidth/>
                                         <div className="margin-left-more">
                                             <div className="vertical-align margin-right">
-                                                <span>API</span>
+                                                <span className="nav-title">API</span>
                                                 <span className="tag background-accent margin-left" style={{"padding": "1px 5px"}}>beta</span>
                                             </div>
                                             <p className="navlink-description">Manage defined API resources</p>
@@ -39,37 +39,37 @@ class SideBar extends Component {
                                 </li>
                                 <li>
                                     <NavLink to={"/project/"+slug+"/collections"} style={{display: "flex"}}>
-                                        <FontAwesomeIcon className="center-self" style={{fontSize: "24px"}} icon={faDatabase} fixedWidth/>
+                                        <FontAwesomeIcon className="center-self nav-icon" style={{fontSize: "18px"}} icon={faDatabase} fixedWidth/>
                                         <div className="margin-left-more">
-                                            Collections                                    
+                                            <span className="nav-title">Collections</span>                                    
                                             <p className="navlink-description">Store unstructured JSON</p>
                                         </div>
                                     </NavLink>
                                 </li>
                                 <li>
                                     <NavLink to={"/project/"+slug+"/access"} style={{display: "flex"}}>
-                                        <FontAwesomeIcon className="center-self" style={{fontSize: "24px"}} icon={faUserLock} fixedWidth/>
+                                        <FontAwesomeIcon className="center-self nav-icon" style={{fontSize: "18px"}} icon={faUserLock} fixedWidth/>
                                         <div className="margin-left-more">
-                                            Access                                    
+                                            <span className="nav-title">Access</span>                                    
                                             <p className="navlink-description">Configure users and access</p>
                                         </div>
                                     </NavLink>
                                 </li>
                                 <li>
                                     <NavLink to={"/project/"+slug+"/security"} style={{display: "flex"}}>
-                                        <FontAwesomeIcon className="center-self" style={{fontSize: "24px"}} icon={faShield} fixedWidth/>
+                                        <FontAwesomeIcon className="center-self nav-icon" style={{fontSize: "18px"}} icon={faShield} fixedWidth/>
                                         <div className="margin-left-more">
-                                            Security                                    
+                                            <span className="nav-title">Security</span>                                   
                                             <p className="navlink-description">View sessions and logs</p>
                                         </div>
                                     </NavLink>
                                 </li>
                                 <li>
                                     <NavLink to={"/project/"+slug+"/settings"} style={{display: "flex"}}>
-                                        <FontAwesomeIcon className="center-self" style={{fontSize: "24px"}} icon={faSliders} fixedWidth/>
+                                        <FontAwesomeIcon className="center-self nav-icon" style={{fontSize: "18px"}} icon={faSliders} fixedWidth/>
                                         <div className="margin-left-more">
-                                            Settings
-                                            <p className="navlink-description">Project configuration and settings</p>
+                                            <span className="nav-title">Settings</span>
+                                            <p className="navlink-description">Project configuration</p>
                                         </div>
                                     </NavLink>
                                 </li>
