@@ -134,7 +134,7 @@ class Projects extends Component {
     emptyState = () => {
         return (
             <div className="grid grid-8">
-                <Card classes="col-8">
+                <Card classes="col-8 no-border">
                     <h2 className="text-center">You don't have any projects yet</h2>
                     <img src={Empty} alt="" className="empty-state"/>
                     <br/>
@@ -167,7 +167,7 @@ class Projects extends Component {
                     {this.state.projects.map(function(project, idx){
                         var fullURL = Statics.GenerateAPIHost(project.slug);
                         return(
-                            <Card key={"project-"+idx} classes="project-hover" to={"/project/"+project.slug}>
+                            <Card key={"project-"+idx} classes="project-hover no-border" to={"/project/"+project.slug}>
                                 <h3 className="text-400 vertical-align no-margin-bottom" style={{"position": "relative"}}>
                                     <ProjectIcon source={project.icon}/>
                                     &nbsp;&nbsp;{project.name}
