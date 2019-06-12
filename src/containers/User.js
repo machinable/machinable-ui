@@ -68,7 +68,7 @@ class User extends Component {
 
 						{/* DOCUMENTATION */}
 						<div className="page-docs">
-							<div>
+							<div className="content-wrapper">
 								<h4 className="text-more-muted text-600"><br/>DOCUMENTATION</h4>
 								<div className="grid grid-3">
 									<Overview />

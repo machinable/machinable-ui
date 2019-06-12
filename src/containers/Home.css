@@ -8,19 +8,26 @@
 		"footer";
 }
 
-.home-content {
-	padding-top: 15px;
-	max-width: 900px;
+.home-page {
+	display: grid;
+	grid-gap: 0px;
+	grid-template-rows: 1fr auto;
 }
+
+.content-wrapper {
+	max-width: 900px;
+    margin: 0px auto;
+}
+
 .home-header{
 	grid-template: "header";   
 	max-width: 900px;
 	margin: auto;
 }
 .container-home > .content {
-	grid-template: "content";
-	max-width: 900px;
-	justify-self: center;
+	/* grid-template: "content"; */
+	/* max-width: 900px; */
+	/* justify-self: center; */
 }
 .footer {
 	grid-template: "footer";
@@ -33,7 +40,7 @@
 .back-drop {
 	width: 100%;
 	background-color: var(--brand);
-	border-bottom: inset 2px rgba(0,0,0, 0.1);
+	/* border-bottom: inset 2px rgba(0,0,0, 0.1); */
 }
 
 .project-hover.center-contents > .card-content {

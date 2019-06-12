@@ -22,64 +22,58 @@ class Settings extends Component {
 		];
 
 		return (
-			<div className="page">
-                <div className="page-content home-content">
-					<div className="grid grid-2 margin-bottom">
-						<h2 className="margin no-margin-left">User Settings</h2>
-						<div className="align-right">
-						</div>
-					</div>
-					<div className="grid grid-5">
-						<Nav 
-							classes="vertical grid col-1 hidden-small"
-							links={siteLinks}
-						/>
-						<Nav 
-							classes="margin-bottom-more horizontal link-underline underline align-center show-small col-4"
-							links={siteLinks}
-						/>
-						<div className="col-4">
-							<Switch>
-								
-								<Route 
-									path="/home/settings/account" 
-									exact 
-									component={() => <Account />}
-									/>
+            <>
+            <div className="page-header content-header margin-bottom-even-more">
+                <div className="content-wrapper">
+                    <h3 className="text-400 text-muted">Settings</h3>
+					<Nav 
+						classes="horizontal link-underline"
+						links={siteLinks}
+					/>
+                </div>
+            </div>
+			<div className="home-page">
+                <div className="page-content">
+					<div className="content-wrapper">
+						<Switch>
+							<Route 
+								path="/home/settings/account" 
+								exact 
+								component={() => <Account />}
+								/>
 
-								<Route 
-									path="/home/settings/plan" 
-									exact 
-									component={() => <Billing />}
-									/>
+							<Route 
+								path="/home/settings/plan" 
+								exact 
+								component={() => <Billing />}
+								/>
 
-								<Route 
-									path="/home/settings/security" 
-									exact 
-									component={() => <Security />}
-									/>
-												
-								<Route 
-									path="/home/settings/apikeys" 
-									exact 
-									component={() => <Tokens />}
-									/>
+							<Route 
+								path="/home/settings/security" 
+								exact 
+								component={() => <Security />}
+								/>
+											
+							<Route 
+								path="/home/settings/apikeys" 
+								exact 
+								component={() => <Tokens />}
+								/>
 
-								<Route 
-									path="/home/settings/support" 
-									exact 
-									component={() => <Support />}
-									/>
+							<Route 
+								path="/home/settings/support" 
+								exact 
+								component={() => <Support />}
+								/>
 
-								<Redirect from="/home/settings/" to="/home/settings/account" />
-							</Switch>
-						</div>
+							<Redirect from="/home/settings/" to="/home/settings/account" />
+						</Switch>
 					</div>
 				</div>
 
 				{/* DOCUMENTATION */}
                 <div className="page-docs">
-                    <div>
+					<div className="content-wrapper">
                         <h4 className="text-more-muted text-600">DOCUMENTATION</h4>
                         <div className="grid grid-3">
                             <Overview />
@@ -89,6 +83,7 @@ class Settings extends Component {
                     </div>
                 </div>
 			</div>
+			</>
 		  );
 	}
 }

@@ -158,12 +158,7 @@ class Projects extends Component {
         
         return (
             <div className="grid grid-1">
-                <div className="grid grid-2 margin-bottom">
-                    <h2 className="margin no-margin-left">Projects</h2>
-                    <div className="align-right">
-                    </div>
-                </div>
-                <div className="grid grid-3">
+                <div className="grid grid-3 home-content">
                     {this.state.projects.map(function(project, idx){
                         var fullURL = Statics.GenerateAPIHost(project.slug);
                         return(
@@ -195,64 +190,72 @@ class Projects extends Component {
         var render = this.state.projects.length > 0 ? this.renderProjects() : this.emptyState();
 
 		return (
-			<div className="page">
-                <div className="page-content home-content">
-                    <Loader loading={this.state.loading} />
-                    {!this.state.loading && render}
-                    <Modal 
-                        close={this.closeModal}
-                        isOpen={this.state.showModal}>
-                        <div className="align-center grid grid-3">
-                            <div className="col-3-2">
-                                <div className=" grid grid-1">
-                                    <Card
-                                        classes="footer-plain no-border"
-                                        footer={
-                                            <div className="grid grid-2">
-                                                <div className="col-2 col-right">
-                                                    <Button classes="plain text" onClick={this.closeModal}>Cancel</Button>	
-                                                    <Button classes="brand margin-left" type="submit" loading={this.state.loading} onClick={this.createProject}>Create</Button>	
+            <>
+            <div className="page-header content-header margin-bottom-even-more">
+                <div className="content-wrapper">
+                    <h3 className="text-400 text-muted">Projects</h3>
+                </div>
+            </div>
+			<div className="home-page">
+                <div className="page-content">
+                    <div className="content-wrapper">
+                        <Loader loading={this.state.loading} />
+                        {!this.state.loading && render}
+                        <Modal 
+                            close={this.closeModal}
+                            isOpen={this.state.showModal}>
+                            <div className="align-center grid grid-3">
+                                <div className="col-3-2">
+                                    <div className=" grid grid-1">
+                                        <Card
+                                            classes="footer-plain no-border"
+                                            footer={
+                                                <div className="grid grid-2">
+                                                    <div className="col-2 col-right">
+                                                        <Button classes="plain text" onClick={this.closeModal}>Cancel</Button>	
+                                                        <Button classes="brand margin-left" type="submit" loading={this.state.loading} onClick={this.createProject}>Create</Button>	
+                                                    </div>
+                                                </div>
+                                            }>
+
+                                            <h2 className="text-center">New Project</h2>
+
+                                            { this.state.errors.length > 0 &&
+                                                <div className="text-danger text-center margin-bottom-more">
+                                                    {this.state.errors.map(function(error){
+                                                        return (<div className="text-400 padding-bottom">{error}</div>)
+                                                    })}
+                                                </div>
+                                            }
+
+                                            <div className="grid grid-1">
+                                                <IconSelect selected={this.state.newProject.icon} onSelect={this.selectIcon}/>
+                                                <Input placeholder="project name" label="Name" name="name" value={this.state.newProject.name} onChange={this.onChange}/>
+                                                <Input placeholder="unique slug" label="Slug" name="slug" value={this.state.newProject.slug} onChange={this.onChange}/>
+                                                <TextArea placeholder="project description" label="Description" name="description" value={this.state.newProject.description} onChange={this.onChange}/>
+                                                <div className="grid grid-1">
+                                                    <strong>User Registration</strong>
+                                                    <Switch name="user_registration" on={this.state.newProject.user_registration} onChange={this.onChange}/>
+                                                    {this.state.newProject.user_registration && 
+                                                        <span className="text-small text-muted">Users can register to your project at the <a className="link text-400 text-information" target="_blank" rel="noopener noreferrer" href={Statics.DOCS.ACCESS}>/users/register endpoint</a>.</span>
+                                                    }
+                                                    {!this.state.newProject.user_registration && 
+                                                        <span className="text-small text-muted">Users will not be able to openly register to your project.</span>
+                                                    }
                                                 </div>
                                             </div>
-                                        }>
-
-                                        <h2 className="text-center">New Project</h2>
-
-                                        { this.state.errors.length > 0 &&
-                                            <div className="text-danger text-center margin-bottom-more">
-                                                {this.state.errors.map(function(error){
-                                                    return (<div className="text-400 padding-bottom">{error}</div>)
-                                                })}
-                                            </div>
-                                        }
-
-                                        <div className="grid grid-1">
-                                            <IconSelect selected={this.state.newProject.icon} onSelect={this.selectIcon}/>
-                                            <Input placeholder="project name" label="Name" name="name" value={this.state.newProject.name} onChange={this.onChange}/>
-                                            <Input placeholder="unique slug" label="Slug" name="slug" value={this.state.newProject.slug} onChange={this.onChange}/>
-                                            <TextArea placeholder="project description" label="Description" name="description" value={this.state.newProject.description} onChange={this.onChange}/>
-                                            <div className="grid grid-1">
-                                                <strong>User Registration</strong>
-                                                <Switch name="user_registration" on={this.state.newProject.user_registration} onChange={this.onChange}/>
-                                                {this.state.newProject.user_registration && 
-                                                    <span className="text-small text-muted">Users can register to your project at the <a className="link text-400 text-information" target="_blank" rel="noopener noreferrer" href={Statics.DOCS.ACCESS}>/users/register endpoint</a>.</span>
-                                                }
-                                                {!this.state.newProject.user_registration && 
-                                                    <span className="text-small text-muted">Users will not be able to openly register to your project.</span>
-                                                }
-                                            </div>
-                                        </div>
-                                        
-                                    </Card>
+                                            
+                                        </Card>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </Modal>
+                        </Modal>
+                    </div>
                 </div>
 
                 {/* DOCUMENTATION */}
                 <div className="page-docs">
-                    <div>
+                    <div className="content-wrapper">
                         <h4 className="text-more-muted text-600">DOCUMENTATION</h4>
                         <div className="grid grid-3">
                             <Overview />
@@ -262,6 +265,7 @@ class Projects extends Component {
                     </div>
                 </div>
             </div>
+            </>
 		  );
 	}
 }

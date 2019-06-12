@@ -479,6 +479,9 @@ div[class^="col-"]{
 .col-3-9 {
     grid-column: 3 / 9;
 }
+.col-4-8 {
+    grid-column: 4 / 8;
+}
 
 .grid-column-end-6{
 	grid-column-end: 6;
@@ -780,7 +783,9 @@ dl dd {
 
 /* phone */
 @media (max-width: 599px) {
-
+	div[class^="col-"]{
+		grid-column: span 1;
+	}
 }
 
 /* tablet - portrait */
@@ -795,16 +800,13 @@ dl dd {
 /* other */
 @media (max-width: 768px) {
 	.grid {
-	    grid-template-columns: repeat(1, 1fr);
-	}
-	div[class^="col-"]{
-		grid-column: span 1;
+	    grid-template-columns: repeat(1, 1fr) !important;
 	}
 }
 
 @media (max-width: 900px) {
 	.grid {
-	    grid-template-columns: repeat(1, 1fr);
+	    grid-template-columns: repeat(1, 1fr) !important;
 	}
 	.hidden-small {
 		display: none !important;

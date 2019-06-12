@@ -43,7 +43,7 @@ class Home extends Component {
 				<div className="back-drop">
 					<HomeHeader {...this.props}/>		
 				</div>
-				<div className="content">
+				<div className="home content">
 					<Switch>
 						<Route path={prefix+"/projects"} component={Projects} />
 						<Route path={prefix+"/settings"} component={Settings} />

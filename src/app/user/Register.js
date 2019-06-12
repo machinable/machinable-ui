@@ -102,7 +102,7 @@ class Register extends Component {
 
 		return (
             <div className="grid grid-10">
-                <div className="login-card col-3-9">
+                <div className="login-card col-4-8">
                     <form onSubmit={this.onSubmit}>
                         <Card
                             classes="footer-plain"
