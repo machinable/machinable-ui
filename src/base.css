@@ -81,8 +81,8 @@
     box-sizing: border-box;
 }
 
-input, select, textarea {
-	border: 1px solid var(--input-color);
+.input, .select, .textarea {
+	border: 1px solid var(--input-color) !important;
 }
 
 input:focus, select:focus, textarea:focus {
@@ -125,6 +125,13 @@ a.anchor {
 	background-color: rgba(0,0,0,.1);
 	color: #FFF !important;
 	font-weight: 400;
+	width: 100%;
+    margin: 5px 0px;
+    border-radius: 2px;
+    padding: 10px;
+    font-size: 16px;
+    font-family: inherit;
+    color: var(--text-color);
 }
 
 .content {
