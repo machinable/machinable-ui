@@ -191,14 +191,16 @@ class Projects extends Component {
 
 		return (
             <>
-            <div className="page-header content-header margin-bottom-even-more">
+            {/* <div className="page-header content-header margin-bottom-even-more">
                 <div className="content-wrapper">
                     <h3 className="text-400 text-muted">Projects</h3>
                 </div>
-            </div>
+            </div> */}
+            <div></div>
 			<div className="home-page">
                 <div className="page-content">
                     <div className="content-wrapper">
+                    <h2 className="text-muted">Projects</h2>
                         <Loader loading={this.state.loading} />
                         {!this.state.loading && render}
                         <Modal 
