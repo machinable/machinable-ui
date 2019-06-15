@@ -3,7 +3,8 @@
 :root {
     --content-background: #e7ebee;
     --border-color: #cfdbe2;
-    --card-border-color: #f1f1f1;
+	--card-border-color: #f1f1f1;
+	--input-color: #dfe1e5;
     --text-color: #515253;
     --text-muted: #6c757d;
     --text-more-muted: #D5D5D5;
@@ -80,8 +81,12 @@
     box-sizing: border-box;
 }
 
+input, select, textarea {
+	border: 1px solid var(--input-color);
+}
+
 input:focus, select:focus, textarea:focus {
-	outline: var(--accent) auto 5px;
+	/* outline: var(--accent) auto 5px; */
 }
 
 body {
@@ -596,7 +601,8 @@ strong {
 /**/
 .content-header{
 	/* background-color: var(--card-border-color); */
-    box-shadow: 0px 2px 2px rgba(0,0,0,.3);
+	box-shadow: 0px 2px 2px rgba(0,0,0,.3);
+	background-color: #FFF;
 }
 
 /* CUSTOM NAV STYLES */
@@ -737,7 +743,7 @@ dl dd {
 
 /* MONACO-EDITOR */
 .react-monaco-editor-container {
-	border: 2px solid var(--card-border-color);
+	border: 1px solid var(--input-color);
 	border-radius: 2px;
 	margin-right: -9px;
 }

@@ -23,9 +23,9 @@ class Settings extends Component {
 
 		return (
             <>
-            <div className="page-header content-header margin-bottom-even-more">
+            <div className="page-header content-header margin-bottom-more">
                 <div className="content-wrapper">
-                    <h3 className="text-400 text-muted">Settings</h3>
+                    <h3 className="text-muted">Settings</h3>
 					<Nav 
 						classes="horizontal link-underline"
 						links={siteLinks}
