@@ -15,13 +15,14 @@ class Billing extends Component {
 
 		return (
 			<div className="grid grid-1">
-				<h4 className="text-muted border-bottom margin-bottom-none">Usage</h4>
-				<div className="grid grid-3 padding">
+				<h4 className="text-muted border-bottom">Usage</h4>
+				<div className="grid grid-3 padding-top">
 					<Usage/>
 				</div>
 
-				<h4 className="text-muted border-bottom margin-bottom-none">Plans</h4>
-				<div className="grid grid-4 padding">
+				<br/>
+				<h4 className="text-muted border-bottom">Plans</h4>
+				<div className="grid grid-4 padding-top">
 					{plans.map(function(plan){
 						return (
 							<Card 
@@ -41,8 +42,9 @@ class Billing extends Component {
 					})}
 				</div>
 
+				<br/>
 				<h4 className="text-muted border-bottom margin-bottom-none">Billing</h4>
-				<div className="margin-top-more padding">
+				<div className="padding-top">
 					<div className="grid grid-1">
 						<div className="col-2 background-content padding vertical-align">
 							<span>no payment method</span>

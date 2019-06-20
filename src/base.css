@@ -644,6 +644,9 @@ strong {
 .padding {
 	padding: 15px;
 }
+.padding-top {
+	padding-top: 15px;
+}
 .padding-bit-less {
 	padding: 10px;
 }

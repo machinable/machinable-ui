@@ -18,6 +18,10 @@ class MachinableClient {
         return localStorage.getItem("access_token")
     }
 
+    getSession() {
+        return localStorage.getItem("session_id")
+    }
+
     setAccessToken(token) {
         localStorage.setItem("access_token", token);
     }
@@ -69,6 +73,27 @@ class MachinableClient {
                     axios.delete(URL, {headers: headers}).then(success).catch(error);
                 }
                 success();
+            }
+        }
+    }
+
+    userSessions() {
+        console.log(MGMT_API_HOST);
+        var GET_SESSIONS = MGMT_API_HOST + "/users/sessions";
+        var DELETE_SESSION = MGMT_API_HOST + "/users/sessions/{id}";
+        var authHeaders = this.getAuthHeaders();
+
+        return {
+            list: function(success, error) {
+                axios.get(GET_SESSIONS, {headers: authHeaders})
+                    .then(success)
+                    .catch(error);
+            },
+
+            delete: function(id, success, error) {
+                axios.delete(DELETE_SESSION.replace("{id}", id), {headers: authHeaders})
+                    .then(success)
+                    .catch(error);
             }
         }
     }
