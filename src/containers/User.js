@@ -8,6 +8,7 @@ import Overview from '../app/documentation/Overview';
 import Login from '../app/user/Login';
 import Register from '../app/user/Register';
 import { Route, Switch } from 'react-router-dom';
+import { loadReCaptcha } from 'react-recaptcha-google'
 
 class User extends Component {
 
@@ -18,27 +19,15 @@ class User extends Component {
 		  sidebar: false,
 		  modal: false
 		}
-  	}
-
-  	componentWillMount = () => {
-  		// if(!API.loggedIn()) {
-  		// 	const history = this.props.history;
-  		// 	API.logout(function(){
-	    //         history.push('/login');
-	    //       });
-  		// }
-  	}
+  }
 
 	toggleSidebar = () => {
 		var body = !this.state.sidebar ? "modal-open" : "";
 		this.setState({sidebar: !this.state.sidebar, body: body});
 	}
 
-	logout = () => {
-		// const history = this.props.history;
-		// API.logout(function(){
-		// 	history.push('/login');
-		// });
+	componentDidMount() {
+		loadReCaptcha();
 	}
 
 	render() {

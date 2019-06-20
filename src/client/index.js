@@ -61,7 +61,6 @@ class MachinableClient {
                 localStorage.setItem("access_token", accessToken);
                 localStorage.setItem("refresh_token", refreshToken);
                 localStorage.setItem("session_id", sessionId);
-                localStorage.setItem("user_id", sessionId);
             },
 
             refreshToken: function() {

@@ -58,8 +58,8 @@ class Account extends Component {
 						</div>
 					</div>
 
-				<br/>
-				<h4 className="text-muted border-bottom">Change Password</h4>
+					{/* <br/>
+					<h4 className="text-muted border-bottom">Change Password</h4>
 					
 					<div className="grid grid-1 padding-top">
 
@@ -75,7 +75,7 @@ class Account extends Component {
 							</div>
 						</div>
 
-					</div>
+					</div> */}
 
 					<br/>
 			</div>

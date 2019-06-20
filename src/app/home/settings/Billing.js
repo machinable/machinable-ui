@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Card } from 'turtle-ui';
-import {Doughnut} from 'react-chartjs-2';
 import Usage from './Usage';
 
 class Billing extends Component {

@@ -17,7 +17,8 @@ class Register extends Component {
 		  captchaResponse: "",
 		  errors: [],
 		  isOpen: false,
-		  loading: false
+			loading: false,
+			recap: null
 		}
   	}
 
@@ -25,8 +26,7 @@ class Register extends Component {
 		UserAPI.saveTokens(
 			response.data.access_token,
 			response.data.refresh_token,
-			response.data.session_id,
-			response.data.user_id
+			response.data.session_id
 		);
 		this.props.history.push('/home');
 	}
@@ -99,8 +99,20 @@ class Register extends Component {
 		this.setState({captchaResponse: response});
 	}
 
-	render() {
+	componentDidMount = () => {
+		// load recaptcha
+		const t = this;
+		setTimeout(function(){
+			t.setState({recap: <ReCaptcha
+				ref={(el) => {t.captcha = el;}}
+				className="g-recaptcha"
+				sitekey={Statics.RECAPTCHA_SITE_KEY}
+				verifyCallback={t.verifyCallback}
+			/>})
+		}, 100);
+	}
 
+	render() {
 		return (
             <div className="grid grid-10">
                 <div className="login-card col-4-8">
@@ -139,12 +151,7 @@ class Register extends Component {
                             </div>
 							
 							<br/>
-							<ReCaptcha
-            					ref={(el) => {this.captcha = el;}}
-								className="g-recaptcha"
-								sitekey={Statics.RECAPTCHA_SITE_KEY}
-								verifyCallback={this.verifyCallback}
-							/>
+							{this.state.recap}
                         </Card>
                     </form>
                 </div>

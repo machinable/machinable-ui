@@ -57,7 +57,7 @@ class Usage extends Component {
                     <div className="doughnut-wrapper" style={{"maxWidth": "275px"}}>
                         <div className="text-wrapper">
                             <h4 className="text-muted text-400 text-center">
-                                400
+                                0
                                 <br/>
                                 <span className="text-small text-muted">of 500 requests</span>
                             </h4>
@@ -70,7 +70,7 @@ class Usage extends Component {
                     <div className="doughnut-wrapper" style={{"maxWidth": "275px"}}>
                         <div className="text-wrapper">
                             <h4 className="text-muted text-400 text-center">
-                                2
+                                0
                                 <br/>
                                 <span className="text-small text-muted">of 2 Resources</span>
                             </h4>
