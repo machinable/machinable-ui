@@ -31,13 +31,13 @@ class SideBar extends Component {
                                         <div className="margin-left-more">
                                             <div className="vertical-align margin-right">
                                                 <span className="nav-title">API</span>
-                                                <span className="tag background-accent margin-left" style={{"padding": "1px 5px"}}>beta</span>
+                                                {/* <span className="tag background-accent margin-left" style={{"padding": "1px 5px"}}>beta</span> */}
                                             </div>
                                             <p className="navlink-description">Manage defined API resources</p>
                                         </div>
                                     </NavLink>
                                 </li>
-                                <li>
+                                {/* <li>
                                     <NavLink to={"/project/"+slug+"/collections"} style={{display: "flex"}}>
                                         <FontAwesomeIcon className="center-self nav-icon" style={{fontSize: "18px"}} icon={faDatabase} fixedWidth/>
                                         <div className="margin-left-more">
@@ -45,7 +45,7 @@ class SideBar extends Component {
                                             <p className="navlink-description">Store unstructured JSON</p>
                                         </div>
                                     </NavLink>
-                                </li>
+                                </li> */}
                                 <li>
                                     <NavLink to={"/project/"+slug+"/access"} style={{display: "flex"}}>
                                         <FontAwesomeIcon className="center-self nav-icon" style={{fontSize: "18px"}} icon={faUserLock} fixedWidth/>

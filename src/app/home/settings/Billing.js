@@ -1,46 +1,56 @@
 import React, { Component } from 'react';
 import { Card } from 'turtle-ui';
+import {Doughnut} from 'react-chartjs-2';
+import Usage from './Usage';
 
 class Billing extends Component {
 
 	render() {
 
 		const plans = [
-			{"name": "Free", "min": 500, "sites": 2, "assets": 4, "price": "0", "active": true},
-			{"name": "Dev", "min": 2000, "sites": 4, "assets": 10, "price": "5", "active": false},
-			{"name": "Pro", "min": 10000, "sites": 10, "assets": 25, "price": "20", "active": false}
+			{"name": "Free", "min": 500, "resources": 2, "storage": "256 MB", "price": "0", "active": true},
+			{"name": "Dev", "min": 2000, "resources": 10, "storage": "5 GB", "price": "5", "active": false},
+			{"name": "Pro", "min": 10000, "resources": 50, "storage": "25 GB", "price": "20", "active": false},
 		];
 
 		return (
-			<div className="grid grid-4">
-				{plans.map(function(plan){
-					return (
-						<Card classes={"hover click " + (plan.active ? "information" : "")}>
-							<h3 className="align-center no-margin text-400">{plan.name} - ${plan.price}</h3>
-							<br/>
-							<h2 className="align-center no-margin">{plan.min.toLocaleString()}</h2>
-							<span className="align-center text-muted text-small">Requests / hour</span>
-							<br/>
-							<h2 className="align-center no-margin">{plan.sites}</h2>
-							<span className="align-center text-muted text-small">API Resources</span>
-							<br/>
-							<h2 className="align-center no-margin">{plan.assets}</h2>
-							<span className="align-center text-muted text-small">Collections</span>
-						</Card>
-					)
-				})}
-				
-				<div className="col-3 margin-top-more">
-					<div className="grid grid-1">
-						<Card classes="no-border no-content-padding">
-							<h3>Payment</h3>
-							<Card
-								classes="alert">
-								no payment method
+			<div className="grid grid-1">
+				<h4 className="text-muted border-bottom margin-bottom-none">Usage</h4>
+				<div className="grid grid-3 padding">
+					<Usage/>
+				</div>
+
+				<h4 className="text-muted border-bottom margin-bottom-none">Plans</h4>
+				<div className="grid grid-4 padding">
+					{plans.map(function(plan){
+						return (
+							<Card 
+								classes={"hover click project-hover " + (plan.active ? "information" : "no-border")}>
+								<h3 className="align-center no-margin text-400">{plan.name} - <span className="text-muted">&nbsp;${plan.price}</span></h3>
+								<br/>
+								<h2 className="align-center no-margin">{plan.min.toLocaleString()}</h2>
+								<span className="align-center text-muted text-small">Requests / hour</span>
+								<br/>
+								<h2 className="align-center no-margin">{plan.resources}</h2>
+								<span className="align-center text-muted text-small">API Resources</span>
+								<br/>
+								<h2 className="align-center no-margin">{plan.storage}</h2>
+								<span className="align-center text-muted text-small">Storage</span>
 							</Card>
-						</Card>
+						)
+					})}
+				</div>
+
+				<h4 className="text-muted border-bottom margin-bottom-none">Billing</h4>
+				<div className="margin-top-more padding">
+					<div className="grid grid-1">
+						<div className="col-2 background-content padding vertical-align">
+							<span>no payment method</span>
+						</div>
 					</div>
 				</div>
+
+				<br/>
 			</div>
 		  );
 	}

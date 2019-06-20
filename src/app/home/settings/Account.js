@@ -7,15 +7,22 @@ class Account extends Component {
 
 		return (
 			<div className="grid grid-1">
-				<h4 className="text-400 text-muted">Account Information</h4>
-				<Card
-					classes="footer-plain">
+				<h4 className="text-muted border-bottom margin-bottom-none">Account Information</h4>
+				{/* <Card
+					classes="footer-plain"> */}
 
-					<div className="grid grid-1">
-
+					<div className="grid grid-1 padding">
 						<div className="grid grid-3">
-							<h3 className="vertical-align">Email</h3>
-							<Input labelClasses="col-2" placeholder="email" name="email"/>
+							<h3 className="vertical-align margin">Username</h3>
+							<div className="col-2 background-content padding-less vertical-align">
+								<span>username</span>
+							</div>
+						</div>
+						<div className="grid grid-3">
+							<h3 className="vertical-align margin">Email</h3>
+							<div className="col-2 background-content padding-less vertical-align">
+								<span>email</span>
+							</div>
 						</div>
 						{/* <div className="grid grid-1">
 							<div className="align-right">
@@ -24,13 +31,13 @@ class Account extends Component {
 						</div> */}
 					</div>
 
-				</Card>
+				{/* </Card> */}
 
-				<h4 className="text-400 text-muted">Change Password</h4>
-				<Card
-					classes="footer-plain">
+				<h4 className="text-muted border-bottom margin-bottom-none">Change Password</h4>
+				{/* <Card
+					classes="footer-plain"> */}
 					
-					<div className="grid grid-1">
+					<div className="grid grid-1 padding">
 
 						<div className="grid grid-1">
 							<Input label="Old Password" labelClasses="text-muted" placeholder="old password" name="old_password"/>
@@ -47,7 +54,7 @@ class Account extends Component {
 					</div>
 
 					<br/>
-				</Card>
+				{/* </Card> */}
 			</div>
 		  );
 	}

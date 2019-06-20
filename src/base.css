@@ -677,6 +677,10 @@ strong {
 .padding-bottom-even-more{
 	padding-bottom: 30px;
 }
+
+.m5 {
+	margin: 5px;
+}
 .no-margin-top {
 	margin-top: 0px;
 }
@@ -723,8 +727,18 @@ strong {
 	margin-bottom: 5px;
 }
 
+.margin-bottom-none {
+	margin-bottom: 0px;
+}
+
+.border-bottom {
+	border-bottom: 2px solid var(--card-border-color);
+    padding-bottom: 5px;
+}
+
 .margin {
-	margin: 10px;
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 .margin-vertical-5 {
 	margin: 5px 0px;
@@ -776,7 +790,7 @@ dl dd {
 
 /* CARDS */
 .card {
-    border: 1px solid var(--card-border-color) !important;
+    /* border: 1px solid var(--card-border-color); */
 }
 
 /* TABLE */

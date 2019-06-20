@@ -130,10 +130,10 @@ class Project extends Component {
 							render={(props) => <API {...props} />} 
 						/>
 							
-						<Route 
+						{/* <Route 
 							path={prefix+"/collections"} 
 							render={(props) => <Collections {...props} />}
-						/>
+						/> */}
 
 						<Route 
 							path={prefix+"/access"} 
