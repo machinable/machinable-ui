@@ -22,12 +22,17 @@ class MachinableClient {
         return localStorage.getItem("session_id")
     }
 
+    getUserID() {
+        return localStorage.getItem("user_id")
+    }
+
     setAccessToken(token) {
         localStorage.setItem("access_token", token);
     }
 
     /* MANAGEMENT APIS */
     user() {
+        var USER = MGMT_API_HOST + "/users/";
         var LOGIN = MGMT_API_HOST + "/users/sessions";
         var REGISTER = MGMT_API_HOST + "/users/register";
         var REFRESH = MGMT_API_HOST + "/users/refresh";
@@ -36,6 +41,12 @@ class MachinableClient {
         var refreshHeaders = {"Authorization": "Bearer " + this.getRefreshToken()}
 
         return {
+            get: function(success, error) {
+                axios.get(USER, {headers: authHeaders})
+                    .then(success)
+                    .catch(error);
+            },
+
             login: function(username, password) {
                 var encoded = window.btoa(username + ":" + password);
                 var headers = {"Authorization": "Basic " + encoded};
@@ -50,6 +61,7 @@ class MachinableClient {
                 localStorage.setItem("access_token", accessToken);
                 localStorage.setItem("refresh_token", refreshToken);
                 localStorage.setItem("session_id", sessionId);
+                localStorage.setItem("user_id", sessionId);
             },
 
             refreshToken: function() {
@@ -61,6 +73,7 @@ class MachinableClient {
                     localStorage.removeItem("access_token");
                     localStorage.removeItem("refresh_token");
                     localStorage.removeItem("session_id");
+                    localStorage.removeItem("user_id");
                     success();
                 }, error);
             },
@@ -81,11 +94,18 @@ class MachinableClient {
         console.log(MGMT_API_HOST);
         var GET_SESSIONS = MGMT_API_HOST + "/users/sessions";
         var DELETE_SESSION = MGMT_API_HOST + "/users/sessions/{id}";
+        var GET_SESSION = MGMT_API_HOST + "/users/sessions/{id}";
         var authHeaders = this.getAuthHeaders();
 
         return {
             list: function(success, error) {
                 axios.get(GET_SESSIONS, {headers: authHeaders})
+                    .then(success)
+                    .catch(error);
+            },
+
+            get: function(id, success, error) {
+                axios.get(GET_SESSION.replace("{id}", id), {headers: authHeaders})
                     .then(success)
                     .catch(error);
             },

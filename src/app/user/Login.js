@@ -21,7 +21,8 @@ class Login extends Component {
 		UserAPI.saveTokens(
 			response.data.access_token,
 			response.data.refresh_token,
-			response.data.session_id
+			response.data.session_id,
+			response.data.user_id
 		);
 		this.props.history.push('/home');
 	}
