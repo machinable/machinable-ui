@@ -7,9 +7,9 @@ class Billing extends Component {
 	render() {
 
 		const plans = [
-			{"name": "Free", "min": 500, "resources": 2, "storage": "256 MB", "price": "0", "active": true},
-			{"name": "Dev", "min": 2000, "resources": 10, "storage": "5 GB", "price": "5", "active": false},
-			{"name": "Pro", "min": 10000, "resources": 50, "storage": "25 GB", "price": "20", "active": false},
+			{"name": "Free", "min": 500, "resources": 6, "storage": "256 MB", "price": "0", "active": true},
+			// {"name": "Dev", "min": 2000, "resources": 25, "storage": "5 GB", "price": "5", "active": false},
+			// {"name": "Pro", "min": 10000, "resources": "Unlimited", "storage": "25 GB", "price": "20", "active": false},
 		];
 
 		return (

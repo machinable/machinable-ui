@@ -72,7 +72,7 @@ class Usage extends Component {
                             <h4 className="text-muted text-400 text-center">
                                 0
                                 <br/>
-                                <span className="text-small text-muted">of 2 Resources</span>
+                                <span className="text-small text-muted">of 6 Resources</span>
                             </h4>
                         </div>
                         <Doughnut data={data} options={{legend: false, cutoutPercentage: 70}}/>

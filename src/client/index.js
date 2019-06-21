@@ -34,6 +34,7 @@ class MachinableClient {
     user() {
         var USER = MGMT_API_HOST + "/users/";
         var LOGIN = MGMT_API_HOST + "/users/sessions";
+        var UPDATE_PASSWORD = MGMT_API_HOST + "/users/password";
         var REGISTER = MGMT_API_HOST + "/users/register";
         var REFRESH = MGMT_API_HOST + "/users/refresh";
         var DELETE_SESSION = MGMT_API_HOST + "/users/sessions/{sid}";
@@ -85,6 +86,12 @@ class MachinableClient {
                     axios.delete(URL, {headers: headers}).then(success).catch(error);
                 }
                 success();
+            },
+
+            resetPassword: function(oldPassword, newPassword, success, error) {
+                axios.post(UPDATE_PASSWORD, {"old_password": oldPassword, "new_password": newPassword}, {headers: authHeaders})
+                    .then(success)
+                    .catch(error);
             }
         }
     }
