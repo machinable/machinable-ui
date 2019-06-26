@@ -1,5 +1,6 @@
 class Statics {
 	APP_NAME = "Machinable";
+	APP_VERSION = process.env.REACT_APP_VERSION ? process.env.REACT_APP_VERSION : "Build v1.0.0-alpha"; 
 	MGMT_API_HOST = process.env.REACT_APP_MGMT_API_HOST;
 	PROJECT_API_HOST = process.env.REACT_APP_PROJECT_API_HOST;
 	

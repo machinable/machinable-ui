@@ -249,7 +249,6 @@ class Details extends Component {
 	}
 
 	toggleNav = (link) => {
-        console.log(link);
         this.setState({navSelection: link});
     }
 

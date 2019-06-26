@@ -9,6 +9,7 @@ import faLifeRing from '@fortawesome/fontawesome-free-solid/faLifeRing';
 import faUserLock from '@fortawesome/fontawesome-free-solid/faUserLock';
 import faShield from '@fortawesome/fontawesome-free-solid/faShieldAlt';
 
+import Statics from '../Statics';
 import Logo from './LogoTitle';
 import './Sidebar.css';
 
@@ -80,6 +81,7 @@ class SideBar extends Component {
                         <ul className="links">
                             <li><a target="_blank" rel="noopener noreferrer" href="https://machinable.github.io/documentation/"><FontAwesomeIcon className="center-self" icon={faBook} fixedWidth/> Documentation</a></li>
                             <li><a target="_blank" rel="noopener noreferrer" href="/home/settings/support"><FontAwesomeIcon className="center-self" icon={faLifeRing} fixedWidth/> Support</a></li>
+                            <li><a target="_blank" rel="noopener noreferrer" href="https://www.machinable.io/documentation/release_notes/#100alpha"><span className="text-small text-muted">{Statics.APP_VERSION}</span></a></li>
                         </ul>
                     </div>
                 </div>
