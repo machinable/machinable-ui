@@ -149,7 +149,6 @@ class NewResource extends Component {
             newResource: newResource
         });
     }
-
     
 	toggleNav = (link) => {
         this.setState({navSelection: link});
