@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ObjectComponent from './Object';
 import Modal from './Modal';
 import PropertySettings from './Properties/PropertySettings';
+import { Button, Input, Select } from 'turtle-ui';
 
 class ArrayComponent extends Component {
     constructor(props) {
@@ -75,7 +76,7 @@ class ArrayComponent extends Component {
                         <div className="backdrop-modal" onClick={this.close}></div>
                         <div className="x-modal">
                             <div className="wrapper">
-                                <button type="button" class="close-modal btn btn-light btn-sm" onClick={this.close}><i class="fa fa-times"></i></button>
+                                <Button type="button" classes="text plain" onClick={this.close}><i class="fa fa-times">S</i></Button>
 
                                 <div className="content">
                                     <PropertySettings  
@@ -90,26 +91,25 @@ class ArrayComponent extends Component {
                     </div>
                 </Modal>
 
-                <div className="property form-inline">
-                    <div className="items form-group mr-2">
-                        <input type="text" disabled className="form-control items-input" value="Items" />
+                <div className="property flex">
+                    <div className="items margin-right-less">
+                        <Input type="text" disabled classes="items-input" value="Items" />
                     </div>
-                    <div className="type form-group mr-2 input-group">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">Type</div>
-                        </div>
-                        <select className="form-control" value={this.props.property.items.type} name="type" onChange={this.onChange}>
-                            <option value="string">string</option>
-                            <option value="integer">integer</option>
-                            <option value="number">number</option>
-                            <option value="boolean">boolean</option>
-                            <option value="array">array</option>
-                            <option value="object">object</option>
-                        </select>
+                    <div className="type margin-right-less">
+                        <Select 
+                            value={this.props.property.items.type} 
+                            name="type" 
+                            onChange={this.onChange}
+                            options={[
+                                {value: "string", text: "string"},
+                                {value: "integer", text: "integer"},
+                                {value: "number", text: "number"},
+                                {value: "boolean", text: "boolean"},
+                                {value: "array", text: "array"},
+                                {value: "object", text: "object"},
+                            ]} />
                     </div>
-                    <div className="name form-group ">
-                        <button type="button" class="btn btn-light btn-sm" onClick={this.open}><i class="fa fa-cog"></i></button>
-                    </div>
+                    <Button type="button" classes="text plain" onClick={this.open}><i class="fa fa-cog">S</i></Button>
                 </div>
 
                 {this.props.property.items.type === "array" && 

@@ -61,12 +61,8 @@ class Property extends Component {
                         <div className="name margin-right-less">
                             <Input className="form-control" name="_key" data-value={this.props.name} value={this.props.name} onChange={onChange}/>
                         </div>
-                        <div className="type margin-right-less input-group">
-                            {/* <div className="input-group-prepend">
-                                <div className="input-group-text">Type</div>
-                            </div> */}
+                        <div className="type margin-right-less">
                             <Select 
-                                className="form-control" 
                                 value={this.props.property.type} 
                                 options={[
                                     {value: "string", text: "string"},
@@ -76,7 +72,8 @@ class Property extends Component {
                                     {value: "array", text: "array"},
                                     {value: "object", text: "object"},
                                 ]} 
-                                data-key={this.props.name} name="type" 
+                                data-key={this.props.name} 
+                                name="type" 
                                 onChange={onChange} />
                         </div>
 

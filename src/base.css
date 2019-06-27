@@ -816,7 +816,7 @@ dl dd {
 .items-input {
 	text-align: right;
 	background-color: transparent !important;
-	border-color: transparent;
+	border-color: transparent !important;
 }
 
 .property{

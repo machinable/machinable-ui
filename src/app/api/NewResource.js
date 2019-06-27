@@ -36,7 +36,7 @@ class NewResource extends Component {
 	}
 
 	editorDidMount = (editor, monaco) => {
-
+        
 	}
 
 	onPropertiesChange = (newValue, event) => {
@@ -168,6 +168,7 @@ class NewResource extends Component {
                 width="100%"
                 height="300"
                 theme="vs"
+                options={{readOnly: true}}
                 value={JSON.stringify(this.state.newResource.schema, undefined, 4)}
                 onChange={this.onPropertiesChange}
                 language="json"/>
