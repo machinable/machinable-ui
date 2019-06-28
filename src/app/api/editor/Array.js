@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import ObjectComponent from './Object';
-import Modal from './Modal';
 import PropertySettings from './Properties/PropertySettings';
-import { Button, Input, Select } from 'turtle-ui';
+import { Button, Input, Select, Modal, Card } from 'turtle-ui';
+import Dismiss from '../../../components/DismissModalButton';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import faCog from '@fortawesome/fontawesome-free-solid/faCog';
 
 class ArrayComponent extends Component {
     constructor(props) {
@@ -71,21 +73,31 @@ class ArrayComponent extends Component {
     render() {
         return (
             <>
-                <Modal show={this.state.show} onClose={this.close}>
-                    <div className="modal-wrapper">
-                        <div className="backdrop-modal" onClick={this.close}></div>
-                        <div className="x-modal">
-                            <div className="wrapper">
-                                <Button type="button" classes="text plain" onClick={this.close}><i class="fa fa-times">S</i></Button>
+                <Modal 
+                    isOpen={this.state.show} 
+                    close={this.close}>
 
-                                <div className="content">
+                    <div className="align-center grid grid-3">
+                        <div className="col-3-2">
+                            <div className=" grid grid-1">
+                                <Card
+                                    classes="footer-plain no-border"
+                                    footer={
+                                        <div className="grid grid-2">
+                                            <div className="col-2 col-right">
+                                                <Button classes="plain text" onClick={this.close}>Done</Button>	
+                                            </div>
+                                        </div>
+                                    }>
+                                    <Dismiss onClick={this.close} />
+
                                     <PropertySettings  
                                         name={this.props.name + " items"} 
                                         property={this.props.property.items} 
                                         required={this.props.required} 
                                         onChange={this.onChange}
                                         arrayItems={true} />
-                                </div>
+                                </Card>
                             </div>
                         </div>
                     </div>
@@ -109,7 +121,9 @@ class ArrayComponent extends Component {
                                 {value: "object", text: "object"},
                             ]} />
                     </div>
-                    <Button type="button" classes="text plain" onClick={this.open}><i class="fa fa-cog">S</i></Button>
+                    <Button type="button" classes="text plain" onClick={this.open}>
+                        <FontAwesomeIcon className="text-muted" icon={faCog} />
+                    </Button>
                 </div>
 
                 {this.props.property.items.type === "array" && 

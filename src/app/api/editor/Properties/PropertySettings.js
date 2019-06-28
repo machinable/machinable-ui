@@ -4,6 +4,8 @@ import ObjectProperty from './ObjectProperty';
 import String from './StringProperty';
 import Number from './NumberProperty';
 
+import { Button, Input, Select, TextArea, Modal, Card} from 'turtle-ui';
+
 class PropertySettings extends Component {
     render() {
         var {onChange} = this.props;
@@ -20,29 +22,31 @@ class PropertySettings extends Component {
 
         return (
             <>
-                <h4>{this.props.name}</h4>
-                <hr/>
-                <form className="form">
+                <h3>{this.props.name}</h3>
+                <div className="grid grid-2">
                     {!this.props.arrayItems && 
-                    <div className="name form-group">
-                        <label for="_key">Property Name</label>
-                        <input className="form-control" name="_key" data-value={this.props.name} value={this.props.name} onChange={onChange}/>
-                    </div>}
-                    <div className="type form-group">
-                        <label for="type">Type</label>
-                        <select className="form-control" id="type" value={this.props.property.type} data-key={this.props.name} name="type" onChange={onChange}>
-                            <option value="string">string</option>
-                            <option value="integer">integer</option>
-                            <option value="number">number</option>
-                            <option value="boolean">boolean</option>
-                            <option value="array">array</option>
-                            <option value="object">object</option>
-                        </select>
-                    </div>
-                    <div className="description form-group">
-                        <label for="description">Description</label>
-                        <textarea 
-                            className="form-control" 
+                    <Input label="Property Name" labelClasses="col-2" name="_key" data-value={this.props.name} value={this.props.name} onChange={onChange}/>}
+                    
+                    <Select 
+                        label="Type"
+                        labelClasses="col-2"
+                        id="type" 
+                        value={this.props.property.type}
+                        data-key={this.props.name} 
+                        name="type" 
+                        options={[
+                            {value: "string", text: "string"},
+                            {value: "integer", text: "integer"},
+                            {value: "number", text: "number"},
+                            {value: "boolean", text: "boolean"},
+                            {value: "array", text: "array"},
+                            {value: "object", text: "object"},
+                        ]} 
+                        onChange={onChange} />
+
+                    <div className="col-2">
+                        <TextArea 
+                            label="Description"
                             name="description" 
                             placeholder="enter description" 
                             data-key={this.props.name} 
@@ -62,7 +66,7 @@ class PropertySettings extends Component {
                     {this.props.property.type === "string" && <String property={this.props.property} name={this.props.name} onChange={this.props.onChange}/>}
                     {this.props.property.type === "integer" && <Number property={this.props.property} name={this.props.name} onChange={this.props.onChange}/>}
                     {this.props.property.type === "number" && <Number property={this.props.property} name={this.props.name} onChange={this.props.onChange}/>}
-                </form>
+                </div>
             </>
         );
     }

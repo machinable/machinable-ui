@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import ObjectComponent from './Object';
 import ArrayComponent from './Array';
-import Modal from './Modal';
 import PropertySettings from './Properties/PropertySettings';
-import { Button, Input, Select } from 'turtle-ui';
+import { Button, Input, Select, Modal, Card} from 'turtle-ui';
+import Dismiss from '../../../components/DismissModalButton';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import faCog from '@fortawesome/fontawesome-free-solid/faCog';
+import faTimes from '@fortawesome/fontawesome-free-solid/faTimes';
 
 class Property extends Component {
     constructor(props) {
@@ -37,20 +40,30 @@ class Property extends Component {
 
         return (
             <>
-                <Modal show={this.state.show} onClose={this.close}>
-                    <div className="modal-wrapper">
-                        <div className="backdrop-modal" onClick={this.close}></div>
-                        <div className="x-modal">
-                            <div className="wrapper">
-                                <Button type="button" classes="text plain" onClick={this.close}><i className="fa fa-times">x</i></Button>
+                <Modal 
+                    isOpen={this.state.show} 
+                    close={this.close}>
 
-                                <div className="content">
+                    <div className="align-center grid grid-3">
+                        <div className="col-3-2">
+                            <div className=" grid grid-1">
+                                <Card
+                                    classes="footer-plain no-border"
+                                    footer={
+                                        <div className="grid grid-2">
+                                            <div className="col-2 col-right">
+                                                <Button classes="plain text" onClick={this.close}>Done</Button>	
+                                            </div>
+                                        </div>
+                                    }>
+                                    <Dismiss onClick={this.close} />
+
                                     <PropertySettings  
                                         name={this.props.name} 
                                         property={this.props.property} 
                                         required={this.props.required} 
                                         onChange={this.props.onChange} />
-                                </div>
+                                </Card>
                             </div>
                         </div>
                     </div>
@@ -77,9 +90,13 @@ class Property extends Component {
                                 onChange={onChange} />
                         </div>
 
-                        <Button type="button" classes="text plain" onClick={this.open}><i className="fa fa-cog">e</i></Button>
+                        <Button type="button" classes="text plain btn-small" onClick={this.open}>
+                            <FontAwesomeIcon className="text-muted" icon={faCog} />
+                        </Button>
 
-                        <Button type="button" classes="text plain" onClick={() => this.props.onDeleteKey(this.props.name)}><i className="fa fa-times">x</i></Button>
+                        <Button type="button" classes="text plain btn-small" onClick={() => this.props.onDeleteKey(this.props.name)}>
+                            <FontAwesomeIcon className="text-more-muted" icon={faTimes} />
+                        </Button>
                     </div>
                     {this.props.property.type === "array" && 
                         <ArrayComponent name={this.props.name} property={this.props.property} required={this.props.required} onUpdate={this.props.onUpdate}/>

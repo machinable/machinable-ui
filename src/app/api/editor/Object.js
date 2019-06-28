@@ -131,7 +131,7 @@ class ObjectComponent extends Component {
                         <Property key={this.props.name + "_" + i} name={el[0]} property={el[1]} required={this.props.property.required.indexOf(el[0]) > -1} onChange={this.onChange} onUpdate={this.onUpdate} onDeleteKey={this.onDeleteKey}/>
                     )
                 }, this)}
-                <Button classes="brand plain margin-top" onClick={() => this.onAdd("new_key", {type: "string"})}>Add Property to&nbsp;<u>{this.props.name || "root"}</u></Button>
+                <Button classes="brand plain margin-top  btn-small" onClick={() => this.onAdd("new_key", {type: "string"})}>Add Property to&nbsp;<u>{this.props.name || "root"}</u></Button>
             </div>
         );
     }
