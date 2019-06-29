@@ -4,7 +4,7 @@ import ObjectProperty from './ObjectProperty';
 import String from './StringProperty';
 import Number from './NumberProperty';
 
-import { Button, Input, Select, TextArea, Modal, Card} from 'turtle-ui';
+import { Input, Select, TextArea, Switch} from 'turtle-ui';
 
 class PropertySettings extends Component {
     render() {
@@ -22,14 +22,13 @@ class PropertySettings extends Component {
 
         return (
             <>
-                <h3>{this.props.name}</h3>
+                <h2><span className="text-more-muted">Edit property - </span> {this.props.name}</h2>
                 <div className="grid grid-2">
                     {!this.props.arrayItems && 
-                    <Input label="Property Name" labelClasses="col-2" name="_key" data-value={this.props.name} value={this.props.name} onChange={onChange}/>}
+                    <Input label="Property Name" name="_key" data-value={this.props.name} value={this.props.name} onChange={onChange}/>}
                     
                     <Select 
                         label="Type"
-                        labelClasses="col-2"
                         id="type" 
                         value={this.props.property.type}
                         data-key={this.props.name} 
@@ -45,21 +44,31 @@ class PropertySettings extends Component {
                         onChange={onChange} />
 
                     <div className="col-2">
-                        <TextArea 
-                            label="Description"
-                            name="description" 
-                            placeholder="enter description" 
-                            data-key={this.props.name} 
-                            value={this.props.property.description} 
-                            onChange={onChange}/>
+                        <div className="grid grid-1">
+                            <TextArea 
+                                label="Description"
+                                name="description" 
+                                placeholder="enter description" 
+                                data-key={this.props.name} 
+                                value={this.props.property.description} 
+                                onChange={onChange}/>
+                        </div>
                     </div>
+
                     {!this.props.arrayItems && 
-                    <div className="required form-check form-group">
-                        <input id={"required_"+this.props.name} className="form-check-input" name="_required" data-key={this.props.name} checked={this.props.required} onChange={onChange} type="checkbox"/>
-                        <label for={"required_"+this.props.name} className="form-check-label">Required</label>
-                        <small className="form-text text-muted">
-                            Specify if this field's value is required when saving data.
-                        </small>
+                    <div className={this.props.property.type === "object" ? "" : "col-2"}>
+                        <div className="grid grid-1 no-gap margin-bottom-less">
+                            <strong>Required</strong>
+                            <Switch 
+                                name="_required" 
+                                data-key={this.props.name} 
+                                on={this.props.required} 
+                                onChange={onChange} 
+                                />
+                            <small className="text-muted">
+                                Specify if this field's value is required when saving data.
+                            </small>
+                        </div>
                     </div>}
                     {this.props.property.type === "boolean" && <Boolean property={this.props.property} name={this.props.name} onChange={this.props.onChange}/>}
                     {this.props.property.type === "object" && <ObjectProperty property={this.props.property} name={this.props.name} onChange={this.props.onChange}/>}

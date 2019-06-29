@@ -74,11 +74,13 @@ class ArrayComponent extends Component {
         return (
             <>
                 <Modal 
+                    overrideClasses={true}
+                    classes={"padding-more"}
                     isOpen={this.state.show} 
                     close={this.close}>
 
-                    <div className="align-center grid grid-3">
-                        <div className="col-3-2">
+                    <div className="align-center grid grid-4">
+                        <div className="col-2-4">
                             <div className=" grid grid-1">
                                 <Card
                                     classes="footer-plain no-border"
@@ -121,7 +123,7 @@ class ArrayComponent extends Component {
                                 {value: "object", text: "object"},
                             ]} />
                     </div>
-                    <Button type="button" classes="text plain" onClick={this.open}>
+                    <Button type="button" classes="text plain btn-small" onClick={this.open}>
                         <FontAwesomeIcon className="text-muted" icon={faCog} />
                     </Button>
                 </div>

@@ -41,11 +41,13 @@ class Property extends Component {
         return (
             <>
                 <Modal 
+                    overrideClasses={true}
+                    classes={"padding-more"}
                     isOpen={this.state.show} 
                     close={this.close}>
 
-                    <div className="align-center grid grid-3">
-                        <div className="col-3-2">
+                    <div className="align-center grid grid-4">
+                        <div className="col-2-4">
                             <div className=" grid grid-1">
                                 <Card
                                     classes="footer-plain no-border"

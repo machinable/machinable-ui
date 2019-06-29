@@ -401,6 +401,9 @@ pre {
 	grid-gap: 10px;
 	grid-template-columns: repeat(12, 1fr);
 }
+.no-gap{
+	grid-gap: 0px;
+}
 .grid-11 {
 	grid-template-columns: repeat(11, 1fr);
 }
