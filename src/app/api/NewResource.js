@@ -23,16 +23,10 @@ class NewResource extends Component {
 				path_name: "",
 				schema: {
                     type: "object",
-                    properties: {
-                        "name": {
-                            _sort: 0, // for consistent display order
-                            type: "string",
-                            description: "A human name."
-                        }
-                    },
+                    properties: {},
                     required: []
-                 }
-			}
+                },
+            }
 		}
 	}
 
@@ -41,12 +35,18 @@ class NewResource extends Component {
 	}
 
 	onPropertiesChange = (newValue, event) => {
-		var newResource = this.state.newResource;
-		newResource["schema"] = newValue;
+		// var schema = this.state.c;
+        // schema = newValue;
+        
+        // try{
+        //     var temp = JSON.parse(value);
+        //     temp = JSON.stringify(temp, undefined, 4);
+        //     value = temp;
+        // }catch(err){}
 
-		this.setState({
-			newResource: newResource
-		});
+		// this.setState({
+		// 	schema: schema
+		// });
 	}
 
 	onChange = (event) => {
@@ -64,13 +64,6 @@ class NewResource extends Component {
 			if (vals.length > 1) {
 				value = value.split("/")[1];
 			}
-		}
-		else if (name === "properties") {
-			try{
-				var temp = JSON.parse(value);
-				temp = JSON.stringify(temp, undefined, 4);
-				value = temp;
-			}catch(err){}
 		}
 
 		newResource[name] = value;
@@ -116,8 +109,8 @@ class NewResource extends Component {
 		if (newResource.path_name === "") {
 			errors.push("Resource path cannot be empty.");
 		}
-		if (newResource.properties === undefined) {
-			errors.push("A resource must have at least one property.");
+		if (newResource.schema === undefined) {
+			errors.push("A resource must have a defined schema.");
 		} else {
 			try {
 				JSON.parse(newResource.schema);
@@ -137,7 +130,7 @@ class NewResource extends Component {
 		var payload = {
 			"title": newResource.title,
 			"path_name": newResource.path_name,
-			"properties": JSON.parse(newResource.schema)
+			"schema": newResource.schema
 		};
 
 		Machinable.resources(this.state.slug).create(payload, this.saveSuccess, this.saveError)
@@ -161,18 +154,34 @@ class NewResource extends Component {
         );
     }
 
+    removeKey = (key, obj) => {
+        for(var k in obj) {
+            delete obj[k][key];
+            if(obj[k].type === "object") {
+                obj[k].properties = this.removeKey(key, obj[k].properties)
+            }
+        }
+        return obj
+    }
+
     renderEditor = () => {
+        // remove _sort key for visual
+        let scrubbedObj = JSON.parse(JSON.stringify(this.state.newResource.schema))
+        scrubbedObj.properties = this.removeKey("_sort", scrubbedObj.properties)
         return (
-            <MonacoEditor
-                ref="editor"
-                name="properties"
-                width="100%"
-                height="300"
-                theme="vs"
-                options={{readOnly: true}}
-                value={JSON.stringify(this.state.newResource.schema, undefined, 4)}
-                onChange={this.onPropertiesChange}
-                language="json"/>
+            <div className="editor-wrapper">
+                <div className="background-content text-center text-more-muted padding-less read-only">Read-only</div>
+                <MonacoEditor
+                    ref="editor"
+                    name="properties"
+                    width="100%"
+                    height="300"
+                    theme="vs"
+                    options={{readOnly: true}}
+                    value={JSON.stringify(scrubbedObj, undefined, 2)}
+                    onChange={this.onPropertiesChange}
+                    language="json"/>
+            </div>
         );
     }
 

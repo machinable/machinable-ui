@@ -774,12 +774,21 @@ dl dd {
 	border-radius: 2px;
 	margin-right: -9px;
 }
+.editor-wrapper .react-monaco-editor-container {
+	border-top: 0px;
+}
 .monaco-editor .margin {
 	margin: 0px;
 }
 .monaco-editor .slider:before {
 	background-color: transparent;
 	display: none;
+}
+.editor-wrapper .read-only {
+	border: 1px solid var(--input-color);
+	border-radius: 2px;
+	border-bottom: none;
+    margin-bottom: -2px;
 }
 
 /* TURTLE-UI OVERRIDES */
