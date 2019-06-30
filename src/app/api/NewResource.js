@@ -111,12 +111,6 @@ class NewResource extends Component {
 		}
 		if (newResource.schema === undefined) {
 			errors.push("A resource must have a defined schema.");
-		} else {
-			try {
-				JSON.parse(newResource.schema);
-			} catch(err) {
-				errors.push(err.message);
-			}
 		}
 
 		if (errors.length > 0) {
@@ -127,10 +121,13 @@ class NewResource extends Component {
 			return;
 		}
 
+        // remove _sort key for visual
+        let scrubSchema = JSON.parse(JSON.stringify(this.state.newResource.schema))
+        scrubSchema.properties = this.removeKey("_sort", scrubSchema.properties)
 		var payload = {
 			"title": newResource.title,
 			"path_name": newResource.path_name,
-			"schema": newResource.schema
+			"schema": scrubSchema
 		};
 
 		Machinable.resources(this.state.slug).create(payload, this.saveSuccess, this.saveError)
@@ -148,12 +145,6 @@ class NewResource extends Component {
         this.setState({navSelection: link});
     }
 
-    renderForm = () => {
-        return (
-            <ObjectComponent onUpdate={this.onUpdate} property={this.state.newResource.schema} />
-        );
-    }
-
     removeKey = (key, obj) => {
         for(var k in obj) {
             delete obj[k][key];
@@ -164,13 +155,19 @@ class NewResource extends Component {
         return obj
     }
 
+    renderForm = () => {
+        return (
+            <ObjectComponent onUpdate={this.onUpdate} property={this.state.newResource.schema} />
+        );
+    }
+
     renderEditor = () => {
         // remove _sort key for visual
         let scrubbedObj = JSON.parse(JSON.stringify(this.state.newResource.schema))
         scrubbedObj.properties = this.removeKey("_sort", scrubbedObj.properties)
         return (
             <div className="editor-wrapper">
-                <div className="background-content text-center text-more-muted padding-less read-only">Read-only</div>
+                <div className="background-content text-center text-muted padding-less read-only">Read-only</div>
                 <MonacoEditor
                     ref="editor"
                     name="properties"

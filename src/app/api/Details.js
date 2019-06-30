@@ -45,7 +45,7 @@ class Schema extends Component {
 	render() {
 		return (
 			<div className="margin-top-more code">
-				<ReactJson name={"properties"} iconStyle="square" src={this.props.def.properties} />
+				<ReactJson name={"root"} iconStyle="square" src={this.props.def.schema} />
 			</div>
 		);
 	}

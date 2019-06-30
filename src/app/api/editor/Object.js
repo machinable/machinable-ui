@@ -7,7 +7,7 @@ class ObjectComponent extends Component {
         super(props);
         this.state = {
             name: this.props.name || "root",
-            rootClass: this.props.name || "__m-root"
+            rootClass: !this.props.name ? "__m-root" : ""
         };
     }
 
@@ -46,6 +46,9 @@ class ObjectComponent extends Component {
         var property = this.props.property;
         var pr = this.props.property.properties;
 
+        let k = event.target.getAttribute('data-key');
+        const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
+        
         if(event.target.name === "_key") {
             // update old key to new key, then delete old key
             var oldv = event.target.getAttribute('data-value');
@@ -60,7 +63,6 @@ class ObjectComponent extends Component {
                 property.required.push(event.target.value);
             }
         } else if (event.target.name === "_required") {
-            let k = event.target.getAttribute('data-key');
             if(event.target.checked) {
                 // add
                 property.required.push(k)
@@ -74,16 +76,16 @@ class ObjectComponent extends Component {
         } else if (event.target.name === "_additionalProperties") {
             property.additionalProperties = event.target.checked
         } else if (event.target.name === "enum") {
-            let k = event.target.getAttribute('data-key');
-            const value = event.target.value;
             if (value === "") {
                 delete pr[k]["enum"];
             } else {
                 pr[k]["enum"] = value.split(/\r?\n/);
             }
+        } else if(event.target.name === "minLength" || event.target.name === "maxLength") {
+            pr[k][event.target.name] = parseInt(value);
+        }  else if(event.target.name === "minimum" || event.target.name === "maximum") {
+            pr[k][event.target.name] = parseFloat(value);
         } else {
-            let k = event.target.getAttribute('data-key');
-            const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
             pr[k][event.target.name] = value;
 
             // cleanup object and array specific keys
