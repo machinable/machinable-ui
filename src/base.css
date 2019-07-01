@@ -401,6 +401,9 @@ pre {
 	grid-gap: 10px;
 	grid-template-columns: repeat(12, 1fr);
 }
+.no-gap{
+	grid-gap: 0px;
+}
 .grid-11 {
 	grid-template-columns: repeat(11, 1fr);
 }
@@ -771,12 +774,21 @@ dl dd {
 	border-radius: 2px;
 	margin-right: -9px;
 }
+.editor-wrapper .react-monaco-editor-container {
+	border-top: 0px;
+}
 .monaco-editor .margin {
 	margin: 0px;
 }
 .monaco-editor .slider:before {
 	background-color: transparent;
 	display: none;
+}
+.editor-wrapper .read-only {
+	border: 1px solid var(--input-color);
+	border-radius: 2px;
+	border-bottom: none;
+    margin-bottom: -2px;
 }
 
 /* TURTLE-UI OVERRIDES */
@@ -809,6 +821,80 @@ dl dd {
 /**/
 .project-content {
 	padding: 20px;
+}
+
+/* json-schema-builder */
+
+.items-input {
+	text-align: right;
+	background-color: transparent !important;
+	border-color: transparent !important;
+}
+
+.property{
+}
+
+.property-wrapper {
+
+}
+
+.property-wrapper:first-of-type {
+	border-left: none;
+}
+
+.objectWrapper {
+	padding: 15px;
+	margin: 5px 0px 5px 0px;
+	border-left: 2px solid #D5D5D5;
+}
+
+.objectWrapper.__m-root{
+	border: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+.modal-wrapper {
+	display: flex;
+	justify-content: center;
+	width: 98vw;
+	position: absolute;
+	z-index: 100000;
+	left: 0;
+	top: 0;
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding: 25px;
+}
+
+.x-modal .wrapper {
+	background-color: #FFF;
+	border-radius: 5px;
+	padding: 2px;
+}
+
+.x-modal .close-modal {
+	float: right;
+}
+
+.x-modal .content {
+	padding: 18px 15px 15px 15px;
+	width: 45vw;
+}
+
+.x-modal {
+	position: relative;
+	display: flex;
+}
+
+.backdrop-modal {
+	position: fixed;
+	height: 100vh;
+	width: 100vw;
+	background-color: rgba(0,0,0,.5);
+	left: 0;
+	top: 0;
+	overflow-x: hidden;
 }
 
 /* phone */

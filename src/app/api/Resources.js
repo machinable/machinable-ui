@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Modal, Card, Input, Dropdown, List, ListItem, Table } from 'turtle-ui';
+import { Button, Modal, Card, Dropdown, List, ListItem, Table } from 'turtle-ui';
 import Loader from '../../components/Loader';
 import Dismiss from '../../components/DismissModalButton';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
@@ -9,9 +9,8 @@ import Empty from '../../images/empty_board.svg';
 import Machinable from '../../client';
 import Statics from '../../Statics';
 import Details from './Details';
-import slugify from 'slugify';
 import moment from 'moment';
-import MonacoEditor from 'react-monaco-editor';
+import NewResource from './NewResource';
 
 class Resources extends Component {
 
@@ -24,12 +23,6 @@ class Resources extends Component {
 			showExtraModal: false,
 			showDeleteModal: false,
 			slug: props.slug,
-			newResource: {
-				errors: [],
-				title: "",
-				path_name: "",
-				properties: undefined
-			},
 			extraElement: <div>nothing selected</div>,
 			deleteResource: {}
 		}
@@ -45,12 +38,7 @@ class Resources extends Component {
 	}
 
 	resSuccess = (response) => {
-		this.setState({resources: response.data, loading: false, newResource: {
-			title: "",
-			path_name: "",
-			errors: [],
-			properties: undefined
-		}}, this.closeModal);
+		this.setState({resources: response.data, loading: false}, this.closeModal);
 	}
 
 	getResources = () => {
@@ -60,12 +48,7 @@ class Resources extends Component {
 	closeModal = () => {
 		var html = document.getElementsByTagName('html')[0];
         html.style.cssText = "--root-overflow: auto";
-		this.setState({showModal: false, showDeleteModal: false, newResource: {
-			title: "",
-			path_name: "",
-			errors: [],
-			properties: undefined
-		}});
+		this.setState({showModal: false, showDeleteModal: false});
 	}
 
 	openModal = () => {
@@ -95,108 +78,6 @@ class Resources extends Component {
 	deleteResource = () => {
 		this.setState({loading: true});
 		Machinable.resources(this.state.slug).delete(this.state.deleteResource.id, this.getResources, this.resError);
-	}
-
-	onPropertiesChange = (newValue, event) => {
-		var newResource = this.state.newResource;
-		newResource["properties"] = newValue;
-
-		this.setState({
-			newResource: newResource
-		});
-	}
-
-	onChange = (event) => {
-	    const target = event.target;
-	    var value = target.value;
-	    const name = target.name;
-
-		var newResource = this.state.newResource;
-		
-		if (name === "title") {
-			newResource["path_name"] = value;
-		} 
-		else if (name === "path_name") {
-			var vals = value.split("/")
-			if (vals.length > 1) {
-				value = value.split("/")[1];
-			}
-		}
-		else if (name === "properties") {
-			try{
-				var temp = JSON.parse(value);
-				temp = JSON.stringify(temp, undefined, 4);
-				value = temp;
-			}catch(err){}
-		}
-
-		newResource[name] = value;
-
-		// slugify path name
-		newResource["path_name"] = slugify(newResource["path_name"], {
-										replacement: '-',
-										remove: null,  
-										lower: false
-									});
-
-	    this.setState({
-	    	newResource: newResource
-	    });
-	}
-
-	saveError = (response) => {
-		console.log(response);
-
-		var newResource = this.state.newResource;
-		newResource.errors.push(response.data.error);
-
-		this.setState({
-			newResource: newResource
-		});
-	}
-
-	saveSuccess = (response) => {
-		this.getResources()
-	}
-
-	saveResource = () => {
-		var errors = [];
-		var newResource = this.state.newResource;
-		newResource.errors = [];
-		this.setState({
-			newResource: newResource
-		});
-		if (newResource.title === "") {
-			errors.push("Resource title cannot be empty.");
-		}
-		if (newResource.path_name === "") {
-			errors.push("Resource path cannot be empty.");
-		}
-		if (newResource.properties === undefined) {
-			errors.push("A resource must have at least one property.");
-		} else {
-			try {
-				JSON.parse(newResource.properties);
-			} catch(err) {
-				errors.push(err.message);
-			}
-		}
-
-		if (errors.length > 0) {
-			newResource.errors = errors;
-			this.setState({
-				newResource: newResource
-			});
-			return;
-		}
-
-		var payload = {
-			"title": newResource.title,
-			"path_name": newResource.path_name,
-			"properties": JSON.parse(newResource.properties)
-		};
-
-		Machinable.resources(this.state.slug).create(payload, this.saveSuccess, this.saveError)
 	}
 
 	componentDidMount = () => {		
@@ -264,22 +145,6 @@ class Resources extends Component {
 	render() {
 		var renderResources = Object.keys(this.state.resources.items).length > 0 ? this.getResourceTable() : this.emptyState();
 
-		var sampleSchema = JSON.stringify({
-			  "firstName": {
-				"type": "string",
-				"description": "The person's first name."
-			  },
-			  "lastName": {
-				"type": "string",
-				"description": "The person's last name."
-			  },
-			  "age": {
-				"description": "Age in years which must be equal to or greater than zero.",
-				"type": "integer",
-				"minimum": 0
-			  }
-		}, undefined, 4);
-
 		return (
 			<div>
 				<Loader loading={this.state.loading} />
@@ -341,56 +206,7 @@ class Resources extends Component {
 					close={this.closeModal}
 					isOpen={this.state.showModal}>
 
-					<div className="full-height grid grid-5">
-						<div className="col-3-5 grid-column-end-6">
-							<div className="grid grid-1">
-								<Card 
-									classes="footer-plain no-border"
-									footer={
-										<div className="grid grid-2">
-											<div className="col-2 col-right">
-												<Button classes="accent" onClick={this.saveResource}>Save</Button>	
-												<Button classes="plain text" onClick={this.closeModal}>Cancel</Button>	
-											</div>
-										</div>
-									}>
-									<div className="modal-header">
-										<h2 className="text-400 margin-bottom no-margin-top">Create a resource</h2>
-										<p className="text-muted margin-top margin-bottom-even-more">Configure an API Resource to store structured data</p>
-									</div>
-									<div className="grid grid-1">
-										{this.state.newResource.errors.length > 0 &&
-											<div className="text-danger">
-												{this.state.newResource.errors.map(function(error, i){
-													return(
-														<div>{error}</div>
-													)
-												})}
-											</div>
-										}
-										
-										<Input placeholder="descriptive title of the resource" label="Title" name="title" value={this.state.newResource.title} onChange={this.onChange}/>
-										<Input placeholder="the url path of this resource" label="Path" name="path_name" value={"/" + this.state.newResource.path_name} onChange={this.onChange}/>
-										<strong>Properties</strong>
-										<div className="margin-top-less text-medium text-muted">
-											Define your resource properties using <a className="link text-400 text-information" target="_blank" rel="noopener noreferrer" href="https://json-schema.org/">JSON Schema</a>. 
-											Check out our <a className="link text-400 text-information" target="_blank" rel="noopener noreferrer" href={Statics.DOCS.JSON_SCHEMA_SAMPLES}>sample schemas</a> to get an idea of how to structure your data.
-										</div>
-										<MonacoEditor
-											ref="editor"
-											name="properties"
-											width="100%"
-											height="300"
-											theme="vs"
-											value={this.state.newResource.properties}
-											defaultValue={sampleSchema}
-											onChange={this.onPropertiesChange}
-											language="json"/>
-									</div>
-								</Card>
-							</div>
-						</div>
-					</div>
+					<NewResource onSuccess={this.getResources} close={this.closeModal}/>
 				</Modal>
 			</div>
 		  );
