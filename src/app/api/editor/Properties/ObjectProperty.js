@@ -6,7 +6,7 @@ class ObjectProperty extends Component {
     render() {
         return (
             <div>
-                <div className="grid grid-1 no-gap margin-bottom-less">
+                {/* <div className="grid grid-1 no-gap margin-bottom-less">
                     <strong>Additional Properties</strong>
                     <Switch 
                         name="additionalProperties" 
@@ -17,7 +17,7 @@ class ObjectProperty extends Component {
                     <small className="text-muted">
                         Allow additional properties to be saved with payload.
                     </small>
-                </div>
+                </div> */}
             </div>
         );
     }

@@ -103,7 +103,7 @@ class ObjectComponent extends Component {
                 if(event.target.value === "object") {
                     pr[k]["properties"] = {};
                     pr[k]["required"] = [];
-                    pr[k]["additionalProperties"] = false;
+                    // pr[k]["additionalProperties"] = false;
                 } else if(event.target.value === "array") {
                     pr[k]["items"] = {"type": "string"};
                 }

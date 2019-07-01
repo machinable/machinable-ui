@@ -93,6 +93,18 @@ class NewResource extends Component {
 	}
 
 	saveSuccess = (response) => {
+        this.setState({
+            newResource: {
+				errors: [],
+				title: "",
+				path_name: "",
+				schema: {
+                    type: "object",
+                    properties: {},
+                    required: []
+                },
+            }
+        })
         this.props.onSuccess(response);
 	}
 

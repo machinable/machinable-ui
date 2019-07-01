@@ -5,7 +5,7 @@ class NumberProperty extends Component {
     render() {
         return (
             <>
-                <Input 
+                {/* <Input 
                     label="Default" 
                     type="number"
                     name="default" 
@@ -13,7 +13,7 @@ class NumberProperty extends Component {
                     value={this.props.property.default} 
                     onChange={this.props.onChange}/>
 
-                <div></div>
+                <div></div> */}
 
                 <Input 
                     label="Minimum" 
@@ -40,7 +40,7 @@ class NumberProperty extends Component {
                     <Switch 
                         name="exclusiveMinimum" 
                         data-key={this.props.name} 
-                        on={this.props.exclusiveMinimum} 
+                        on={this.props.property.exclusiveMinimum} 
                         onChange={this.props.onChange} 
                         />
                 </div>
@@ -50,7 +50,7 @@ class NumberProperty extends Component {
                     <Switch 
                         name="exclusiveMaximum" 
                         data-key={this.props.name} 
-                        on={this.props.exclusiveMaximum} 
+                        on={this.props.property.exclusiveMaximum} 
                         onChange={this.props.onChange} 
                         />
                 </div>

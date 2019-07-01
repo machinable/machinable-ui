@@ -6,13 +6,13 @@ class String extends Component {
     render() {
         return (
             <>
-                <Input 
+                {/* <Input 
                     label="Default" 
                     labelClasses="col-2" 
                     name="default" 
                     data-key={this.props.name}
                     value={this.props.property.default} 
-                    onChange={this.props.onChange}/>
+                    onChange={this.props.onChange}/> */}
 
                 <Input 
                     label="Min. Length" 
