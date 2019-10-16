@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import faDatabase from '@fortawesome/fontawesome-free-solid/faDatabase';
+import faStop from '@fortawesome/fontawesome-free-solid/faStop';
 import faSliders from '@fortawesome/fontawesome-free-solid/faSlidersH';
 import faProject from '@fortawesome/fontawesome-free-solid/faProjectDiagram';
 import faBook from '@fortawesome/fontawesome-free-solid/faBook';
@@ -38,21 +38,30 @@ class SideBar extends Component {
                                         </div>
                                     </NavLink>
                                 </li>
-                                {/* <li>
-                                    <NavLink to={"/project/"+slug+"/collections"} style={{display: "flex"}}>
-                                        <FontAwesomeIcon className="center-self nav-icon" style={{fontSize: "18px"}} icon={faDatabase} fixedWidth/>
+                                <li>
+                                    <NavLink to={"/project/"+slug+"/json"} style={{display: "flex"}}>
+                                        <FontAwesomeIcon className="center-self nav-icon" style={{fontSize: "18px"}} icon={faStop} fixedWidth/>
                                         <div className="margin-left-more">
-                                            <span className="nav-title">Collections</span>                                    
-                                            <p className="navlink-description">Store unstructured JSON</p>
+                                            <span className="nav-title">Key/Value</span>                                    
+                                            <p className="navlink-description">Access data as JSON trees</p>
                                         </div>
                                     </NavLink>
-                                </li> */}
+                                </li>
                                 <li>
                                     <NavLink to={"/project/"+slug+"/access"} style={{display: "flex"}}>
                                         <FontAwesomeIcon className="center-self nav-icon" style={{fontSize: "18px"}} icon={faUserLock} fixedWidth/>
                                         <div className="margin-left-more">
                                             <span className="nav-title">Access</span>                                    
                                             <p className="navlink-description">Configure users and access</p>
+                                        </div>
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to={"/project/"+slug+"/webhooks"} style={{display: "flex"}}>
+                                        <FontAwesomeIcon className="center-self nav-icon" style={{fontSize: "18px"}} icon={faStop} fixedWidth/>
+                                        <div className="margin-left-more">
+                                            <span className="nav-title">Web Hooks</span>                                    
+                                            <p className="navlink-description">Trigger hooks on API Resources</p>
                                         </div>
                                     </NavLink>
                                 </li>

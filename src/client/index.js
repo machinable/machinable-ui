@@ -33,6 +33,8 @@ class MachinableClient {
     /* MANAGEMENT APIS */
     user() {
         var USER = MGMT_API_HOST + "/users/";
+        var TIERS = MGMT_API_HOST + "/users/tiers";
+        var USAGE = MGMT_API_HOST + "/users/usage";
         var LOGIN = MGMT_API_HOST + "/users/sessions";
         var UPDATE_PASSWORD = MGMT_API_HOST + "/users/password";
         var REGISTER = MGMT_API_HOST + "/users/register";
@@ -42,6 +44,18 @@ class MachinableClient {
         var refreshHeaders = {"Authorization": "Bearer " + this.getRefreshToken()}
 
         return {
+            tiers: function(success, error) {
+                axios.get(TIERS, {headers: authHeaders})
+                    .then(success)
+                    .catch(error);
+            },
+
+            usage: function(success, error) {
+                axios.get(USAGE, {headers: authHeaders})
+                    .then(success)
+                    .catch(error);
+            },
+
             get: function(success, error) {
                 axios.get(USER, {headers: authHeaders})
                     .then(success)

@@ -7,7 +7,7 @@ import {Bar} from 'react-chartjs-2';
 // https://superdevresources.com/tools/color-shades#06d6a0
 const GOOD_COLORS = ["#06dfa7", "#05ae82", "#037c5d"];
 // https://superdevresources.com/tools/color-shades#1b9aaa
-const NOTGOOD_COLORS = ["#39cde0", "#1fb3c6", "#188c9a", "#11646e"];
+const NOTGOOD_COLORS = ["#39cde0", "#1fb3c6", "#188c9a", "#11646e", "#0a3c42"];
 // 
 const BAD_COLORS = ["#f15b7e", "#5d5d5d"];
 
@@ -19,6 +19,7 @@ const CODEZ = {
     "401": {label: "401 Unauthorized", color: NOTGOOD_COLORS[1]},
     "403": {label: "403 Forbidden", color: NOTGOOD_COLORS[2]},
     "404": {label: "404 Not Found", color: NOTGOOD_COLORS[3]},
+    "429": {label: "429 Too Many Requests", color: NOTGOOD_COLORS[4]},
     "500": {label: "500 Internal Server Error", color: BAD_COLORS[0]},
     "unknown": {label: "Unknown", color: BAD_COLORS[1]}
 };

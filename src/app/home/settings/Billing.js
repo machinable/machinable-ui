@@ -2,15 +2,46 @@ import React, { Component } from 'react';
 import { Card } from 'turtle-ui';
 import Usage from './Usage';
 
+import API from '../../../client/';
+
 class Billing extends Component {
+	constructor(props) {
+		super(props);
 
-	render() {
+		this.state = {
+            user: undefined,
+            tiers: undefined,
+			errors: [],
+			loading: true
+		}
+    }
+    
+    requestError = (error) => {
+		this.setState({loading: false, errors: [error.data.error]});
+	}
 
-		const plans = [
-			{"name": "Free", "min": 500, "resources": 6, "storage": "256 MB", "price": "0", "active": true},
-			// {"name": "Dev", "min": 2000, "resources": 25, "storage": "5 GB", "price": "5", "active": false},
-			// {"name": "Pro", "min": 10000, "resources": "Unlimited", "storage": "25 GB", "price": "20", "active": false},
-		];
+	receivedUser = (response) => {
+		this.setState({user: response.data.user}, this.getTiers);
+    }
+    
+    receivedTiers = (response) => {
+		this.setState({tiers: response.data.tiers, loading: false}, this.getUsage);
+    }
+    
+	getUser = () => {
+		API.user().get(this.receivedUser, this.requestError);
+    }
+    
+    getTiers = () => {
+		API.user().tiers(this.receivedTiers, this.requestError);
+    }
+    
+	componentDidMount = () => {
+		this.getUser();
+	}
+	
+	renderPlans() {
+		const { tiers: plans, user } = this.state;
 
 		return (
 			<div className="grid grid-1">
@@ -25,14 +56,15 @@ class Billing extends Component {
 					{plans.map(function(plan){
 						return (
 							<Card 
-								classes={"hover click project-hover " + (plan.active ? "information" : "no-border")}>
-								<h3 className="align-center no-margin text-400">{plan.name} - <span className="text-muted">&nbsp;${plan.price}</span></h3>
+								key={plan.name}
+								classes={"hover click project-hover " + (plan.id === user.app_tier ? "information" : "no-border")}>
+								<h3 className="align-center no-margin text-400">{plan.name} - <span className="text-muted">&nbsp;${plan.cost}</span></h3>
 								<br/>
-								<h2 className="align-center no-margin">{plan.min.toLocaleString()}</h2>
+								<h2 className="align-center no-margin">{plan.requests.toLocaleString()}</h2>
 								<span className="align-center text-muted text-small">Requests / hour</span>
 								<br/>
-								<h2 className="align-center no-margin">{plan.resources}</h2>
-								<span className="align-center text-muted text-small">API Resources</span>
+								<h2 className="align-center no-margin">{plan.projects}</h2>
+								<span className="align-center text-muted text-small">Projects</span>
 								<br/>
 								<h2 className="align-center no-margin">{plan.storage}</h2>
 								<span className="align-center text-muted text-small">Storage</span>
@@ -54,6 +86,10 @@ class Billing extends Component {
 				<br/>
 			</div>
 		  );
+	}
+
+	render() {
+		return this.state.loading === true ? <></> : this.renderPlans();
 	}
 }
 
