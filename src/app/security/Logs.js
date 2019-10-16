@@ -3,7 +3,7 @@ import { Table, Button, Select, Dropdown } from 'turtle-ui';
 import { connect } from 'react-redux';
 import Machinable from '../../client';
 import Loader from '../../components/Loader';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import faSync from '@fortawesome/fontawesome-free-solid/faSync';
 import moment from 'moment';
 

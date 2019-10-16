@@ -1,3 +1,7 @@
+:root{
+    --sidebar-color: #f8f9fa;
+}
+
 .sidebar {
     background-color: var(--real-brand);
 }
@@ -27,7 +31,7 @@
     border-top: 1px solid rgba(255, 255, 255, .06);
     padding: 10px;
     text-align: center;
-    color: #CCC;
+    color: var(--sidebar-color);
     display: block;
     font-size: 15px;
 }
@@ -42,7 +46,7 @@
 
 .sidebar .links ul li a {
     padding: 15px;
-    color: #CCC;
+    color: var(--sidebar-color);
     display: block;
     font-weight: 400;
     /* text-align: center; */
@@ -51,12 +55,12 @@
 
 .sidebar .links ul li a:hover {
     background-color: rgba(255,255,255,.1);
-    box-shadow: inset 4px 0 0 #CCC;
+    box-shadow: inset 4px 0 0 var(--sidebar-color);
 }
 
 .sidebar .links ul li a.active {
     background-color: rgba(255,255,255,.1);
-    box-shadow: inset 4px 0 0 #CCC;
+    box-shadow: inset 4px 0 0 var(--sidebar-color);
 }
 
 .sidebar .nav-title {
@@ -67,7 +71,7 @@
 .sidebar .nav-icon {
     padding: 8px;
     border-radius: 100px;
-    background-color: #CCC;
+    background-color: var(--sidebar-color);
     color: var(--real-brand);
     height: 36px;
     width: 36px;

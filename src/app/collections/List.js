@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Table, List, ListItem, Dropdown, Modal, Card, Button } from 'turtle-ui';
 import Loader from '../../components/Loader';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import faEllipsis from '@fortawesome/fontawesome-free-solid/faEllipsisV';
 import Empty from '../../images/empty_canvas.svg';
 import Machinable from '../../client';

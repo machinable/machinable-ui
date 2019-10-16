@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Table, Button, Card, Modal, Input, Switch, Dropdown, List, ListItem, Select } from 'turtle-ui';
 import Loader from '../../components/Loader';
 import Dismiss from '../../components/DismissModalButton';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import faUser from '@fortawesome/fontawesome-free-solid/faUserCircle';
 import faEllipsis from '@fortawesome/fontawesome-free-solid/faEllipsisV';
 import Empty from '../../images/empty.svg';

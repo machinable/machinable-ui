@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import faStop from '@fortawesome/fontawesome-free-solid/faStop';
-import faSliders from '@fortawesome/fontawesome-free-solid/faSlidersH';
-import faProject from '@fortawesome/fontawesome-free-solid/faProjectDiagram';
-import faBook from '@fortawesome/fontawesome-free-solid/faBook';
-import faLifeRing from '@fortawesome/fontawesome-free-solid/faLifeRing';
-import faUserLock from '@fortawesome/fontawesome-free-solid/faUserLock';
-import faShield from '@fortawesome/fontawesome-free-solid/faShieldAlt';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { 
+    faBracketsCurly, 
+    faCodeBranch, 
+    faSlidersH as faSliders,
+    faProjectDiagram as faProject,
+    faBook,
+    faLifeRing,
+    faUserLock,
+    faShieldAlt as faShield,
+} from '@fortawesome/pro-duotone-svg-icons';
 
 import Statics from '../Statics';
 import Logo from './LogoTitle';
@@ -38,9 +41,9 @@ class SideBar extends Component {
                                         </div>
                                     </NavLink>
                                 </li>
-                                <li>
+                                {/* <li>
                                     <NavLink to={"/project/"+slug+"/json"} style={{display: "flex"}}>
-                                        <FontAwesomeIcon className="center-self nav-icon" style={{fontSize: "18px"}} icon={faStop} fixedWidth/>
+                                        <FontAwesomeIcon className="center-self nav-icon" style={{fontSize: "18px"}} icon={faBracketsCurly} fixedWidth/>
                                         <div className="margin-left-more">
                                             <span className="nav-title">Key/Value</span>                                    
                                             <p className="navlink-description">Access data as JSON trees</p>
@@ -48,20 +51,20 @@ class SideBar extends Component {
                                     </NavLink>
                                 </li>
                                 <li>
+                                    <NavLink to={"/project/"+slug+"/webhooks"} style={{display: "flex"}}>
+                                        <FontAwesomeIcon className="center-self nav-icon" style={{fontSize: "18px"}} icon={faCodeBranch} fixedWidth/>
+                                        <div className="margin-left-more">
+                                            <span className="nav-title">Web Hooks</span>                                    
+                                            <p className="navlink-description">Trigger hooks on events</p>
+                                        </div>
+                                    </NavLink>
+                                </li> */}
+                                <li>
                                     <NavLink to={"/project/"+slug+"/access"} style={{display: "flex"}}>
                                         <FontAwesomeIcon className="center-self nav-icon" style={{fontSize: "18px"}} icon={faUserLock} fixedWidth/>
                                         <div className="margin-left-more">
                                             <span className="nav-title">Access</span>                                    
                                             <p className="navlink-description">Configure users and access</p>
-                                        </div>
-                                    </NavLink>
-                                </li>
-                                <li>
-                                    <NavLink to={"/project/"+slug+"/webhooks"} style={{display: "flex"}}>
-                                        <FontAwesomeIcon className="center-self nav-icon" style={{fontSize: "18px"}} icon={faStop} fixedWidth/>
-                                        <div className="margin-left-more">
-                                            <span className="nav-title">Web Hooks</span>                                    
-                                            <p className="navlink-description">Trigger hooks on API Resources</p>
                                         </div>
                                     </NavLink>
                                 </li>

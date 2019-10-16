@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Table, Button } from 'turtle-ui';
 import Loader from '../../components/Loader';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import faMobile from '@fortawesome/fontawesome-free-solid/faMobileAlt';
 import faComputer from '@fortawesome/fontawesome-free-solid/faDesktop';
 import Machinable from '../../client';

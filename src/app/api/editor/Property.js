@@ -4,7 +4,7 @@ import ArrayComponent from './Array';
 import PropertySettings from './Properties/PropertySettings';
 import { Button, Input, Select, Modal, Card} from 'turtle-ui';
 import Dismiss from '../../../components/DismissModalButton';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import faCog from '@fortawesome/fontawesome-free-solid/faCog';
 import faTimes from '@fortawesome/fontawesome-free-solid/faTimes';
 

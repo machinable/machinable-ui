@@ -3,7 +3,7 @@ import { Table, Button, Select, TextArea, Switch, Modal, Card, Dropdown, List, L
 import { connect } from 'react-redux';
 import Loader from '../../components/Loader';
 import Dismiss from '../../components/DismissModalButton';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import faKey from '@fortawesome/fontawesome-free-solid/faKey';
 import faEllipsis from '@fortawesome/fontawesome-free-solid/faEllipsisV';
 import Empty from '../../images/safe.svg';

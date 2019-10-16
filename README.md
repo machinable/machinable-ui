@@ -37,3 +37,12 @@ $ make remove
 # stop and remove container, images, and volumes
 $ make clean
 ```
+
+### Dependencies
+
+Requires a `.npmrc` file for Font Awesome PRO icons. The contents of the file should look like:
+
+```
+@fortawesome:registry=https://npm.fontawesome.com/
+//npm.fontawesome.com/:_authToken={pro token}
+```
