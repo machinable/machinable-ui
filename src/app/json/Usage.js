@@ -45,11 +45,11 @@ class Usage extends Component {
 	}
 
 	loadStats = () => {
-		Machinable.collections(this.state.slug).stats(this.statsSuccess, this.statsError)
+		Machinable.rootKeys(this.state.slug).stats(this.statsSuccess, this.statsError)
 	}
 
 	loadUsage = () => {
-		Machinable.collections(this.state.slug).usage(this.usageSuccess, this.statsError)
+		Machinable.rootKeys(this.state.slug).usage(this.usageSuccess, this.statsError)
 	}
 
 	componentDidMount = () => {

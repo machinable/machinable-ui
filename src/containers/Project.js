@@ -7,8 +7,8 @@ import Sidebar from '../components/Sidebar';
 import ProjectIcon from '../components/ProjectIcon';
 import API from '../app/api/API';
 import Access from '../app/access/Access';
+import Json from '../app/json/Json';
 import Security from '../app/security/Security';
-import Collections from '../app/collections/Collections';
 import Settings from '../app/settings/Settings';
 
 import {setCurrentProject, setProjectObject} from '../store/projects/actionCreators';
@@ -130,10 +130,10 @@ class Project extends Component {
 							render={(props) => <API {...props} />} 
 						/>
 							
-						{/* <Route 
-							path={prefix+"/collections"} 
-							render={(props) => <Collections {...props} />}
-						/> */}
+						<Route 
+							path={prefix+"/json"} 
+							render={(props) => <Json {...props} />}
+						/>
 
 						<Route 
 							path={prefix+"/access"} 

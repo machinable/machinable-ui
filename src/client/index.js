@@ -234,58 +234,54 @@ class MachinableClient {
         }
     }
 
-    collections(projectSlug) {
-        var GET_COLLECTIONS = this.projectHost(projectSlug) + "/mgmt/collections/"
-        var GET_COLLECTION = this.projectHost(projectSlug) + "/mgmt/collections/{name}";
-        var GET_COLLECTION_USAGE = this.projectHost(projectSlug) + "/mgmt/collectionUsage/";
-        var GET_COLLECTION_STATS = this.projectHost(projectSlug) + "/mgmt/collectionUsage/stats";
-        var DELETE_COLLECTION = this.projectHost(projectSlug) + "/mgmt/collections/{id}";
-        var UPDATE_COLLECTION = this.projectHost(projectSlug) + "/mgmt/collections/{id}";
+    rootKeys(projectSlug) {
+        var GET_ROOTKEYS  = this.projectHost(projectSlug) + "/mgmt/json/"
+        var GET_ROOTKEY = this.projectHost(projectSlug) + "/mgmt/json/{key}";
+        var GET_ROOTKEYS_USAGE = this.projectHost(projectSlug) + "/mgmt/jsonUsage/";
+        var GET_ROOTKEYS_STATS = this.projectHost(projectSlug) + "/mgmt/jsonUsage/stats";
+        var DELETE_ROOTKEY = this.projectHost(projectSlug) + "/mgmt/json/{key}";
+        var UPDATE_ROOTKEY = this.projectHost(projectSlug) + "/mgmt/json/{key}";
         var authHeaders = this.getAuthHeaders();
 
         return {
-            data: function() {
-                return {
-                    list: function(name, success, error) {
-                        axios.get(GET_COLLECTION.replace("{name}", name), {headers: authHeaders})
-                            .then(success)
-                            .catch(error);
-                    }
-                }
-            }, 
+            get: function(key, success, error) {
+                axios.get(GET_ROOTKEY.replace("{key}", key), {headers: authHeaders})
+                    .then(success)
+                    .catch(error);
+            },
 
             list: function(success, error) {
-                axios.get(GET_COLLECTIONS, {headers: authHeaders})
+                axios.get(GET_ROOTKEYS, {headers: authHeaders})
                     .then(success)
                     .catch(error);
             },
 
-            create: function(data, success, error) {
-                axios.post(GET_COLLECTIONS, data, {headers: authHeaders})
+            create: function(key, data, success, error) {
+                axios.post(GET_ROOTKEY.replace("{key}", key), data, {headers: authHeaders})
                     .then(success)
                     .catch(error);
             },
 
-            delete: function(id, success, error) {
-                axios.delete(DELETE_COLLECTION.replace("{id}", id), {headers: authHeaders})
+            delete: function(key, success, error) {
+                axios.delete(DELETE_ROOTKEY.replace("{key}", key), {headers: authHeaders})
                     .then(success)
                     .catch(error);
             },
 
             update: function(id, data, success, error) {
-                axios.put(UPDATE_COLLECTION.replace("{id}", id), data, {headers: authHeaders})
+                axios.put(UPDATE_ROOTKEY.replace("{key}", id), data, {headers: authHeaders})
                     .then(success)
                     .catch(error);
             },
 
             stats: function(success, error) {
-                axios.get(GET_COLLECTION_STATS, {headers: authHeaders})
+                axios.get(GET_ROOTKEYS_STATS, {headers: authHeaders})
                     .then(success)
                     .catch(error);
             },
 
             usage: function(success, error) {
-                axios.get(GET_COLLECTION_USAGE, {headers: authHeaders})
+                axios.get(GET_ROOTKEYS_USAGE, {headers: authHeaders})
                     .then(success)
                     .catch(error);
             }
