@@ -103,24 +103,6 @@ class KeyList extends Component {
 				<Loader loading={this.state.loading} />
 				{/* {!this.state.loading && renderKeys} */}
 
-				<div className="grid grid-10" style={{"height": "100%"}}>
-					<Nav
-						onClickCallback={() => {}}
-						classes="root-keys col-2" 
-						selected={"Access"}
-						links={[
-							{text: "Details", render: this.renderRootKeys},
-							{text: "Access", render: this.renderRootKeys},
-							{text: "Schema", render: this.renderRootKeys},
-							{text: "Data", render: this.renderRootKeys}
-						]}
-					/>
-
-					<div className="col-8">
-						<pre>Test</pre>
-					</div>
-				</div>
-
 				<Modal 
 					close={this.closeModal}
 					isOpen={this.state.showDeleteModal}>

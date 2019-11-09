@@ -22,8 +22,8 @@ class Json extends Component {
 		return (
 			<>
 				<div className="padding-side content-header">
-					<h3 className="text-400 margin-bottom">Collections</h3>
-					<p className="text-muted margin-top margin-bottom-even-more">Use collections to store your project's unstructured JSON data</p>
+					<h3 className="text-400 margin-bottom">Key/Value</h3>
+					<p className="text-muted margin-top margin-bottom-even-more">Store your project's unstructured JSON data as key/values</p>
 					<Nav 
 						classes="horizontal link-underline"
 						links={collectionLinks}

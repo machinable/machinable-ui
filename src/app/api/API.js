@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import { Nav } from 'turtle-ui';
+import { Nav, Button, Modal } from 'turtle-ui';
 import Querying from '../documentation/API';
 import ResourceDocs from '../documentation/Resources';
 import Examples from '../documentation/Examples';
 import Resources from './Resources';
 import Usage from './Usage';
+import NewResource from './NewResource';
 
 class API extends Component {
-	componentDidMount = () => {		
-
-	}
 
 	render() {
 		var prefix = this.props.match.url;
@@ -24,12 +23,12 @@ class API extends Component {
 					<div className="grid grid-4">
 						<div className="col-3">
 							<div>
-								<h3 className="text-400 margin-bottom">API Resources</h3>
-								<p className="text-muted margin-top margin-bottom-even-more">Create a new API for your application by defining HTTP resources using the JSON Schema standard</p>
+								<h3 className="text-400 margin-bottom margin-bottom-even-more">API Resources</h3>
+								{/* <p className="text-muted margin-top margin-bottom-even-more">Create a new API for your application by defining HTTP resources using the JSON Schema standard</p> */}
 							</div>
 						</div>
 						<div className="vertical-align align-right">
-							{/* <Button classes="accent page-btn" >New Resource</Button> */}
+							{/* <Button classes="accent page-btn" onClick={this.openModal}>New Resource</Button> */}
 						</div>
 					</div>
 					
@@ -64,5 +63,11 @@ class API extends Component {
 	}
 }
 
-
-export default API;
+// redux
+function mapStateToProps(state) {
+	return {
+		slug: state.project_slug
+	};
+}
+  
+export default connect(mapStateToProps)(API);

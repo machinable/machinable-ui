@@ -84,6 +84,13 @@ class Resources extends Component {
 		this.getResources();
 	}
 
+	getTablePageButtons = () => {
+		var buttons = [];
+        buttons.push(<Button key={"table_btn_0"} classes={"text plain btn-small " + ("disabled")} >Previous</Button>)
+		buttons.push(<Button key={"table_btn_1"} classes={"text plain btn-small " + ("disabled")} >Next</Button>)
+		return buttons;
+	}
+
 	getResourceTable = () => {
 		var resourceValues = this.state.resources.items.map(function(def, idx){
 			var fullURL = Statics.GenerateAPIHost(this.state.slug) + "/api/" + def.path_name;
@@ -115,14 +122,34 @@ class Resources extends Component {
 			]
 		}, this);
 
+		const buttons = this.getTablePageButtons();
+
 		return (
 			<React.Fragment>
 				<Table 
+					title={
+						<div>
+							<Button classes="brand plain" onClick={this.openModal}>New Resource</Button>
+						</div>
+					}
 					classes="m-table"
 					headers={["Name", "Created", ""]}
-					values={resourceValues} />
-
-				<Button classes="accent page-btn" onClick={this.openModal}>New Resource</Button>
+					values={resourceValues}
+					
+					footer={<div className="grid grid-2">
+								<div className="text-small text-muted vertical-align">
+									showing 1 to 3 of 3 entries
+								</div>
+								<div className="pull-right">
+									{buttons.map(function(btn, index){
+										return (
+											btn
+										)
+									})}
+								</div>
+							</div>} 
+					/>
+				
 			</React.Fragment>
 		);
 	}
