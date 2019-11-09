@@ -175,11 +175,98 @@ a.anchor {
 
 /* COPY TO TURTLEUI*/
 
+/* ITEM SELECTION */
+.m-item-selection .card-content {
+	display: grid;
+	grid-gap: 0px;
+	grid-template-columns: 320px auto;
+}
+.m-item-selection .m-item-selection-nav {
+	border: none;
+    border-right: 1px solid #EEE;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+	border-width: 1px !important;
+	display: grid;
+	grid-gap: 0px;
+	grid-template-rows: 64px auto 44px;
+}
+
+.m-item-selection .m-selection-header {
+	border-top-left-radius: 10px;
+	border-bottom: 2px solid var(--card-border-color);
+}
+.m-item-selection .m-selection-header .button{
+	border-top-left-radius: 10px;
+}
+.m-item-selection .m-selection-header .button:active:before{
+	border-top-left-radius: 10px;
+}
+
+.m-item-header {
+	background-color: #FFF;
+	text-transform: uppercase;
+	text-align: left;
+    font-weight: 600;
+    padding: 15px;
+    color: var(--text-more-muted);
+    font-size: 12px;
+	border-bottom: 2px solid var(--card-border-color);
+}
+
+.m-selection-item {
+	padding: 10px 15px;
+}
+.m-selection-item:hover {
+	background-color: var(--card-border-color);
+	cursor: pointer;
+}
+
+.m-selection-items-empty {
+	width: 100%;
+    height: calc(100% - 46px);
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    color: var(--text-more-muted);
+    background-color: #FAFAFA;
+}
+
+.m-item-selection .m-selection-footer {
+	background-color: #fafafa;
+	border-bottom-left-radius: 10px;
+	align-items: center;
+	display: flex;
+	padding: 0px 10px;
+	border-top: 2px solid var(--card-border-color);
+}
+
+.m-selection-active {
+	padding: 15px;
+}
+
+/* CARDS */
+.m-card {
+	border-width: 0px !important;
+	box-shadow: 0 1px 3px rgba(0,0,0,.3);
+	border-radius: 10px;
+	background-color: #FFF;
+}
+
+.m-card.clear-padding .card-content {
+	padding: 0px;
+}
+
+/* TABLES */
+
 .m-table {
 	border-width: 0px !important;
 	box-shadow: 0 1px 3px rgba(0,0,0,.3);
 	border-radius: 10px;
 	background-color: #FFF;
+}
+.m-table.noshadow {
+	box-shadow: none;
 }
 
 .m-table input.search {
@@ -443,6 +530,9 @@ hr.thin {
 }
 .full-height {
 	height: 100%;
+}
+.clear-padding {
+	padding: 0px;
 }
 
 pre {
@@ -880,7 +970,7 @@ dl dd {
 
 /* CARDS */
 .card {
-    /* border: 1px solid var(--card-border-color); */
+	/* border: 1px solid var(--card-border-color); */
 }
 
 /* DROPDOWN */

@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import faMobile from '@fortawesome/fontawesome-free-solid/faMobileAlt';
 import faComputer from '@fortawesome/fontawesome-free-solid/faDesktop';
 import Machinable from '../../client';
+import Empty from '../../images/sessions.svg';
 import moment from 'moment';
 
 class Sessions extends Component {
@@ -45,7 +46,8 @@ class Sessions extends Component {
             <div className="grid grid-8">
                 <div className="col-2-8 flex-col">
                     <h2 className="text-center">No Active Sessions</h2>
-                    <h3 className="text-center">Sessions will be shown here once a project user logs in to your project.</h3>
+					<img src={Empty} alt="" className="empty-state-sm"/>
+					<h3 className="text-center">Sessions will be shown here once a project user logs in to your project.</h3>
                 </div>
             </div>
         );

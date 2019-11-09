@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Modal, Card, Button } from 'turtle-ui';
-import Nav from '../../components/DisplayNav';
+import { Modal, Card, Button, Table } from 'turtle-ui';
 import Loader from '../../components/Loader';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import faEllipsis from '@fortawesome/fontawesome-free-solid/faEllipsisV';
-import Empty from '../../images/empty_canvas.svg';
 import Machinable from '../../client';
+import Empty from '../../images/moon.svg';
 import Statics from '../../Statics';
 
 import moment from 'moment';
@@ -75,9 +74,9 @@ class KeyList extends Component {
 		return (
 			<div className="grid grid-1">
                 <div className="align-center flex-col">
-					<h2 className="text-center">Create your first Root key</h2>
+					<h2 className="text-center">Create or a select a Root key</h2>
                     <img src={Empty} alt="" className="empty-state-sm"/>
-                    <h3 className="text-center">Access JSON structure with HTTP path parameters as keys/indices to the JSON</h3>
+                    <h3 className="text-center">Access all depths of JSON with HTTP path parameters as keys/indices</h3>
 					<div className="align-center">
                         <Button classes="accent" onClick={this.openModal}>Create A Key</Button>
                     </div>
@@ -88,20 +87,48 @@ class KeyList extends Component {
 
 	renderRootKeys = () => {
 	
+		var values = [[<div className="text-muted text-small text-center">no keys found</div>]];
+
 		return (
-			<div>keys</div>
+			<Card
+				classes="m-card m-item-selection clear-padding"
+			>
+				<div className="m-item-selection-nav">
+					<div className="m-selection-header grid grid-1">
+						<Button classes="brand text plain btn-block">New Root Key</Button>
+					</div>
+
+					<div className="m-selection-content">
+						<div className="m-item-header">Keys</div>
+						<div className="m-selection-items-empty">No Keys</div>
+					</div>
+					<div className="m-selection-footer">
+						<div className="grid grid-2">
+							<div className="text-small text-muted vertical-align">
+								showing 0 to {0} of {0}
+							</div>
+							<div className="pull-right">
+								<Button key={"table_btn_0"} classes={"text plain btn-small " + ("disabled")} >Previous</Button>
+								<Button key={"table_btn_1"} classes={"text plain btn-small " + ("disabled")} >Next</Button>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div className="m-selection-active">
+					{this.emptyState()}
+				</div>
+			</Card>
 		);
 	}
 
 	render() {
-		var renderKeys = this.state.keys.length > 0 ? this.renderRootKeys() : this.emptyState();
-		var rootKeyNav = {
+		var renderKeys = this.renderRootKeys();//this.state.keys.length > 0 ? this.renderRootKeys() : this.emptyState();
 
-		}
 		return (
 			<div style={{"height": "100%"}}>
 				<Loader loading={this.state.loading} />
-				{/* {!this.state.loading && renderKeys} */}
+				{!this.state.loading && renderKeys}
 
 				<Modal 
 					close={this.closeModal}
