@@ -113,6 +113,7 @@ a.anchor {
 
 .header {
 	grid-area: header;
+	z-index: 2;
 }
 
 .home-header .searchbox {
