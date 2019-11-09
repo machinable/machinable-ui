@@ -848,6 +848,14 @@ dl dd {
 
 /* TURTLE-UI OVERRIDES */
 
+/* DROPDOWN */
+.dropdown-items {
+	pointer-events: none;
+}
+.dropdown-items.show {
+	pointer-events: all;
+}
+
 /* BUTTON */
 .button.disabled {
 	pointer-events: none;
