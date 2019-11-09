@@ -98,58 +98,60 @@ class Settings extends Component {
 		var hostName = Statics.GenerateAPIHost(this.state.project.slug);
 		var userRegisterURL = Statics.GenerateUserRegistration(this.state.project.slug)
 		return (
-			<div>
+			<>
 				<div className="padding-side content-header">
 					<h3 className="text-400 margin-bottom">Settings</h3>
 					<p className="text-muted padding-bottom no-margin">Project configuration and settings</p>
 				</div>
 
-				<div className="project-content">
-					<div className="grid grid-2">
-						<div>
-							<h3 className="margin-bottom">Name</h3>
-							<p className="text-muted padding-bottom no-margin">The name of this project.</p>
+				<div className="project-content page">
+					<div className="page-content">
+						<div className="grid grid-2">
+							<div>
+								<h3 className="margin-bottom">Name</h3>
+								<p className="text-muted padding-bottom no-margin">The name of this project.</p>
+							</div>
+							<h3 className="vertical-align align-right text-muted">
+								<Button classes="btn-small margin-left" onClick={() => this.copyText("projectName")}>{this.state.copyText.projectName}</Button><span>{this.state.project.name}</span>
+								<textarea cols="1000" className="copy-text"  id="projectName" value={this.state.project.name} readOnly/>
+							</h3>
 						</div>
-						<h3 className="vertical-align align-right text-muted">
-							<Button classes="btn-small margin-left" onClick={() => this.copyText("projectName")}>{this.state.copyText.projectName}</Button><span>{this.state.project.name}</span>
-							<textarea cols="1000" className="copy-text"  id="projectName" value={this.state.project.name} readOnly/>
-						</h3>
+						<hr/>
+						<div className="grid grid-2">
+							<div>
+								<h3 className="margin-bottom">Hostname</h3>
+								<p className="text-muted padding-bottom no-margin">The project hostname used for API access.</p>
+							</div>
+							<h3 className="vertical-align align-right text-muted">
+								<Button classes="btn-small margin-left" onClick={() => this.copyText("projectHost")}>{this.state.copyText.projectHost}</Button><span>{hostName}</span>
+								<textarea cols="1000" className="copy-text"  id="projectHost" value={hostName} readOnly/>
+							</h3>
+						</div>
+						<hr/>
+						<div className="grid grid-2">
+							<div>
+								<h3 className="margin-bottom">User Registration</h3>
+								<p className="text-muted padding-bottom no-margin">
+									{this.state.project.user_registration && <span><a className="link text-400 text-information" target="_blank" rel="noopener noreferrer" href={userRegisterURL}>{userRegisterURL}</a></span>}
+									{!this.state.project.user_registration && "Users will not be able to openly register to your project."}
+								</p>
+							</div>
+							<div className="vertical-align align-right">
+								<Switch on={this.state.project.user_registration} onChange={this.updateRegistration}/>
+							</div>
+						</div>
+						<hr/>
+						<div className="grid grid-2">
+							<div>
+								<h3 className="margin-bottom">Delete this Project</h3>
+								<p className="text-muted padding-bottom no-margin">Once you delete a project, it cannot be undone. Please be certain.</p>
+							</div>
+							<div className="vertical-align align-right">
+								<Button classes="danger plain" onClick={this.openDeleteModal}>Delete Project</Button>
+							</div>
+						</div>
+						<hr/>
 					</div>
-					<hr/>
-					<div className="grid grid-2">
-						<div>
-							<h3 className="margin-bottom">Hostname</h3>
-							<p className="text-muted padding-bottom no-margin">The project hostname used for API access.</p>
-						</div>
-						<h3 className="vertical-align align-right text-muted">
-							<Button classes="btn-small margin-left" onClick={() => this.copyText("projectHost")}>{this.state.copyText.projectHost}</Button><span>{hostName}</span>
-							<textarea cols="1000" className="copy-text"  id="projectHost" value={hostName} readOnly/>
-						</h3>
-					</div>
-					<hr/>
-					<div className="grid grid-2">
-						<div>
-							<h3 className="margin-bottom">User Registration</h3>
-							<p className="text-muted padding-bottom no-margin">
-								{this.state.project.user_registration && <span><a className="link text-400 text-information" target="_blank" rel="noopener noreferrer" href={userRegisterURL}>{userRegisterURL}</a></span>}
-								{!this.state.project.user_registration && "Users will not be able to openly register to your project."}
-							</p>
-						</div>
-						<div className="vertical-align align-right">
-							<Switch on={this.state.project.user_registration} onChange={this.updateRegistration}/>
-						</div>
-					</div>
-					<hr/>
-					<div className="grid grid-2">
-						<div>
-							<h3 className="margin-bottom">Delete this Project</h3>
-							<p className="text-muted padding-bottom no-margin">Once you delete a project, it cannot be undone. Please be certain.</p>
-						</div>
-						<div className="vertical-align align-right">
-							<Button classes="danger plain" onClick={this.openDeleteModal}>Delete Project</Button>
-						</div>
-					</div>
-					<hr/>
 				</div>
 
 				<Modal 
@@ -182,7 +184,7 @@ class Settings extends Component {
                         </div>
                     </div>
                 </Modal>
-			</div>
+			</>
 		  );
 	}
 }

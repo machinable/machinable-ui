@@ -14,8 +14,7 @@ class Security extends Component {
 		return (
 			<>
 				<div className="padding-side content-header">
-					<h3 className="text-400 margin-bottom">Security</h3>
-					<p className="text-muted margin-top margin-bottom-even-more">View activity logs and manage user sessions</p>
+					<h3 className="text-400 margin-bottom-even-more">Security</h3>
 					<Nav 
 						classes="horizontal link-underline"
 						links={collectionLinks}

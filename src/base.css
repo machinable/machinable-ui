@@ -62,8 +62,8 @@
 }
 
 .page-btn {
-	border-radius: 100px !important;
-	box-shadow: 1px 2px 3px rgba(0,0,0,.4) !important;
+	border-radius: 10px !important;
+    box-shadow: 0px 1px 2px rgba(0,0,0,.4) !important;
 }
 
 * {
@@ -180,6 +180,15 @@ a.anchor {
 	box-shadow: 0 1px 3px rgba(0,0,0,.3);
 	border-radius: 10px;
 	background-color: #FFF;
+}
+
+.m-table input.search {
+	margin: 0px;
+	border-radius: 10px;
+	border: none !important;
+	outline: none !important;
+	width: 100%;
+	font-size: 17px;
 }
 
 .m-table tbody tr {
@@ -394,6 +403,9 @@ hr.thin {
 .vertical-align {
 	display: flex !important;
     align-items: center !important;
+}
+.flex-1 {
+	flex: 1;
 }
 
 .center-self {

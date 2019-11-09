@@ -20,17 +20,8 @@ class API extends Component {
 		return (
 			<React.Fragment>
 				<div className="padding-side content-header">
-					<div className="grid grid-4">
-						<div className="col-3">
-							<div>
-								<h3 className="text-400 margin-bottom margin-bottom-even-more">API Resources</h3>
-								{/* <p className="text-muted margin-top margin-bottom-even-more">Create a new API for your application by defining HTTP resources using the JSON Schema standard</p> */}
-							</div>
-						</div>
-						<div className="vertical-align align-right">
-							{/* <Button classes="accent page-btn" onClick={this.openModal}>New Resource</Button> */}
-						</div>
-					</div>
+					
+					<h3 className="text-400 text-muted margin-top">API Resources</h3>
 					
 					<Nav 
 						classes="horizontal link-underline"

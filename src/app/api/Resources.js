@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Modal, Card, Dropdown, List, ListItem, Table } from 'turtle-ui';
+import { Button, Modal, Card, Dropdown, List, ListItem, Table, Input } from 'turtle-ui';
 import Loader from '../../components/Loader';
 import Dismiss from '../../components/DismissModalButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -92,7 +92,8 @@ class Resources extends Component {
 	}
 
 	getResourceTable = () => {
-		var resourceValues = this.state.resources.items.map(function(def, idx){
+		const { items } = this.state.resources;
+		var resourceValues = items.map(function(def, idx){
 			var fullURL = Statics.GenerateAPIHost(this.state.slug) + "/api/" + def.path_name;
 			var definitionTitle = <div>
 										<h4 className="text-400 no-margin margin-bottom-less">{def.title}</h4>
@@ -128,8 +129,13 @@ class Resources extends Component {
 			<React.Fragment>
 				<Table 
 					title={
-						<div>
-							<Button classes="brand plain" onClick={this.openModal}>New Resource</Button>
+						<div className="grid grid-2">
+							<div className="vertical-align">
+								<Input labelClasses="flex-1" classes="search" placeholder="Search resources..."/>
+							</div>
+							<div className="align-right">
+								<Button classes="brand plain page-btn" onClick={this.openModal}>New Resource</Button>
+							</div>
 						</div>
 					}
 					classes="m-table"
@@ -138,7 +144,7 @@ class Resources extends Component {
 					
 					footer={<div className="grid grid-2">
 								<div className="text-small text-muted vertical-align">
-									showing 1 to 3 of 3 entries
+									showing 1 to {items.length} of {items.length} entries
 								</div>
 								<div className="pull-right">
 									{buttons.map(function(btn, index){

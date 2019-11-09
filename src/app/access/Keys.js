@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Button, Select, TextArea, Switch, Modal, Card, Dropdown, List, ListItem } from 'turtle-ui';
+import { Table, Button, Select, TextArea, Switch, Modal, Card, Dropdown, List, ListItem, Input } from 'turtle-ui';
 import { connect } from 'react-redux';
 import Loader from '../../components/Loader';
 import Dismiss from '../../components/DismissModalButton';
@@ -163,7 +163,8 @@ class Keys extends Component {
     }
 
     renderKeys = () => {
-        var tableValues = this.state.keys.map(function(key, idx){
+        const { keys } = this.state;
+        var tableValues = keys.map(function(key, idx){
             var accessList = [];
             var copyId = "keyid-"+key.id;
             if(key.read) {
@@ -213,11 +214,31 @@ class Keys extends Component {
         return (
             <React.Fragment>
                 <Table
+                    title={
+						<div className="grid grid-2">
+                            <div className="vertical-align">
+                                <Input labelClasses="flex-1" classes="search" placeholder="Search api keys..."/>
+                            </div>
+                            <div className="align-right">
+				                <Button classes="brand plain page-btn" onClick={this.generateNewKey}>Generate API Token</Button>
+                            </div>
+                        </div>
+                    }
                     classes="hover m-table"
                     headers={["Description", "Role", "Access", <div className="align-center m-th">ID</div>, <div className="align-right m-th">Options</div>]}
-					values={tableValues}
+                    values={tableValues}
+                    
+					footer={<div className="grid grid-2">
+                                <div className="text-small text-muted vertical-align">
+                                    showing 1 to {keys.length} of {keys.length} entries
+                                </div>
+                                <div className="pull-right">
+                                    <Button key={"table_btn_0"} classes={"text plain btn-small " + ("disabled")} >Previous</Button>
+                                    <Button key={"table_btn_1"} classes={"text plain btn-small " + ("disabled")} >Next</Button>
+                                </div>
+                            </div>
+                    } 
 				/>
-				<Button classes="accent page-btn" onClick={this.generateNewKey}>Generate API Token</Button>
             </React.Fragment>
         )
     }
