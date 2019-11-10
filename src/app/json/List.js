@@ -45,7 +45,7 @@ class KeyList extends Component {
 
 	createRootKey = () => {
 		const { newRootKey } = this.state;
-		this.setState({loading: true}, function() {
+		this.setState({loading: true, errors: []}, function() {
 			Machinable.rootKeys(this.state.slug).create(newRootKey, {}, this.getRootKeys, this.colError);
 		});
 	}

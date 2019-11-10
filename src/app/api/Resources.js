@@ -34,7 +34,7 @@ class Resources extends Component {
 
 	resError = (response) => {
 		console.log(response);
-		this.setState({loading: false});
+		this.setState({loading: false, errors: [response.data.error]});
 	}
 
 	resSuccess = (response) => {

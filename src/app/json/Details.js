@@ -5,7 +5,8 @@ import Machinable from '../../client';
 import Loader from '../../components/Loader';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import faSync from '@fortawesome/fontawesome-free-solid/faSync';
-import moment from 'moment';
+import ReactJson from 'react-json-view';
+import Statics from "../../Statics";
 
 class Details extends Component {
 
@@ -37,11 +38,32 @@ class Details extends Component {
         this.getKey();
 	}
 
+	componentWillReceiveProps = (newProps) => {
+		if (newProps.rootKey !== this.state.rootKey) {
+			this.setState({loading: true, rootKey: newProps.rootKey}, this.getKey);
+		}
+	}
+
 	render() {
+		const { rootKey, slug, loading, rootKeyData } = this.state
+		const fullURL = Statics.GenerateAPIHost(slug) + "/json/" + rootKey.key + "/";
+
 		return (
 			<>
-				{this.state.loading && <Loader loading={this.state.loading} />}
-				{!this.state.loading && <pre>{JSON.stringify(this.state.rootKeyData, undefined, 3)}</pre>}
+				<a className="anchor" target="_blank" rel="noopener noreferrer" href={fullURL} title={fullURL}>{fullURL}</a>
+				{this.state.loading && <Loader loading={loading} />}
+				{!this.state.loading &&
+					<div className="margin-top padding">
+						<ReactJson 
+							onAdd={() => {}}
+							onEdit={() => {}}
+							onDelete={() => {}}
+							collapsed={2} 
+							name={rootKey.key} 
+							iconStyle="square" 
+							src={rootKeyData} />
+					</div>
+				}
 			</>
 		  );
 	}
