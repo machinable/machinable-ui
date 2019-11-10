@@ -249,7 +249,7 @@ class Users extends Component {
             ]
         }, this);
         return (
-            <React.Fragment>
+            <>
                 <Table
                     title={
 						<div className="grid grid-2">
@@ -276,7 +276,7 @@ class Users extends Component {
                             </div>
                     } 
                 />
-            </React.Fragment>
+            </>
         )
     }
 

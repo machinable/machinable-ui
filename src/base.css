@@ -216,6 +216,13 @@ a.anchor {
 
 .m-selection-item {
 	padding: 10px 15px;
+	border-bottom: 2px solid var(--card-border-color);
+}
+.m-selection-item.active {
+	background-color: var(--card-border-color);
+}
+.m-selection-item:last-child {
+	border-bottom: none;
 }
 .m-selection-item:hover {
 	background-color: var(--card-border-color);
