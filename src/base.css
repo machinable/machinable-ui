@@ -176,7 +176,7 @@ a.anchor {
 /* COPY TO TURTLEUI*/
 
 /* ITEM SELECTION */
-.m-item-selection .card-content {
+.m-item-selection>.card-content {
 	display: grid;
 	grid-gap: 0px;
 	grid-template-columns: 320px auto;
@@ -189,7 +189,7 @@ a.anchor {
 	border-width: 1px !important;
 	display: grid;
 	grid-gap: 0px;
-	grid-template-rows: 64px auto 44px;
+	grid-template-rows: auto 44px;
 }
 
 .m-item-selection .m-selection-header {
@@ -205,13 +205,18 @@ a.anchor {
 
 .m-item-header {
 	background-color: #FFF;
+    padding: 15px;
+	border-bottom: 2px solid var(--card-border-color);
+}
+
+.m-item-header .m-header-title {
+    font-size: 12px;
+    color: var(--text-more-muted);
 	text-transform: uppercase;
 	text-align: left;
-    font-weight: 600;
-    padding: 15px;
-    color: var(--text-more-muted);
-    font-size: 12px;
-	border-bottom: 2px solid var(--card-border-color);
+	font-weight: 600;
+	display: flex;
+    align-items: center;
 }
 
 .m-selection-item {
@@ -260,7 +265,7 @@ a.anchor {
 	background-color: #FFF;
 }
 
-.m-card.clear-padding .card-content {
+.m-card.clear-padding>.card-content {
 	padding: 0px;
 }
 
@@ -541,6 +546,12 @@ hr.thin {
 .clear-padding {
 	padding: 0px;
 }
+.clear-margin-top {
+	margin-top: 0px;
+}
+.clear-margin {
+	margin: 0px;
+}
 
 pre {
 	background-color: #f7f7f7;
@@ -814,6 +825,9 @@ strong {
 .padding-top {
 	padding-top: 15px;
 }
+.padding-top-bit-less {
+	padding-top: 10px;
+}
 .padding-bit-less {
 	padding: 10px;
 }
@@ -826,6 +840,10 @@ strong {
 .padding-side{
 	padding-left: 20px;
 	padding-right: 20px;
+}
+.padding-side-bit-less{
+	padding-left: 15px;
+	padding-right: 15px;
 }
 .padding-bottom {
 	padding-bottom: 15px;

@@ -4,7 +4,7 @@ import { Modal, Card, Button, Input } from 'turtle-ui';
 import Loader from '../../components/Loader';
 import Dismiss from '../../components/DismissModalButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import faEllipsis from '@fortawesome/fontawesome-free-solid/faEllipsisV';
+import faPlus from '@fortawesome/fontawesome-free-solid/faPlus';
 import Machinable from '../../client';
 import Empty from '../../images/moon.svg';
 import Detail from './Details';
@@ -19,12 +19,9 @@ class KeyList extends Component {
 			keys: [],
 			slug: props.slug,
 			data: {},
-			deleteKey: {},
 			errors: [],
-			deleteRootKey: "",
 			newRootKey: "",
 			activeKey: {id: ""},
-			showDeleteModal: false,
 			showCreateModal: false,
 			loading: true,
 		}
@@ -36,7 +33,7 @@ class KeyList extends Component {
 	}
 
 	colSuccess = (response) => {
-		this.setState({keys: response.data.items, loading: false, showDeleteModal: false, showCreateModal: false});
+		this.setState({keys: response.data.items, loading: false, showCreateModal: false});
 	}
 
 	getRootKeys = () => {
@@ -58,13 +55,13 @@ class KeyList extends Component {
 	closeModal = () => {
 		var html = document.getElementsByTagName('html')[0];
         html.style.cssText = "--root-overflow: auto";
-		this.setState({showDeleteModal: false, showCreateModal: false, deleteRootKey: ""});
+		this.setState({showCreateModal: false, deleteRootKey: ""});
 	}
 
 	openDeleteModal = (key) => {
 		var html = document.getElementsByTagName('html')[0];
         html.style.cssText = "--root-overflow: hidden";
-		this.setState({showDeleteModal: true, deleteKey: key});
+		this.setState({deleteKey: key});
 	}
 
 	openCreateModal = () => {
@@ -73,9 +70,8 @@ class KeyList extends Component {
 		this.setState({showCreateModal: true, deleteRootKey: ""});
 	}
 
-	deleteRootKey = () => {
-		this.setState({loading: true});
-		Machinable.rootKeys(this.state.slug).delete(this.state.deleteKey.key, this.getRootKeys, this.colError);
+	onDeleteRootKey = () => {
+		this.setState({loading: true, activeKey: {id: ""}}, this.getRootKeys);
 	}
 
 	onChange = (e) => {
@@ -111,17 +107,22 @@ class KeyList extends Component {
 				classes="m-card m-item-selection clear-padding"
 			>
 				<div className="m-item-selection-nav">
-					<div className="m-selection-header grid grid-1">
-						<Button classes="brand text plain btn-block" onClick={this.openCreateModal}>New Root Key</Button>
-					</div>
-
 					<div className="m-selection-content">
-						<div className="m-item-header">Keys</div>
+						<div className="m-item-header">
+							<div className="grid grid-2">
+								<span className="m-header-title">Keys</span>
+								<div className="align-right">
+									<Button classes="btn-small" onClick={this.openCreateModal}>
+										<FontAwesomeIcon icon={faPlus} />
+									</Button>
+								</div>
+							</div>
+						</div>
 						{keys.length > 0 && keys.map(function(key, i){
 							return (
 								<div 
 									key={key.id} 
-									className={"m-selection-item text-muted" + (key.id === activeKey.id ? " active" : "")}
+									className={"m-selection-item text-muted text-400" + (key.id === activeKey.id ? " active" : "")}
 									onClick={() => this.getRootKey(key)}>
 
 									{key.key}
@@ -134,7 +135,7 @@ class KeyList extends Component {
 					<div className="m-selection-footer">
 						<div className="grid grid-2">
 							<div className="text-small text-muted vertical-align">
-								showing 0 to {0} of {0}
+								showing 1 to {keys.length} of {keys.length}
 							</div>
 							<div className="pull-right">
 								<Button key={"table_btn_0"} classes={"text plain btn-small " + ("disabled")} >Previous</Button>
@@ -147,7 +148,7 @@ class KeyList extends Component {
 				<div className="m-selection-active">
 					{activeKey.id === "" && this.emptyState()}
 					{activeKey.id !== "" &&
-						<Detail slug={slug} rootKey={activeKey}/>
+						<Detail slug={slug} rootKey={activeKey} onDelete={this.onDeleteRootKey}/>
 					}
 				</div>
 			</Card>
@@ -161,34 +162,6 @@ class KeyList extends Component {
 			<div style={{"height": "100%"}}>
 				<Loader loading={this.state.loading} />
 				{!this.state.loading && renderKeys}
-
-				<Modal 
-					close={this.closeModal}
-					isOpen={this.state.showDeleteModal}>
-                    <div className="align-center grid grid-3">
-                        <div className="col-3-2">
-                            <div className=" grid grid-1">
-                                <Card
-                                    classes="footer-plain no-border"
-                                    footer={
-                                        <div className="grid grid-2">
-                                            <div className="col-2 col-right">
-                                                <Button classes="plain text" onClick={this.closeModal}>Cancel</Button>	
-                                                <Button classes="danger margin-left" type="submit" loading={this.state.loading} onClick={this.deleteRootKey}>Yes, I'm sure</Button>	
-                                            </div>
-                                        </div>
-                                    }>
-
-                                    <h2 className="text-center">Delete Root Key</h2>
-									<h3 className="text-center">Are you sure you want to delete <strong>{this.state.deleteRootKey && this.state.deleteRootKey.key}</strong>?</h3>
-									<p className="text-center">
-										This will delete all data associated with this key. This cannot be undone.
-									</p>
-                                </Card>
-                            </div>
-                        </div>
-                    </div>
-                </Modal>
 
 				<Modal 
 					close={this.closeModal}
