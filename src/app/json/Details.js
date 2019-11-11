@@ -23,7 +23,14 @@ class Details extends Component {
 	}
 
 	colError = (response) => {
-		this.setState({loading: false, errors: [response.data.error]});
+		var error = "";
+		console.log(response);
+		if(response.data.hasOwnProperty("error")) {
+			error = response.data.error;
+		} else {
+			error = JSON.stringify(response.data);
+		}
+		this.setState({loading: false, errors: [error]});
 	}
 
 	colSuccess = (response) => {
@@ -57,7 +64,13 @@ class Details extends Component {
 	}
 
 	updateAccess = (op) => {
+		let { rootKey } = this.state;
 
+		if (rootKey.hasOwnProperty(op)) {
+			rootKey[op] = !rootKey[op];
+
+			Machinable.rootKeys(this.state.slug).update(rootKey.key, rootKey, () => this.setState({rootKey}), this.colError);
+		}
 	}
 
 	render() {

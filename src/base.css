@@ -207,6 +207,7 @@ a.anchor {
 	background-color: #FFF;
     padding: 15px;
 	border-bottom: 2px solid var(--card-border-color);
+	border-top-left-radius: 10px;
 }
 
 .m-item-header .m-header-title {
@@ -489,6 +490,9 @@ hr.thin {
 }
 .text-small {
 	font-size: 80%;
+}
+.text-xsmall {
+	font-size: 60%;
 }
 .text-medium {
 	font-size: 90%;

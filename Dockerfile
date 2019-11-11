@@ -4,6 +4,7 @@ RUN mkdir /usr/src/app
 WORKDIR /usr/src/app
 ENV PATH /usr/src/app/node_modules/.bin:$PATH
 COPY package.json /usr/src/app/package.json
+COPY .npmrc /usr/src/app/.npmrc
 RUN npm install --silent
 RUN npm install -D extract-text-webpack-plugin@next
 RUN npm install -D loader-utils@latest
