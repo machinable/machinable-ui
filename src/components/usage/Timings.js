@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Card } from 'turtle-ui';
 import Loader from '../Loader';
 import moment from 'moment';
 import {Line} from 'react-chartjs-2';
@@ -93,7 +94,7 @@ class Timings extends Component {
 
     renderTimings = () => {
 		return (
-            <div>
+            <Card classes="m-card">
                 <h4 className="text-muted text-400">
                     Average Request Process Times <span className="text-muted text-small">(ms)</span><br/>
                     <span className="text-muted text-small">The amount of time for Machinable servers to process the request, does not include DNS, TLS/Connect time, or time to bytes.</span>
@@ -110,7 +111,7 @@ class Timings extends Component {
                         }
                     }}
                     />
-            </div>
+            </Card>
         );
     }
     

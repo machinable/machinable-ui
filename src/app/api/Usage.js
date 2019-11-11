@@ -70,9 +70,9 @@ class Usage extends Component {
 		return (
 			<div className="grid grid-1">
 				<span className="text-small text-400 text-more-muted">Usage metrics for the last 1 hour</span>
-				<div className="grid grid-3">
-					<Requests requests={this.state.totalRequests}/>
-					<Stats stats={this.state.stats} />
+				<div className="grid grid-5">
+					<Requests requests={this.state.totalRequests} statistic={true}/>
+					<Stats stats={this.state.stats} statistic={true}/>
 				</div>
 				<Codes codes={this.state.requests}/>
 				<Timings timings={this.state.requests}/> 

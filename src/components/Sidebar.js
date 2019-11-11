@@ -41,7 +41,7 @@ class SideBar extends Component {
                                         </div>
                                     </NavLink>
                                 </li>
-                                {/* <li>
+                                <li>
                                     <NavLink to={"/project/"+slug+"/json"} style={{display: "flex"}}>
                                         <FontAwesomeIcon className="center-self nav-icon" style={{fontSize: "18px"}} icon={faBracketsCurly} fixedWidth/>
                                         <div className="margin-left-more">
@@ -50,7 +50,7 @@ class SideBar extends Component {
                                         </div>
                                     </NavLink>
                                 </li>
-                                <li>
+                                {/* <li>
                                     <NavLink to={"/project/"+slug+"/webhooks"} style={{display: "flex"}}>
                                         <FontAwesomeIcon className="center-self nav-icon" style={{fontSize: "18px"}} icon={faCodeBranch} fixedWidth/>
                                         <div className="margin-left-more">

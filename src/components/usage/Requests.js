@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Card } from 'turtle-ui';
 import Loader from '../Loader';
 import {Doughnut} from 'react-chartjs-2';
 import './Usage.css';
@@ -12,7 +13,7 @@ class Requests extends Component {
 
 		this.state = {
 			loading: false,
-			slug: props.slug,
+            slug: props.slug,
 			requests: props.requests,
 		}
 	}
@@ -40,23 +41,41 @@ class Requests extends Component {
                 ]
             }]
 		};
-		
+        
+        const { requests } = this.state;
+
         return (
-            <div>
-                <h4 className="text-muted text-400">
-                    Requests
-                </h4>
-				<div className="doughnut-wrapper">
-					<div className="text-wrapper">
-						<h4 className="text-muted text-400 text-center">
-							{this.state.requests}
-							<br/>
-							<span className="text-small text-muted">of 1000 requests</span>
-						</h4>
-					</div>
-                	<Doughnut data={data} options={{legend: false, cutoutPercentage: 70}}/>
-				</div>
-            </div>
+            <>
+            {!this.props.statistic && 
+                <Card classes="m-card">
+                    <h4 className="text-muted text-400 text-center">
+                        Requests
+                    </h4>
+                    <div className="doughnut-wrapper">
+                        <div className="text-wrapper">
+                            <h4 className="text-muted text-400 text-center">
+                                {this.state.requests}
+                                <br/>
+                                <span className="text-small text-muted">of 1000 requests</span>
+                            </h4>
+                        </div>
+                        <Doughnut data={data} options={{legend: false, cutoutPercentage: 70}}/>
+                    </div>
+                </Card>
+            }
+            {this.props.statistic && 
+                <Card classes="m-card">
+                    <h4 className="text-muted text-400 text-center">
+                        Request Count
+                    </h4>
+                    <div>
+                        <h2 className="text-center margin-bottom-none">
+                            <span>{requests}</span><span className="text-xsmall text-more-muted"> / {LIMIT_REQUESTS}</span>
+                        </h2>
+                    </div>
+                </Card>
+            }
+            </>
         );
     }
 

@@ -12,24 +12,29 @@ class Security extends Component {
 			{to: `${prefix}/sessions`, text: 'Sessions'}
 		];
 		return (
-			<div>
+			<>
 				<div className="padding-side content-header">
-					<h3 className="text-400 margin-bottom">Security</h3>
-					<p className="text-muted margin-top margin-bottom-even-more">View activity logs and manage user sessions</p>
+					<h3 className="text-400 text-muted margin-top">Security</h3>
 					<Nav 
 						classes="horizontal link-underline"
 						links={collectionLinks}
 					/>
 				</div>
 
-				<div className="project-content">
-                    <Switch>
-                        <Route path={prefix+"/logs"} component={Logs} />
-                        <Route path={prefix+"/sessions"} component={Sessions} />
-                        <Redirect from="/" to={prefix+"/logs"} />
-                    </Switch>
+				<div className="project-content page">
+					<div className="page-content">
+						<Switch>
+							<Route path={prefix+"/logs"} component={Logs} />
+							<Route path={prefix+"/sessions"} component={Sessions} />
+							<Redirect from="/" to={prefix+"/logs"} />
+						</Switch>
+					</div>
+
+					{/* DOCUMENTATION */}
+					<div className="page-docs">
+					</div>
 				</div>
-			</div>
+			</>
 		  );
 	}
 }

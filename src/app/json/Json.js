@@ -7,7 +7,7 @@ import Examples from '../documentation/Examples';
 import List from './List';
 import Usage from './Usage';
 
-class Collections extends Component {
+class Json extends Component {
 
 	componentDidMount = () => {		
 
@@ -16,14 +16,14 @@ class Collections extends Component {
 	render() {
 		var prefix = this.props.match.url;
 		var collectionLinks = [
-			{to: `${prefix}/list`, text: 'Collections'},
+			{to: `${prefix}/list`, text: 'Root Keys'},
 			{to: `${prefix}/usage`, text: 'Usage'}
 		];
 		return (
-			<React.Fragment>
+			<>
 				<div className="padding-side content-header">
-					<h3 className="text-400 margin-bottom">Collections</h3>
-					<p className="text-muted margin-top margin-bottom-even-more">Use collections to store your project's unstructured JSON data</p>
+					<h3 className="text-400 text-muted margin-top">Key/Value</h3>
+
 					<Nav 
 						classes="horizontal link-underline"
 						links={collectionLinks}
@@ -43,16 +43,14 @@ class Collections extends Component {
 					<div className="page-docs">
 						<h4 className="text-more-muted text-600">DOCUMENTATION</h4>
 						<div className="grid grid-3">
-							<CollectionDocs />
 							<Querying />
 							<Examples />
 						</div>
 					</div>
 				</div>
-			</React.Fragment>
+			</>
 		  );
 	}
 }
 
-
-export default Collections;
+export default Json;

@@ -142,53 +142,59 @@ class Logs extends Component {
 		];
 		
 		return (
-			<React.Fragment>
-				<div className="log-filters align-right">
-					<Button onClick={this.refresh} classes="plain btn-small"><FontAwesomeIcon icon={faSync} /></Button>
-
-					<Dropdown 
-						width={300}
-						showIcon={true}
-						buttonText="Filters"
-						classes="col-1 align-items-right margin-right"
-						disableClickClose={true}
-						buttonClasses="plain btn-small">
-						<div className="padding">
-							<Select 
-								onChange={this.onChange} 
-								value={this.state.filters.initiator_type} 
-								name="initiator_type" 
-								classes="margin-bottom" 
-								label="Initiator Type" 
-								options={initatorTypes}/>
-							<Select 
-								onChange={this.onChange} 
-								value={this.state.filters.status_code} 
-								name="status_code" 
-								label="Status Code" 
-								options={statusCodes}/>
-						</div>
-					</Dropdown>
-				</div>
-				
+			<>
 				<Table
-						classes="hover m-table"
-						headers={headers}
-						values={logValues}
-						footer={<div className="grid grid-2">
-									<div className="text-small text-muted vertical-align">
-										showing {tableStart} to {tableEnd} of {this.state.count} entries
+					title={
+						<div className="grid grid-2">
+							<div></div>
+							<div className="log-filters align-right">
+								<Button onClick={this.refresh} classes="text plain btn-small">
+									<FontAwesomeIcon icon={faSync} />
+								</Button>
+			
+								<Dropdown 
+									width={300}
+									showIcon={true}
+									buttonText="Filters"
+									classes="col-1 align-items-right margin-right"
+									disableClickClose={true}
+									buttonClasses="text plain btn-small">
+									<div className="padding">
+										<Select 
+											onChange={this.onChange} 
+											value={this.state.filters.initiator_type} 
+											name="initiator_type" 
+											classes="margin-bottom" 
+											label="Initiator Type" 
+											options={initatorTypes}/>
+										<Select 
+											onChange={this.onChange} 
+											value={this.state.filters.status_code} 
+											name="status_code" 
+											label="Status Code" 
+											options={statusCodes}/>
 									</div>
-									<div className="pull-right">
-										{buttons.map(function(btn, index){
-											return (
-												btn
-											)
-										})}
-									</div>
-								</div>}
+								</Dropdown>
+							</div>
+						</div>
+					}
+					classes="hover m-table"
+					headers={headers}
+					values={logValues}
+					footer={<div className="grid grid-2">
+								<div className="text-small text-muted vertical-align">
+									showing {tableStart} to {tableEnd} of {this.state.count} entries
+								</div>
+								<div className="pull-right">
+									{buttons.map(function(btn, index){
+										return (
+											btn
+										)
+									})}
+								</div>
+							</div>}
 					/>
-			</React.Fragment>
+			</>
 		)
 	}
 

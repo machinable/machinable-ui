@@ -17,8 +17,8 @@ class Access extends Component {
 		return (
 			<React.Fragment>
 				<div className="padding-side content-header">
-					<h3 className="text-400 margin-bottom">Access</h3>
-					<p className="text-muted margin-top margin-bottom-even-more">Manage users and API keys of this project</p>
+					<h3 className="text-400 text-muted margin-top">Access</h3>
+					
 					<Nav 
 						classes="horizontal link-underline"
 						links={collectionLinks}

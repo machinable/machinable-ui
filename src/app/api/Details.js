@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Switch} from 'turtle-ui';
+import { Switch } from 'turtle-ui';
 import Machinable from '../../client';
 import Statics from '../../Statics';
 import ReactJson from 'react-json-view';

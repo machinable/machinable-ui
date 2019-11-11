@@ -26,9 +26,9 @@ class Usage extends Component {
 		this.setState({loading: false});
 	}
 
-	statsSuccess = (response) => {
-		this.setState({stats: response.data}, this.loadUsage);
-	}
+	// statsSuccess = (response) => {
+	// 	this.setState({stats: response.data}, this.loadUsage);
+	// }
 
 	usageSuccess = (response) => {
 		var totalRequests = 0;
@@ -44,16 +44,16 @@ class Usage extends Component {
 		this.setState({loading: false, requests: response.data.items, totalRequests: totalRequests});
 	}
 
-	loadStats = () => {
-		Machinable.collections(this.state.slug).stats(this.statsSuccess, this.statsError)
-	}
+	// loadStats = () => {
+	// 	Machinable.rootKeys(this.state.slug).stats(this.statsSuccess, this.statsError)
+	// }
 
 	loadUsage = () => {
-		Machinable.collections(this.state.slug).usage(this.usageSuccess, this.statsError)
+		Machinable.rootKeys(this.state.slug).usage(this.usageSuccess, this.statsError)
 	}
 
 	componentDidMount = () => {
-		this.loadStats();
+		this.loadUsage();
 	}
 	
 	emptyState = () => {
@@ -70,9 +70,9 @@ class Usage extends Component {
 		return (
 			<div className="grid grid-1">
 				<span className="text-small text-400 text-more-muted">Usage metrics for the last 1 hour</span>
-				<div className="grid grid-3">
-					<Requests requests={this.state.totalRequests}/>
-					<Stats stats={this.state.stats} />
+				<div className="grid grid-5">
+					<Requests requests={this.state.totalRequests} statistic={true}/>
+					{/* <Stats stats={this.state.stats} /> */}
 				</div>
 				<Codes codes={this.state.requests}/>
 				<Timings timings={this.state.requests}/> 
@@ -82,8 +82,9 @@ class Usage extends Component {
 	}
 
 	render() {
-		var result = (this.state.stats && Object.keys(this.state.stats.collections).length) ? this.renderUsage() : this.emptyState();
-		result = this.state.loading ? <Loader loading={this.state.loading} /> : result;
+		const { requests, loading } = this.state;
+		var result = (requests && Object.keys(requests).length) ? this.renderUsage() : this.emptyState();
+		result = loading ? <Loader loading={loading} /> : result;
 		return result;
 	}
 }

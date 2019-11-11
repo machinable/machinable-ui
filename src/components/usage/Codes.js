@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Card } from 'turtle-ui';
 import Loader from '../Loader';
 import moment from 'moment';
 import {Bar} from 'react-chartjs-2';
@@ -134,7 +135,7 @@ class Codes extends Component {
 
     renderCodes = () => {
 		return (
-            <div>
+            <Card classes="m-card">
                 <h4 className="text-muted text-400">
                     Status Codes<br/>
                     <span className="text-muted text-small">HTTP Status codes returned over the last 1 hour</span>
@@ -160,7 +161,7 @@ class Codes extends Component {
                         }
                     }}
                     />
-            </div>
+            </Card>
 		  );
     }
     

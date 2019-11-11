@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Modal, Card, Dropdown, List, ListItem, Table } from 'turtle-ui';
+import { Button, Modal, Card, Dropdown, List, ListItem, Table, Input } from 'turtle-ui';
 import Loader from '../../components/Loader';
 import Dismiss from '../../components/DismissModalButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -34,7 +34,7 @@ class Resources extends Component {
 
 	resError = (response) => {
 		console.log(response);
-		this.setState({loading: false});
+		this.setState({loading: false, errors: [response.data.error]});
 	}
 
 	resSuccess = (response) => {
@@ -84,8 +84,16 @@ class Resources extends Component {
 		this.getResources();
 	}
 
+	getTablePageButtons = () => {
+		var buttons = [];
+        buttons.push(<Button key={"table_btn_0"} classes={"text plain btn-small " + ("disabled")} >Previous</Button>)
+		buttons.push(<Button key={"table_btn_1"} classes={"text plain btn-small " + ("disabled")} >Next</Button>)
+		return buttons;
+	}
+
 	getResourceTable = () => {
-		var resourceValues = this.state.resources.items.map(function(def, idx){
+		const { items } = this.state.resources;
+		var resourceValues = items.map(function(def, idx){
 			var fullURL = Statics.GenerateAPIHost(this.state.slug) + "/api/" + def.path_name;
 			var definitionTitle = <div>
 										<h4 className="text-400 no-margin margin-bottom-less">{def.title}</h4>
@@ -115,14 +123,39 @@ class Resources extends Component {
 			]
 		}, this);
 
+		const buttons = this.getTablePageButtons();
+
 		return (
 			<React.Fragment>
 				<Table 
+					title={
+						<div className="grid grid-2">
+							<div className="vertical-align">
+								<Input labelClasses="flex-1" classes="search" placeholder="Search resources..."/>
+							</div>
+							<div className="align-right">
+								<Button classes="brand plain page-btn" onClick={this.openModal}>New Resource</Button>
+							</div>
+						</div>
+					}
 					classes="m-table"
 					headers={["Name", "Created", ""]}
-					values={resourceValues} />
-
-				<Button classes="accent page-btn" onClick={this.openModal}>New Resource</Button>
+					values={resourceValues}
+					
+					footer={<div className="grid grid-2">
+								<div className="text-small text-muted vertical-align">
+									showing 1 to {items.length} of {items.length} entries
+								</div>
+								<div className="pull-right">
+									{buttons.map(function(btn, index){
+										return (
+											btn
+										)
+									})}
+								</div>
+							</div>} 
+					/>
+				
 			</React.Fragment>
 		);
 	}

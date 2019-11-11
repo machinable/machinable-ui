@@ -204,7 +204,8 @@ class Users extends Component {
     }
 
     renderTable = () => {
-        var tableValues = this.state.users.map(function(user, idx){
+        const { users } = this.state;
+        var tableValues = users.map(function(user, idx){
             var accessList = [];
             var copyId = "userid-"+user.id;
             if(user.read) {
@@ -248,14 +249,34 @@ class Users extends Component {
             ]
         }, this);
         return (
-            <React.Fragment>
+            <>
                 <Table
+                    title={
+						<div className="grid grid-2">
+                            <div className="vertical-align">
+                                <Input labelClasses="flex-1" classes="search" placeholder="Search users..."/>
+                            </div>
+                            <div className="align-right">
+                                <Button classes="brand plain page-btn" onClick={this.openModal}>Add User</Button>
+                            </div>
+                        </div>
+                    }
                     classes="m-table"
                     headers={["Username", "Role", "Access", <div className="align-center m-th">ID</div>, <div className="align-right m-th">Options</div>]}
                     values={tableValues}
+
+					footer={<div className="grid grid-2">
+                                <div className="text-small text-muted vertical-align">
+                                    showing 1 to {users.length} of {users.length} entries
+                                </div>
+                                <div className="pull-right">
+                                    <Button key={"table_btn_0"} classes={"text plain btn-small " + ("disabled")} >Previous</Button>
+		                            <Button key={"table_btn_1"} classes={"text plain btn-small " + ("disabled")} >Next</Button>
+                                </div>
+                            </div>
+                    } 
                 />
-                <Button classes="accent page-btn" onClick={this.openModal}>Add User</Button>
-            </React.Fragment>
+            </>
         )
     }
 
