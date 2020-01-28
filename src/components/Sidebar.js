@@ -79,7 +79,7 @@ class SideBar extends Component {
                                     </NavLink>
                                 </li>
                                 <li>
-                                    <NavLink to={"/project/"+slug+"/documentation"} style={{display: "flex"}}>
+                                    <NavLink to={"/docs/"+slug} style={{display: "flex"}}>
                                         <FontAwesomeIcon className="center-self nav-icon" style={{fontSize: "18px"}} icon={faBookSpells} fixedWidth/>
                                         <div className="margin-left-more">
                                             <span className="nav-title">Documentation</span>                                   
