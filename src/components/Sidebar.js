@@ -83,7 +83,7 @@ class SideBar extends Component {
                                         <FontAwesomeIcon className="center-self nav-icon" style={{fontSize: "18px"}} icon={faBookSpells} fixedWidth/>
                                         <div className="margin-left-more">
                                             <span className="nav-title">Documentation</span>                                   
-                                            <p className="navlink-description">OpenAPI Docs and Demo</p>
+                                            <p className="navlink-description">OpenAPI Spec and Docs</p>
                                         </div>
                                     </NavLink>
                                 </li>

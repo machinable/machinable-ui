@@ -557,7 +557,7 @@ hr.thin {
 	margin: 0px;
 }
 
-pre {
+.root pre {
 	background-color: #f7f7f7;
 	border: 2px solid #EAEAEA;
 	padding: 15px;
