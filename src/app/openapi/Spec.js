@@ -13,7 +13,6 @@ class Spec extends Component {
             spec={{
                "openapi": "3.0.0",
                "info": {
-                  "version": "2.1",
                   "title": "Sample Machinable Project API",
                   "contact": {
                      "name": "Machinable Support",
@@ -32,7 +31,67 @@ class Spec extends Component {
                      "description": "Live Server"
                   }
                ],
-               "paths": {},
+               "tags": [
+                  {
+                     "name": "People",
+                     "description": "Test resource for people"
+                  }
+               ],
+               "x-tagGroups": [
+                  {
+                     "name": "API Resources",
+                     "tags": [
+                        "People"
+                     ]
+                  }
+               ],
+               "security": [
+                  {
+                     "SecretApiKey": []
+                  },
+                  {
+                     "JWT": []
+                  }
+               ],
+               "paths": {
+                  "/people": {
+                     "get": {
+                        "tags": ["People"],
+                        "summary": "Retrieve list of People path summary",
+                        "operationId": "ListPeople",
+                        "parameters": [],
+                        "security": [
+                           {
+                              "SecretApiKey": []
+                           },
+                           {
+                              "JWT": []
+                           }
+                        ],
+                        "responses": {
+                           "200": {
+                              "description": "A list was retrieved successfully",
+                              "headers": {},
+                              "content": {
+                                 "application/json": {
+                                    "schema": {
+                                       "type": "array",
+                                       "items": {
+                                          "$ref": "#/components/schemas/People"
+                                       }
+                                    }
+                                 }
+                              }
+                           },
+                           "400": {},
+                           "401": {},
+                           "403": {},
+                           "404": {},
+                           "500": {}
+                        }
+                     }
+                  }
+               },
                "components": {
                   "schemas": {
                      "Error": {
@@ -42,6 +101,31 @@ class Spec extends Component {
                               "type": "string"
                            }
                         }
+                     },
+                     "People": {
+                        "type": "object",
+                        "properties": {
+                           "age": {
+                              "description": "The age of the person",
+                              "maximum": 150,
+                              "minimum": 0,
+                              "type": "integer"
+                           },
+                           "birth_date": {
+                              "description": "The birth date of the person",
+                              "format": "date-time",
+                              "type": "string"
+                           },
+                           "name": {
+                              "description": "The name of the person.",
+                              "maxLength": 36,
+                              "minLength": 4,
+                              "type": "string"
+                           }
+                        },
+                        "required": [
+                           "name"
+                        ]
                      }
                   },
                   "responses": {
@@ -54,6 +138,20 @@ class Spec extends Component {
                               }
                            }
                         }
+                     }
+                  },
+                  "securitySchemes": {
+                     "JWT": {
+                        "description": "JWT\n",
+                        "type": "http",
+                        "scheme": "bearer",
+                        "bearerFormat": "JWT"
+                     },
+                     "SecretApiKey": {
+                        "description": "API Keys\n",
+                        "name": "Authorization",
+                        "type": "apiKey",
+                        "in": "header"
                      }
                   }
                }
