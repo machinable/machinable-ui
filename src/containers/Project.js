@@ -10,6 +10,7 @@ import Access from '../app/access/Access';
 import Json from '../app/json/Json';
 import Security from '../app/security/Security';
 import Settings from '../app/settings/Settings';
+import Spec from '../app/openapi/Spec';
 
 import {setCurrentProject, setProjectObject} from '../store/projects/actionCreators';
 
@@ -143,6 +144,12 @@ class Project extends Component {
 						<Route 
 							path={prefix+"/security"} 
 							render={(props) => <Security {...props} />} 
+						/>
+
+
+						<Route 
+							path={prefix+"/spec"} 
+							render={(props) => <Spec {...props} />} 
 						/>
 
 						<Route 
