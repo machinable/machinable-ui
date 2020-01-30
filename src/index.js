@@ -68,8 +68,8 @@ const App = () => (
 
 
 				<Route 
-					path="/docs"
-					render={(props) => <Spec {...props} />} 
+					path="/docs/:projectSlug"
+					component={({history, match}) => <Spec history={history} match={match}/>}
 				/>
 
 				<Route path="/error" component={Errors} />
