@@ -275,7 +275,7 @@ a.anchor {
 .m-table {
 	border-width: 0px !important;
 	box-shadow: 0 1px 3px rgba(0,0,0,.3);
-	border-radius: 10px;
+	border-radius: 10px !important;
 	background-color: #FFF;
 }
 .m-table.noshadow {

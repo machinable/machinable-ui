@@ -2,17 +2,49 @@ import React, { Component } from 'react';
 import { RedocStandalone } from 'redoc';
 import Robot from '../../images/project/robot.svg';
 import Header from '../../components/HomeHeader';
+import Machinable from '../../client';
 
 class Spec extends Component {
 
-   componentDidMount = () => {
+	constructor(props) {
+      super(props);
+      this.state = {
+       spec: {},
+       loading: true,
+    }
+ }
 
+	specError = (response) => {
+		this.setState({loading: false, errors: [response.data && response.data.error]});
+	}
+
+	specSuccess = (response) => {
+      var spec = response.data.spec;
+      spec['info']['x-logo']['url'] = Robot;
+		this.setState({spec: spec, loading: false});
+	}
+
+	getSpec = () => {
+		Machinable.spec("one").get(this.specSuccess, this.specError);
+	}
+
+   componentDidMount = () => {
+      this.getSpec();
    }
 
    render() {
       return (
-         <RedocStandalone
-            spec={{
+         <>
+            {!this.state.loading && <RedocStandalone
+               spec={this.state.spec}
+            />}
+         </>
+      );
+   }
+}
+
+/*
+{
                "openapi": "3.0.0",
                "info": {
                   "title": "Sample Machinable Project API",
@@ -490,10 +522,7 @@ class Spec extends Component {
                      }
                   }
                }
-            }}
-         />
-      );
-   }
-}
+            }
+*/
 
 export default Spec;

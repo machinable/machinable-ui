@@ -176,6 +176,19 @@ class MachinableClient {
         return PROJECT_API_HOST.replace("{project-slug}", projectSlug)
     }
 
+    spec(projectSlug) {
+        var GET_SPEC = this.projectHost(projectSlug) + "/spec/";
+        var authHeaders = this.getAuthHeaders();
+
+        return {
+            get: function(success, error) {
+                axios.get(GET_SPEC, {headers: authHeaders})
+                    .then(success)
+                    .catch(error);
+            }
+        }
+    }
+
     resources(projectSlug) {
         var GET_RESOURCES = this.projectHost(projectSlug) + "/resources/";
         var GET_RESOURCE = this.projectHost(projectSlug) + "/resources/{id}";
