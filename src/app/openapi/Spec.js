@@ -50,6 +50,8 @@ class Spec extends Component {
                   >
                      {!this.state.loading && 
                         <ReactJson
+                           displayObjectSize={false}
+                           displayDataTypes={false}
                            collapsed={5} 
                            name={false} 
                            iconStyle="square" 
