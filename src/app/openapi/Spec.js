@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { Card, Button } from 'turtle-ui';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import faLink from '@fortawesome/fontawesome-free-solid/faLink';
-import Examples from '../documentation/Examples';
+import Redoc from '../documentation/Redoc';
+import OpenAPI from '../documentation/OpenAPI';
 import ReactJson from 'react-json-view';
 import Machinable from '../../client';
 import { SOURCES } from '../../components/ProjectIcon'; 
@@ -84,7 +85,8 @@ class Spec extends Component {
                <div className="page-docs">
                   <h4 className="text-more-muted text-600">DOCUMENTATION</h4>
                   <div className="grid grid-3">
-                     <Examples />
+                     <Redoc />
+                     <OpenAPI />
                   </div>
                </div>
             </div>

@@ -10,6 +10,8 @@ class Statics {
 	API = "api";
 
 	DOCS = {
+		OPENAPI: "https://github.com/OAI/OpenAPI-Specification",
+		REDOC: "https://github.com/Redocly/redoc",
 		JSON_SCHEMA_SAMPLES: "https://machinable.github.io/documentation/reference/json_schema/",
 		SAMPLE_PROJECTS: "https://machinable.github.io/documentation/reference/sample_projects/",
 		QUERYING: "https://machinable.github.io/documentation/querying_data/crud/",
