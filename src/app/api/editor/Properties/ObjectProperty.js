@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import { Switch } from 'turtle-ui';
-
 class ObjectProperty extends Component {
     render() {
         return (

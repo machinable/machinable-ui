@@ -86,8 +86,8 @@ class Resources extends Component {
 
 	getTablePageButtons = () => {
 		var buttons = [];
-        buttons.push(<Button key={"table_btn_0"} classes={"text plain btn-small " + ("disabled")} >Previous</Button>)
-		buttons.push(<Button key={"table_btn_1"} classes={"text plain btn-small " + ("disabled")} >Next</Button>)
+        buttons.push(<Button key={"table_btn_0"} classes={"text plain btn-small disabled"} >Previous</Button>)
+		buttons.push(<Button key={"table_btn_1"} classes={"text plain btn-small disabled"} >Next</Button>)
 		return buttons;
 	}
 

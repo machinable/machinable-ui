@@ -3,13 +3,13 @@ import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
     faBracketsCurly, 
-    faCodeBranch, 
     faSlidersH as faSliders,
     faProjectDiagram as faProject,
     faBook,
     faLifeRing,
     faUserLock,
     faShieldAlt as faShield,
+    faBookSpells,
 } from '@fortawesome/pro-duotone-svg-icons';
 
 import Statics from '../Statics';
@@ -74,6 +74,15 @@ class SideBar extends Component {
                                         <div className="margin-left-more">
                                             <span className="nav-title">Security</span>                                   
                                             <p className="navlink-description">View sessions and logs</p>
+                                        </div>
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to={"/project/"+slug+"/spec"} style={{display: "flex"}}>
+                                        <FontAwesomeIcon className="center-self nav-icon" style={{fontSize: "18px"}} icon={faBookSpells} fixedWidth/>
+                                        <div className="margin-left-more">
+                                            <span className="nav-title">Documentation</span>                                   
+                                            <p className="navlink-description">OpenAPI Spec and Docs</p>
                                         </div>
                                     </NavLink>
                                 </li>

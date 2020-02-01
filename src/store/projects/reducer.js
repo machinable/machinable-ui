@@ -13,8 +13,6 @@ export default function reducer(state = initialState, action = {}) {
 				project_slug: action.slug
 			});
 		case types.SET_PROJECT_OBJECT:
-			console.log("set object");
-			console.log(action);
 			return Object.assign({}, state, {
 				project: action.project,
 				project_slug: action.project.slug

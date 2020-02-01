@@ -16,7 +16,7 @@ class Footer extends Component {
 
 	render() {
 		return (
-			<div className="footer">
+			<div className="footer footer-dark">
 
 				<span>&copy; 2018 - {new Date().getFullYear()} Machinable.io</span>
 			</div>

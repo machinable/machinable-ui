@@ -233,8 +233,8 @@ class Keys extends Component {
                                     showing 1 to {keys.length} of {keys.length} entries
                                 </div>
                                 <div className="pull-right">
-                                    <Button key={"table_btn_0"} classes={"text plain btn-small " + ("disabled")} >Previous</Button>
-                                    <Button key={"table_btn_1"} classes={"text plain btn-small " + ("disabled")} >Next</Button>
+                                    <Button key={"table_btn_0"} classes={"text plain btn-small disabled"} >Previous</Button>
+                                    <Button key={"table_btn_1"} classes={"text plain btn-small disabled"} >Next</Button>
                                 </div>
                             </div>
                     } 

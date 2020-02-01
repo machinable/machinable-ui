@@ -5,7 +5,7 @@
     font-size: 14px;
 }
 
-.footer .footer-dark {
-    background-color: var(--real-brand);
-    color: #DDD;
+.footer.footer-dark {
+    background-color: rgb(249, 249, 249);;
+    color: #999;
 }

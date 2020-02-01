@@ -5,8 +5,6 @@ import { Button, Card, Input } from 'turtle-ui';
 import Machinable from '../../client';
 import Statics from '../../Statics';
 import slugify from 'slugify';
-import MonacoEditor from 'react-monaco-editor';
-import Nav from '../../components/DisplayNav';
 import ObjectComponent from './editor/Object';
 
 class NewResource extends Component {
@@ -28,10 +26,6 @@ class NewResource extends Component {
                 },
             }
 		}
-	}
-
-	editorDidMount = (editor, monaco) => {
-        
 	}
 
 	onPropertiesChange = (newValue, event) => {
@@ -173,27 +167,6 @@ class NewResource extends Component {
         );
     }
 
-    renderEditor = () => {
-        // remove _sort key for visual
-        let scrubbedObj = JSON.parse(JSON.stringify(this.state.newResource.schema))
-        scrubbedObj.properties = this.removeKey("_sort", scrubbedObj.properties)
-        return (
-            <div className="editor-wrapper">
-                <div className="background-content text-center text-muted padding-less read-only">Read-only</div>
-                <MonacoEditor
-                    ref="editor"
-                    name="properties"
-                    width="100%"
-                    height="300"
-                    theme="vs"
-                    options={{readOnly: true}}
-                    value={JSON.stringify(scrubbedObj, undefined, 2)}
-                    onChange={this.onPropertiesChange}
-                    language="json"/>
-            </div>
-        );
-    }
-
 	render() {
 
 		return (
@@ -232,16 +205,7 @@ class NewResource extends Component {
                                     Define your resource properties using <a className="link text-400 text-information" target="_blank" rel="noopener noreferrer" href="https://json-schema.org/">JSON Schema</a>. 
                                     Check out our <a className="link text-400 text-information" target="_blank" rel="noopener noreferrer" href={Statics.DOCS.JSON_SCHEMA_SAMPLES}>sample schemas</a> to get an idea of how to structure your data.
                                 </div>
-                                <Nav
-                                    onClickCallback={this.toggleNav}
-                                    classes="horizontal link-underline margin-top-more margin-bottom" 
-                                    selected={this.state.navSelection.text}
-                                    links={[
-                                        {text: "Form", render: this.renderForm},
-                                        {text: "Editor", render: this.renderEditor}
-                                    ]}
-                                />
-                                {this.state.navSelection.render()}
+                                {this.renderForm()}
                             </div>
                         </Card>
                     </div>
