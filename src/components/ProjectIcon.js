@@ -66,5 +66,5 @@ class Icon extends Component {
 	}
 }
 
-
+export { SOURCES };
 export default Icon;

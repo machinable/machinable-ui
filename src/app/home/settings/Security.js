@@ -45,7 +45,6 @@ class Security extends Component {
 
 	renderSessions = () => {
 		var currentSession = this.state.current_session;
-		var headers = [<h3 className="no-margin text-400 text-muted">Sessions</h3>, ""];
 		var sessions = this.state.sessions.reverse();
 		var values = sessions.map(function(session){
 			var isCurrent = currentSession === session.id ? <span style={{"float":"right"}} className="background-information text-400 tag">Active Session</span> : <Button style={{"float":"right"}} classes="btn-small" onClick={() => this.deleteSession(session)}>Revoke</Button>;

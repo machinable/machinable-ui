@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { Nav } from 'turtle-ui';
 import Querying from '../documentation/API';
-import CollectionDocs from '../documentation/Collections';
 import Examples from '../documentation/Examples';
 import List from './List';
 import Usage from './Usage';

@@ -3,7 +3,6 @@ import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
     faBracketsCurly, 
-    faCodeBranch, 
     faSlidersH as faSliders,
     faProjectDiagram as faProject,
     faBook,

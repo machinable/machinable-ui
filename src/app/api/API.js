@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import { Nav, Button, Modal } from 'turtle-ui';
+import { Nav } from 'turtle-ui';
 import Querying from '../documentation/API';
 import ResourceDocs from '../documentation/Resources';
 import Examples from '../documentation/Examples';
 import Resources from './Resources';
 import Usage from './Usage';
-import NewResource from './NewResource';
 
 class API extends Component {
 

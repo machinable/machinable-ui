@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { RedocStandalone } from 'redoc';
-import Robot from '../../images/project/robot.svg';
 import Machinable from '../../client';
+import { SOURCES } from '../../components/ProjectIcon'; 
 
 class Documentation extends Component {
 
@@ -20,7 +20,8 @@ class Documentation extends Component {
 
 	specSuccess = (response) => {
       var spec = response.data.spec;
-      spec['info']['x-logo']['url'] = Robot;
+      var icon = spec['info']['x-logo']['url'];
+      spec['info']['x-logo']['url'] = SOURCES[icon];
 		this.setState({spec: spec, loading: false});
 	}
 

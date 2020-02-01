@@ -9,7 +9,7 @@ import Home from './containers/Home';
 import User from './containers/User';
 import Project from './containers/Project';
 import Errors from './containers/Error';
-import Spec from './app/openapi/Spec';
+import Documentation from './app/openapi/Documentation';
 import Machinable from './client';
 
 import './base.css';
@@ -69,7 +69,7 @@ const App = () => (
 
 				<Route 
 					path="/docs/:projectSlug"
-					component={({history, match}) => <Spec history={history} match={match}/>}
+					component={({history, match}) => <Documentation history={history} match={match}/>}
 				/>
 
 				<Route path="/error" component={Errors} />

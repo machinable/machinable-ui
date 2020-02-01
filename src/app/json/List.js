@@ -9,8 +9,6 @@ import Machinable from '../../client';
 import Empty from '../../images/moon.svg';
 import Detail from './Details';
 
-import moment from 'moment';
-
 class KeyList extends Component {
 
 	constructor(props) {
@@ -138,8 +136,8 @@ class KeyList extends Component {
 								showing 1 to {keys.length} of {keys.length}
 							</div>
 							<div className="pull-right">
-								<Button key={"table_btn_0"} classes={"text plain btn-small " + ("disabled")} >Previous</Button>
-								<Button key={"table_btn_1"} classes={"text plain btn-small " + ("disabled")} >Next</Button>
+								<Button key={"table_btn_0"} classes={"text plain btn-small disabled"} >Previous</Button>
+								<Button key={"table_btn_1"} classes={"text plain btn-small disabled"} >Next</Button>
 							</div>
 						</div>
 					</div>

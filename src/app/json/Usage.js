@@ -5,7 +5,6 @@ import Machinable from '../../client';
 import Empty from '../../images/usage.svg';
 import Timings from '../../components/usage/Timings';
 import Codes from '../../components/usage/Codes';
-import Stats from './usage/Stats';
 import Requests from '../../components/usage/Requests';
 
 class Usage extends Component {

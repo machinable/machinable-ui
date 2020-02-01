@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Table } from 'turtle-ui';
 import {Doughnut} from 'react-chartjs-2';
 
 import API from '../../../client/';
@@ -60,7 +58,7 @@ class Usage extends Component {
 	}
     
     renderStats = () => {
-        const { user, tiers, usage, active } = this.state;
+        const { usage, active } = this.state;
 
         const cp = {
             backgroundColor: [
