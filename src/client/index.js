@@ -254,7 +254,9 @@ class MachinableClient {
         var GET_ROOTKEYS_STATS = this.projectHost(projectSlug) + "/mgmt/jsonUsage/stats";
         var DELETE_ROOTKEY = this.projectHost(projectSlug) + "/mgmt/json/{key}";
         var UPDATE_ROOTKEY = this.projectHost(projectSlug) + "/mgmt/json/{key}";
+        var UPDATE_KEY_VALUE = this.projectHost(projectSlug) + "/json/{key}/";
         var authHeaders = this.getAuthHeaders();
+        // http://one.machinable.io/json/one
 
         return {
             get: function(key, success, error) {
@@ -283,6 +285,12 @@ class MachinableClient {
 
             update: function(id, data, success, error) {
                 axios.put(UPDATE_ROOTKEY.replace("{key}", id), data, {headers: authHeaders})
+                    .then(success)
+                    .catch(error);
+            },
+
+            updateKeyValue: function(id, data, success, error) {
+                axios.put(UPDATE_KEY_VALUE.replace("{key}", id), data)
                     .then(success)
                     .catch(error);
             },
