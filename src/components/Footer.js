@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './Footer.css';
+import Statics from '../Statics';
 
 class Footer extends Component {
 
@@ -17,8 +18,7 @@ class Footer extends Component {
 	render() {
 		return (
 			<div className="footer footer-dark">
-
-				<span>&copy; 2018 - {new Date().getFullYear()} Machinable.io</span>
+				<div className="align-right">&copy; 2018 - {new Date().getFullYear()} Machinable.io // {Statics.APP_VERSION}</div>
 			</div>
 		  );
 	}

@@ -11,6 +11,7 @@ import Json from '../app/json/Json';
 import Security from '../app/security/Security';
 import Settings from '../app/settings/Settings';
 import Spec from '../app/openapi/Spec';
+import Webhooks from '../app/webhooks/Webhooks';
 
 import {setCurrentProject, setProjectObject} from '../store/projects/actionCreators';
 
@@ -142,10 +143,14 @@ class Project extends Component {
 						/>
 
 						<Route 
+							path={prefix+"/webhooks"} 
+							render={(props) => <Webhooks {...props} />}
+						/>
+
+						<Route 
 							path={prefix+"/security"} 
 							render={(props) => <Security {...props} />} 
 						/>
-
 
 						<Route 
 							path={prefix+"/spec"} 
