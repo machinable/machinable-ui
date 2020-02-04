@@ -73,6 +73,26 @@ class Details extends Component {
 		}
 	}
 
+	onAddKey = (event) => {
+		console.log(event);
+	}
+
+	onEditKey = (event) => {
+		const { rootKey } = this.state;
+		// updated_src
+		console.log(event);
+		Machinable.rootKeys(this.state.slug).updateKeyValue(
+				rootKey.key, 
+				event.updated_src,
+				function(){},
+				this.colError
+			);
+	}
+
+	onDeleteKey = (event) => {
+		console.log(event);
+	}
+
 	render() {
 		const { rootKey, slug, loading, rootKeyData } = this.state
 		const fullURL = Statics.GenerateAPIHost(slug) + "/json/" + rootKey.key + "/";
@@ -159,9 +179,10 @@ class Details extends Component {
 					<>
 						<div className="margin-top padding">
 							<ReactJson
-								// onAdd={(event) => {console.log(event);}}
-								// onEdit={(event) => {console.log(event);}}
-								// onDelete={(event) => {console.log(event);}}
+								defaultValue={true}
+								onAdd={this.onEditKey}
+								onEdit={this.onEditKey}
+								onDelete={this.onEditKey}
 								collapsed={2} 
 								name={false} 
 								iconStyle="square" 
