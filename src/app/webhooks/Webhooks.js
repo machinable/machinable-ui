@@ -9,7 +9,6 @@ class Webhooks extends Component {
    constructor(props) {
       super(props);
       this.state = {
-         spec: {},
          projectSlug: props.slug,
          loading: true,
       }

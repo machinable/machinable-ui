@@ -18,7 +18,10 @@ class Footer extends Component {
 	render() {
 		return (
 			<div className="footer footer-dark">
-				<div className="align-right">&copy; 2018 - {new Date().getFullYear()} Machinable.io // {Statics.APP_VERSION}</div>
+				<div>
+					&copy; 2018 - {new Date().getFullYear()} Machinable.io 
+					// <a className="text-muted" href="">{Statics.APP_VERSION}</a>	
+				</div>
 			</div>
 		  );
 	}
