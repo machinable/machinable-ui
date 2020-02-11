@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { Modal, Select, Button, Input, Card } from 'turtle-ui';
 import Loader from '../../components/Loader';
 import Dismiss from '../../components/DismissModalButton';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import faTimes from '@fortawesome/fontawesome-free-solid/faTimes';
 
 class NewHook extends Component {
 
@@ -12,7 +14,37 @@ class NewHook extends Component {
             projectSlug: props.slug,
             loading: false,
             errors: [],
+            newHook: {
+                headers: []
+            }
         }
+    }
+
+    addHeader = () => {
+        let { newHook } = this.state;
+        newHook['headers'].push({key: "", value: ""});
+        this.setState({newHook: newHook});
+    }
+
+    removeHeader = (i) => {
+        console.log("delete", i);
+        let { newHook } = this.state;
+        console.log(newHook.headers);
+        newHook.headers.splice(i, 1);
+        console.log(newHook.headers);
+        this.setState({newHook: newHook});
+    }
+
+    updateHeaderKey = (event, i) => {
+        let { newHook } = this.state;
+        newHook.headers[i].key = event.target.value;
+        this.setState({newHook: newHook});
+    }
+
+    updateHeaderValue = (event, i) => {
+        let { newHook } = this.state;
+        newHook.headers[i].value = event.target.value;
+        this.setState({newHook: newHook});
     }
 
     createHook = () => {
@@ -90,6 +122,32 @@ class NewHook extends Component {
                                     <strong>Request Headers</strong>
                                     <div className="margin-top-less text-medium text-muted">
                                         Custom HTTP headers to be sent with the web hook request.
+                                    </div>
+
+                                    {this.state.newHook.headers.map(function(header, i){
+                                        const index = i;
+                                        return (
+                                            <div key={i}>
+                                                <div className="flex">
+                                                    <div className="margin-right-less">
+                                                        <Input placeholder="header key" value={header.key} name={header.key} onChange={(event) => this.updateHeaderKey(event, index)}/>
+                                                    </div>
+                                                    <div className="margin-right-less">
+                                                        <Input placeholder="header value" value={header.value} name={`${header.key}-value`} onChange={(event) => this.updateHeaderValue(event, index)}/>
+                                                    </div>
+
+                                                    <Button type="button" classes="text plain btn-small" onClick={() => this.removeHeader(index)}>
+                                                        <FontAwesomeIcon className="text-more-muted" icon={faTimes}/>
+                                                    </Button>
+                                                </div>
+                                            </div>
+                                        )
+                                    }, this)}
+
+                                    <div>
+                                        <div className="flex">
+                                            <Button classes="brand plain margin-top btn-small" onClick={() => this.addHeader()}>Add Header</Button>
+                                        </div>
                                     </div>
                                 </div>
                                 
