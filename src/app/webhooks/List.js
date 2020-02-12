@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Modal, Table, Button, Input } from 'turtle-ui';
+import { Modal, Table, Button, Input, Dropdown, List as TList, ListItem } from 'turtle-ui';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheckCircle } from '@fortawesome/fontawesome-free-solid';
-import { faTimes } from '@fortawesome/fontawesome-free-solid';
+import { faEllipsisV as faEllipsis } from '@fortawesome/fontawesome-free-solid';
+import { faPowerOff } from '@fortawesome/fontawesome-free-solid';
 import Machinable from '../../client';
 import NewHook from './NewHook';
 
@@ -61,11 +61,27 @@ class List extends Component {
         for (let index = 0; index < hooks.length; index++) {
             const hook = hooks[index];
             items.push([
-                hook["label"],
+                <div className="text-400">{hook["label"]}</div>,
                 hook["entity"],
                 hook["event"],
-                hook["is_enabled"] ? <FontAwesomeIcon style={{color: "green"}} icon={faCheckCircle} fixedWidth/> : <FontAwesomeIcon style={{color: "red"}} icon={faTimes} fixedWidth/>,
-                ""
+                <div className="text-center"><FontAwesomeIcon className={hook["is_enabled"] ? "text-success" : "text-more-muted"} icon={faPowerOff} fixedWidth/></div>,
+                <div className="align-center">
+                    <Dropdown 
+                        showIcon={false}
+                        width={150}
+                        buttonText={<FontAwesomeIcon className="text-muted" icon={faEllipsis} />}
+                        buttonClasses="btn-small text plain vertical-align"
+                        classes="align-items-right">
+                        <div className="grid grid-1">
+                            <TList>
+                                <ListItem onClick={function(){}} title={<div className="text-center text-400">Details</div>}/>
+                                <ListItem onClick={function(){}} title={<div className="text-center text-400">Edit</div>}/>
+                                <hr className="no-margin no-padding"/>
+                                <ListItem onClick={function(){}} title={<div className="text-center text-danger text-400">Delete</div>}/>
+                            </TList>
+                        </div>
+                    </Dropdown>
+                </div>
             ]);
         }
 
@@ -83,7 +99,7 @@ class List extends Component {
                         </div>
                     }
                     classes="m-table"
-                    headers={items.length ? ["Label", "Entity", "Event", "Enabled", ""] : []}
+                    headers={items.length ? ["Label", "Entity", "Event", <div className="m-th text-center">Enabled</div>, <div className="m-th text-center">Options</div>] : []}
                     values={items.length ? items : [[<div className="text-center text-muted">No Web Hooks</div>]]}
 
                     footer={<div className="grid grid-2">

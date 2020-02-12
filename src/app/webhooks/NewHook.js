@@ -72,7 +72,7 @@ class NewHook extends Component {
     }
 
     hookError = (response) => {
-        this.setState({loading: false, errors: response.data.error});
+        this.setState({loading: false, errors: [response.data.error]});
         console.log(response);
         // TODO
     }
@@ -96,7 +96,7 @@ class NewHook extends Component {
 
     entityError = (response) => {
         console.log(response);
-        this.setState({loading: false, errors: response.data.error});
+        this.setState({loading: false, errors: [response.data.error]});
     }
 
     recResources = (response) => {
