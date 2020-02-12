@@ -361,6 +361,44 @@ class MachinableClient {
         }
     }
 
+    hooks(projectSlug) {
+        var GET_HOOKS = this.projectHost(projectSlug) + "/hooks/";
+        var GET_HOOK = this.projectHost(projectSlug) + "/hooks/{id}";
+        var authHeaders = this.getAuthHeaders();
+
+        return {
+            list: function(success, error) {
+                axios.get(GET_HOOKS, {headers: authHeaders})
+                    .then(success)
+                    .catch(error);
+            },
+
+            get: function(id, success, error) {
+                axios.get(GET_HOOK.replace("{id}", id), {headers: authHeaders})
+                    .then(success)
+                    .catch(error);
+            },
+
+            create: function(data, success, error) {
+                axios.post(GET_HOOKS, data, {headers: authHeaders})
+                    .then(success)
+                    .catch(error);
+            },
+
+            delete: function(id, success, error) {
+                axios.delete(GET_HOOK.replace("{id}", id), {headers: authHeaders})
+                    .then(success)
+                    .catch(error);
+            },
+
+            update: function(hook, success, error){
+                axios.put(GET_HOOK.replace("{id}", hook.id), hook,{headers: authHeaders})
+                    .then(success)
+                    .catch(error);
+            }
+        }
+    }
+
     keys(projectSlug) {
         var GET_APIKEYS = this.projectHost(projectSlug) + "/keys/";
         var GENERATE_KEY = this.projectHost(projectSlug) + "/keys/generate";

@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { Modal, Table, Button, Input } from 'turtle-ui';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/fontawesome-free-solid';
+import { faTimes } from '@fortawesome/fontawesome-free-solid';
+import Machinable from '../../client';
 import NewHook from './NewHook';
 
 class List extends Component {
@@ -10,7 +12,8 @@ class List extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            projectSlug: props.slug,
+            slug: props.slug,
+            hooks: [],
             loading: true,
             newHookModal: false
         }
@@ -28,9 +31,44 @@ class List extends Component {
         this.setState({newHookModal: false});
     }
 
+    hookError = (response) => {
+        console.log(response);
+        this.setState({loading: false});
+    }
+
+    hookSuccess = (response) => {
+        this.setState({
+            hooks: response.data.items, 
+            loading: false, 
+            newHookModal: false,
+        });
+    }
+
+    listHooks = () => {
+        Machinable.hooks(this.state.slug).list(this.hookSuccess, this.hookError);
+    }
+
+	componentDidMount = () => {		
+		this.listHooks();
+	}
+
     render() {
         let items = [];
         let buttons = [];
+
+        const { hooks } = this.state;
+
+        for (let index = 0; index < hooks.length; index++) {
+            const hook = hooks[index];
+            items.push([
+                hook["label"],
+                hook["entity"],
+                hook["event"],
+                hook["is_enabled"] ? <FontAwesomeIcon style={{color: "green"}} icon={faCheckCircle} fixedWidth/> : <FontAwesomeIcon style={{color: "red"}} icon={faTimes} fixedWidth/>,
+                ""
+            ]);
+        }
+
         return (
             <>
                 <Table
@@ -45,10 +83,8 @@ class List extends Component {
                         </div>
                     }
                     classes="m-table"
-                    headers={["Label", "Entity", "Event", "Enabled", ""]}
-                    values={[
-                        ["Slack", "API Resource", "Create", <FontAwesomeIcon style={{color: "green"}} icon={faCheckCircle} fixedWidth/>, ""]
-                    ]}
+                    headers={items.length ? ["Label", "Entity", "Event", "Enabled", ""] : []}
+                    values={items.length ? items : [[<div className="text-center text-muted">No Web Hooks</div>]]}
 
                     footer={<div className="grid grid-2">
                         <div className="text-small text-muted vertical-align">
@@ -64,7 +100,7 @@ class List extends Component {
                     </div>}
                 />
 
-                <NewHook isOpen={this.state.newHookModal} onClose={this.closeModal}/>
+                <NewHook isOpen={this.state.newHookModal} onClose={this.closeModal} onCreate={this.listHooks}/>
             </>
         );
     }
