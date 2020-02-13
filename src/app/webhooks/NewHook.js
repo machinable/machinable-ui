@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Modal, Select, Button, Input, Card, Switch } from 'turtle-ui';
 import Loader from '../../components/Loader';
-import Dismiss from '../../components/DismissModalButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import faTimes from '@fortawesome/fontawesome-free-solid/faTimes';
 import Machinable from '../../client';
@@ -24,6 +23,20 @@ class NewHook extends Component {
             },
             entities: []
         }
+    }
+
+    clear = () => {
+        this.setState({
+            errors: [],
+            loading: false,
+            newHook: {
+                label: "",
+                hook_url: "",
+                entity: "resource",
+                event: "create",
+                headers: []
+            }
+        });
     }
 
     addHeader = () => {
@@ -67,7 +80,8 @@ class NewHook extends Component {
         }
 
         this.setState({
-            newHook: newHook
+            newHook: newHook,
+            errors: []
         });
     }
 
@@ -78,15 +92,13 @@ class NewHook extends Component {
     }
 
     hookSuccess = (response) => {
-        this.setState({loading: false});
+        this.clear();
         this.props.onCreate();
         this.props.onClose();
     }
 
     postHook = () => {
         let { newHook } = this.state;
-
-        console.log(newHook);
         Machinable.hooks(this.state.slug).create(newHook, this.hookSuccess, this.hookError);
     }
 

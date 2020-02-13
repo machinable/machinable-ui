@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Modal, Table, Button, Input, Dropdown, List as TList, ListItem } from 'turtle-ui';
+import { Modal, Table, Button, Input, Dropdown, List as TList, ListItem, Card } from 'turtle-ui';
+import Dismiss from '../../components/DismissModalButton';
+import Loader from '../../components/Loader';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV as faEllipsis } from '@fortawesome/fontawesome-free-solid';
 import { faPowerOff } from '@fortawesome/fontawesome-free-solid';
@@ -15,8 +17,24 @@ class List extends Component {
             slug: props.slug,
             hooks: [],
             loading: true,
-            newHookModal: false
+            newHookModal: false,
+            showDeleteModal: false,
+            resources: {},
+            deleteHook: {},
+            keys: {}
         }
+    }
+
+    openDeleteModal = (hook) => {
+		var html = document.getElementsByTagName('html')[0];
+        html.style.cssText = "--root-overflow: hidden";
+        this.setState({showDeleteModal: true, deleteHook: hook});
+    }
+
+    closeDeleteModal = () => {
+		var html = document.getElementsByTagName('html')[0];
+        html.style.cssText = "--root-overflow: auto";
+        this.setState({showDeleteModal: false});
     }
 
     openModal = () => {
@@ -41,6 +59,7 @@ class List extends Component {
             hooks: response.data.items, 
             loading: false, 
             newHookModal: false,
+            showDeleteModal: false
         });
     }
 
@@ -48,21 +67,72 @@ class List extends Component {
         Machinable.hooks(this.state.slug).list(this.hookSuccess, this.hookError);
     }
 
-	componentDidMount = () => {		
-		this.listHooks();
-	}
+    deleteHook = () => {
+        const { deleteHook } = this.state;
+        this.setState({loading: true});
+        Machinable.hooks(this.state.slug).delete(deleteHook.id, this.listHooks, this.hookError);
+    }
 
-    render() {
+    entityError = (response) => {
+        console.log(response);
+        this.setState({loading: false, errors: [response.data.error]});
+    }
+
+    recResources = (response) => {
+        const items = response.data.items;
+        let entities = {};
+
+        for (let index = 0; index < items.length; index++) {
+            const element = items[index];
+            entities[element.id] = element.title;
+        }
+        
+        this.setState({ resources: entities });
+    }
+
+    recKeys = (response) => {
+        const items = response.data.items;
+        let entities = {};
+
+        for (let index = 0; index < items.length; index++) {
+            const element = items[index];
+            entities[element.id] = element.key;
+        }
+        
+        this.setState({ keys: entities });
+    }
+
+    listResources = () => {
+        Machinable.resources(this.state.slug).list(this.recResources, this.entityError);
+    }
+
+    listJsonKeys = () => {
+        Machinable.rootKeys(this.state.slug).list(this.recKeys, this.entityError);
+    }
+
+	componentDidMount = () => {		
+        this.listJsonKeys();
+        this.listResources();
+		this.listHooks();
+    }
+    
+    renderHooks = () => {
         let items = [];
         let buttons = [];
 
-        const { hooks } = this.state;
+        const { hooks, resources, keys } = this.state;
 
         for (let index = 0; index < hooks.length; index++) {
             const hook = hooks[index];
+            let entityName = "";
+            if(hook["entity"] === "resource") {
+                entityName = (<div><span>{resources[hook["entity_id"]]}</span> <span className="text-more-muted">[resource]</span></div>);
+            } else {
+                entityName = (<div><span>{keys[hook["entity_id"]]}</span> <span className="text-more-muted">[key/value]</span></div>);
+            }
             items.push([
                 <div className="text-400">{hook["label"]}</div>,
-                hook["entity"],
+                entityName,
                 hook["event"],
                 <div className="text-center"><FontAwesomeIcon className={hook["is_enabled"] ? "text-success" : "text-more-muted"} icon={faPowerOff} fixedWidth/></div>,
                 <div className="align-center">
@@ -77,7 +147,7 @@ class List extends Component {
                                 <ListItem onClick={function(){}} title={<div className="text-center text-400">Details</div>}/>
                                 <ListItem onClick={function(){}} title={<div className="text-center text-400">Edit</div>}/>
                                 <hr className="no-margin no-padding"/>
-                                <ListItem onClick={function(){}} title={<div className="text-center text-danger text-400">Delete</div>}/>
+                                <ListItem onClick={() => this.openDeleteModal(hook)} title={<div className="text-center text-danger text-400">Delete</div>}/>
                             </TList>
                         </div>
                     </Dropdown>
@@ -86,37 +156,74 @@ class List extends Component {
         }
 
         return (
-            <>
-                <Table
-                    title={
-                        <div className="grid grid-2">
-                            <div className="vertical-align">
-                                <Input labelClasses="flex-1" classes="search" placeholder="Search webhooks..." />
-                            </div>
-                            <div className="align-right">
-                                <Button classes="brand plain page-btn" onClick={this.openModal}>New Hook</Button>
-                            </div>
+            <Table
+                title={
+                    <div className="grid grid-2">
+                        <div className="vertical-align">
+                            <Input labelClasses="flex-1" classes="search" placeholder="Search webhooks..." />
                         </div>
-                    }
-                    classes="m-table"
-                    headers={items.length ? ["Label", "Entity", "Event", <div className="m-th text-center">Enabled</div>, <div className="m-th text-center">Options</div>] : []}
-                    values={items.length ? items : [[<div className="text-center text-muted">No Web Hooks</div>]]}
+                        <div className="align-right">
+                            <Button classes="brand plain page-btn" onClick={this.openModal}>New Hook</Button>
+                        </div>
+                    </div>
+                }
+                classes="m-table"
+                headers={items.length ? ["Label", "Entity", "Event", <div className="m-th text-center">Enabled</div>, <div className="m-th text-center">Options</div>] : []}
+                values={items.length ? items : [[<div className="text-center text-muted">No Web Hooks</div>]]}
 
-                    footer={<div className="grid grid-2">
-                        <div className="text-small text-muted vertical-align">
-                            showing 1 to {items.length} of {items.length} entries
-                            </div>
-                        <div className="pull-right">
-                            {buttons.map(function (btn, index) {
-                                return (
-                                    btn
-                                )
-                            })}
+                footer={<div className="grid grid-2">
+                    <div className="text-small text-muted vertical-align">
+                        showing 1 to {items.length} of {items.length} entries
                         </div>
-                    </div>}
-                />
+                    <div className="pull-right">
+                        {buttons.map(function (btn, index) {
+                            return (
+                                btn
+                            )
+                        })}
+                    </div>
+                </div>}
+            />
+        );
+    }
+
+    render() {
+        return (
+            <>
+				<Loader loading={this.state.loading} />
+				{!this.state.loading && this.renderHooks()}
 
                 <NewHook isOpen={this.state.newHookModal} onClose={this.closeModal} onCreate={this.listHooks}/>
+            
+
+				<Modal 
+					close={this.closeDeleteModal}
+					isOpen={this.state.showDeleteModal}>
+                    <div className="align-center grid grid-3">
+                        <div className="col-3-2">
+                            <div className=" grid grid-1">
+                                <Card
+                                    classes="footer-plain no-border"
+                                    footer={
+                                        <div className="grid grid-2">
+                                            <div className="col-2 col-right">
+                                                <Button classes="plain text" onClick={this.closeDeleteModal}>Cancel</Button>	
+                                                <Button classes="danger margin-left" type="submit" loading={this.state.loading} onClick={this.deleteHook}>Yes, I'm sure</Button>	
+                                            </div>
+                                        </div>
+                                    }>
+									<Dismiss onClick={this.closeExtraModal}/>
+                                    <h2 className="text-center">Delete Web Hook</h2>
+									<h3 className="text-center">Are you sure you want to delete <strong>{this.state.deleteHook.label}</strong>?</h3>
+									<p className="text-center">
+										This will permanently delete the configured web hook and any request history. This cannot be undone.
+									</p>
+                                </Card>
+                            </div>
+                        </div>
+                    </div>
+                </Modal>
+
             </>
         );
     }
