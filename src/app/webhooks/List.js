@@ -8,6 +8,7 @@ import { faEllipsisV as faEllipsis } from '@fortawesome/fontawesome-free-solid';
 import { faPowerOff } from '@fortawesome/fontawesome-free-solid';
 import Machinable from '../../client';
 import NewHook from './NewHook';
+import EditHook from './EditHook';
 
 class List extends Component {
 
@@ -19,6 +20,7 @@ class List extends Component {
             loading: true,
             newHookModal: false,
             showDeleteModal: false,
+            editHook: {},
             resources: {},
             deleteHook: {},
             keys: {}
@@ -46,7 +48,7 @@ class List extends Component {
     closeModal = () => {
 		var html = document.getElementsByTagName('html')[0];
         html.style.cssText = "--root-overflow: auto";
-        this.setState({newHookModal: false});
+        this.setState({newHookModal: false, editHook: {}});
     }
 
     hookError = (response) => {
@@ -145,7 +147,7 @@ class List extends Component {
                         <div className="grid grid-1">
                             <TList>
                                 <ListItem onClick={function(){}} title={<div className="text-center text-400">Details</div>}/>
-                                <ListItem onClick={function(){}} title={<div className="text-center text-400">Edit</div>}/>
+                                <ListItem onClick={() => this.setState({editHook: hook})} title={<div className="text-center text-400">Edit</div>}/>
                                 <hr className="no-margin no-padding"/>
                                 <ListItem onClick={() => this.openDeleteModal(hook)} title={<div className="text-center text-danger text-400">Delete</div>}/>
                             </TList>
@@ -188,13 +190,15 @@ class List extends Component {
     }
 
     render() {
+        const { resources, keys } = this.state;
         return (
             <>
 				<Loader loading={this.state.loading} />
 				{!this.state.loading && this.renderHooks()}
 
-                <NewHook isOpen={this.state.newHookModal} onClose={this.closeModal} onCreate={this.listHooks}/>
+                <NewHook resources={resources} keys={keys} isOpen={this.state.newHookModal} onClose={this.closeModal} onCreate={this.listHooks}/>
             
+                <EditHook resources={resources} keys={keys}  editHook={this.state.editHook} isOpen={this.state.editHook.hasOwnProperty("id")} onClose={this.closeModal} onCreate={this.listHooks}/>
 
 				<Modal 
 					close={this.closeDeleteModal}

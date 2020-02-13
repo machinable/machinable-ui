@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import faTimes from '@fortawesome/fontawesome-free-solid/faTimes';
 import Machinable from '../../client';
 
-class NewHook extends Component {
+class EditHook extends Component {
 
     constructor(props) {
         super(props);
@@ -14,79 +14,87 @@ class NewHook extends Component {
             slug: props.slug,
             loading: false,
             errors: [],
-            newHook: {
-                label: "",
-                hook_url: "",
-                entity: "resource",
-                event: "create",
-                headers: []
-            },
-            entities: []
+            editHook: props.editHook,
+            entities: [],
+            keys: props.keys,
+            resources: props.resources,
+        }
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.editHook && prevProps.editHook['id'] !== this.props.editHook['id']) {
+            this.setState({editHook: this.props.editHook}, this.updateEntities);
+        } else if (prevProps.keys !== this.props.keys) {
+            this.setState({keys: this.props.keys}, this.recKeys);
+        } else if (prevProps.resources !== this.props.resources) {
+            this.setState({resources: this.props.resources}, this.recResources);
+        }
+    }
+
+    updateEntities = () => {
+        const { editHook } = this.state;
+        if (editHook["entity"] === "json") {
+            this.recKeys();
+        } else {
+            this.recResources();
         }
     }
 
     clear = () => {
         this.setState({
             errors: [],
-            loading: false,
-            newHook: {
-                label: "",
-                hook_url: "",
-                entity: "resource",
-                event: "create",
-                headers: []
-            }
+            loading: false
         });
     }
 
     addHeader = () => {
-        let { newHook } = this.state;
-        newHook['headers'].push({ key: "", value: "" });
-        this.setState({ newHook: newHook });
+        let { editHook } = this.state;
+        editHook['headers'].push({ key: "", value: "" });
+        this.setState({ editHook: editHook });
     }
 
     removeHeader = (i) => {
-        let { newHook } = this.state;
-        newHook.headers.splice(i, 1);
-        this.setState({ newHook: newHook });
+        let { editHook } = this.state;
+        editHook.headers.splice(i, 1);
+        this.setState({ editHook: editHook });
     }
 
     updateHeaderKey = (event, i) => {
-        let { newHook } = this.state;
-        newHook.headers[i].key = event.target.value;
-        this.setState({ newHook: newHook });
+        let { editHook } = this.state;
+        editHook.headers[i].key = event.target.value;
+        this.setState({ editHook: editHook });
     }
 
     updateHeaderValue = (event, i) => {
-        let { newHook } = this.state;
-        newHook.headers[i].value = event.target.value;
-        this.setState({ newHook: newHook });
+        let { editHook } = this.state;
+        editHook.headers[i].value = event.target.value;
+        this.setState({ editHook: editHook });
     }
 
     onChange = (event) => {
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
-        let { newHook } = this.state;
+        let { editHook } = this.state;
 
-        newHook[name] = value;
+        editHook[name] = value;
 
         if (name === "entity") {
             if (value === "resource") {
-                this.listResources();
+                this.recResources();
             } else if (value === "json") {
-                this.listJsonKeys();
+                this.recKeys();
             }
         }
 
         this.setState({
-            newHook: newHook,
+            editHook: editHook,
             errors: []
         });
     }
 
     hookError = (response) => {
-        this.setState({loading: false, errors: [response.data.error]});
+        this.setState({ loading: false, errors: [response.data.error] });
         console.log(response);
         // TODO
     }
@@ -97,64 +105,65 @@ class NewHook extends Component {
         this.props.onClose();
     }
 
-    postHook = () => {
-        let { newHook } = this.state;
-        Machinable.hooks(this.state.slug).create(newHook, this.hookSuccess, this.hookError);
+    putHook = () => {
+        let { editHook } = this.state;
+        Machinable.hooks(this.state.slug).update(editHook, this.hookSuccess, this.hookError);
     }
 
-    createHook = () => {
-        this.setState({loading: true}, this.postHook);
+    saveHook = () => {
+        this.setState({ loading: true }, this.putHook);
     }
 
     entityError = (response) => {
         console.log(response);
-        this.setState({loading: false, errors: [response.data.error]});
+        this.setState({ loading: false, errors: [response.data.error] });
     }
 
-    recResources = (response) => {
-        const items = response.data.items;
-        let entities = [{"value": "", "text": ""}];
+    recResources = () => {
+        const { resources, editHook } = this.state;
+        if (editHook["entity"] === "resource") {
+            let entities = [{ "value": "", "text": "" }];
 
-        for (let index = 0; index < items.length; index++) {
-            const element = items[index];
-            entities.push({
-                "value": element.id,
-                "text": element.title
-            });
+            for (const key in resources) {
+                if (resources.hasOwnProperty(key)) {
+                    const element = resources[key];
+                    entities.push({
+                        "value": key,
+                        "text": element
+                    });
+                }
+            }
+
+            this.setState({ entities: entities });
         }
-        
-        this.setState({ entities: entities });
     }
 
-    recKeys = (response) => {
-        const items = response.data.items;
-        let entities = [{"value": "", "text": ""}];
+    recKeys = () => {
+        const { keys, editHook } = this.state;
+        if (editHook["entity"] === "json") {
+            let entities = [{ "value": "", "text": "" }];
 
-        for (let index = 0; index < items.length; index++) {
-            const element = items[index];
-            entities.push({
-                "value": element.id,
-                "text": element.key
-            });
+            for (const key in keys) {
+                if (keys.hasOwnProperty(key)) {
+                    const element = keys[key];
+                    entities.push({
+                        "value": key,
+                        "text": element
+                    });
+                }
+            }
+
+            this.setState({ entities: entities });
         }
-        
-        this.setState({ entities: entities });
     }
 
-    listResources = () => {
-        Machinable.resources(this.state.slug).list(this.recResources, this.entityError);
+    componentDidMount = () => {
+        // this.getHook();
+        this.recResources();
     }
-
-    listJsonKeys = () => {
-        Machinable.rootKeys(this.state.slug).list(this.recKeys, this.entityError);
-    }
-
-	componentDidMount = () => {		
-		this.listResources();
-	}
 
     render() {
-        const { newHook, entities } = this.state;
+        const { editHook, entities } = this.state;
 
         return (
             <Modal
@@ -171,13 +180,13 @@ class NewHook extends Component {
                                     <div className="grid grid-2">
                                         <div className="col-2 col-right">
                                             <Button classes="plain text" onClick={this.props.onClose}>Cancel</Button>
-                                            <Button classes="brand margin-left" type="submit" loading={this.state.loading} onClick={this.createHook}>Create</Button>
+                                            <Button classes="brand margin-left" type="submit" loading={this.state.loading} onClick={this.saveHook}>Save</Button>
                                         </div>
                                     </div>
                                 }>
                                 {/* <Dismiss onClick={this.props.onClose} /> */}
 
-                                <h2>New Web Hook</h2>
+                                <h2>Edit Web Hook</h2>
 
                                 {this.state.errors.length > 0 &&
                                     <div className="text-danger text-center margin-bottom-more">
@@ -187,9 +196,10 @@ class NewHook extends Component {
                                     </div>
                                 }
 
+                                {editHook.hasOwnProperty("id") && 
                                 <div className="grid grid-1">
 
-                                    <Input placeholder="short/descriptive label" label="Label" name="label" value={newHook['label']} onChange={this.onChange} />
+                                    <Input placeholder="short/descriptive label" label="Label" name="label" value={editHook['label']} onChange={this.onChange} />
 
                                     <div className="grid grid-8">
                                         <div className="col col-2">
@@ -200,7 +210,7 @@ class NewHook extends Component {
                                                     { value: "json", text: "Key/Value" },
                                                 ]}
                                                 name="entity"
-                                                value={newHook['entity']}
+                                                value={editHook['entity']}
                                                 onChange={this.onChange}
                                             />
                                         </div>
@@ -210,7 +220,7 @@ class NewHook extends Component {
                                                 label="Entity"
                                                 options={entities}
                                                 name="entity_id"
-                                                value={newHook['entity_id']}
+                                                value={editHook['entity_id']}
                                                 onChange={this.onChange}
                                             />
                                         </div>
@@ -224,7 +234,7 @@ class NewHook extends Component {
                                             { value: "delete", text: "On Delete" },
                                         ]}
                                         name="event"
-                                        value={newHook['event']}
+                                        value={editHook['event']}
                                         onChange={this.onChange}
                                     />
 
@@ -232,22 +242,21 @@ class NewHook extends Component {
                                         placeholder="url endpoint"
                                         label="URL"
                                         name="hook_url"
-                                        value={newHook['hook_url']}
+                                        value={editHook['hook_url']}
                                         onChange={this.onChange}
                                     />
 
                                     <div className="grid grid-1">
                                         <strong>Enabled</strong>
-                                        {/* <Switch name="user_registration" on={this.state.newProject.user_registration} onChange={this.onChange}/> */}
 
-                                        <Switch on={newHook['is_enabled']} name="is_enabled" onChange={this.onChange} />
+                                        <Switch on={editHook['is_enabled']} name="is_enabled" onChange={this.onChange} />
                                     </div>
                                     <strong>Request Headers</strong>
                                     <div className="margin-top-less text-medium text-muted">
                                         Custom HTTP headers to be sent with the web hook request.
                                     </div>
 
-                                    {this.state.newHook.headers.map(function (header, i) {
+                                    {this.state.editHook.headers.map(function (header, i) {
                                         const index = i;
                                         return (
                                             <div key={i}>
@@ -272,7 +281,7 @@ class NewHook extends Component {
                                             <Button classes="brand plain margin-top btn-small" onClick={() => this.addHeader()}>Add Header</Button>
                                         </div>
                                     </div>
-                                </div>
+                                </div>}
 
                             </Card>
                         </div>
@@ -290,4 +299,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(NewHook);
+export default connect(mapStateToProps)(EditHook);
