@@ -191,7 +191,7 @@ class EditHook extends Component {
                                 {this.state.errors.length > 0 &&
                                     <div className="text-danger text-center margin-bottom-more">
                                         {this.state.errors.map(function (error) {
-                                            return (<div className="text-400 padding-bottom">{error}</div>)
+                                            return (<div key={error} className="text-400 padding-bottom">{error}</div>)
                                         })}
                                     </div>
                                 }
