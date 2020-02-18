@@ -9,6 +9,7 @@ import { faPowerOff } from '@fortawesome/fontawesome-free-solid';
 import Machinable from '../../client';
 import NewHook from './NewHook';
 import EditHook from './EditHook';
+import ViewHook from './ViewHook';
 
 class List extends Component {
 
@@ -21,6 +22,7 @@ class List extends Component {
             newHookModal: false,
             showDeleteModal: false,
             editHook: {},
+            viewHook: {},
             resources: {},
             deleteHook: {},
             keys: {}
@@ -48,7 +50,7 @@ class List extends Component {
     closeModal = () => {
 		var html = document.getElementsByTagName('html')[0];
         html.style.cssText = "--root-overflow: auto";
-        this.setState({newHookModal: false, editHook: {}});
+        this.setState({newHookModal: false, editHook: {}, viewHook: {}});
     }
 
     hookError = (response) => {
@@ -146,7 +148,7 @@ class List extends Component {
                         classes="align-items-right">
                         <div className="grid grid-1">
                             <TList>
-                                <ListItem onClick={function(){}} title={<div className="text-center text-400">Details</div>}/>
+                                <ListItem onClick={() => this.setState({viewHook: {hook: hook, entity: entityName}})} title={<div className="text-center text-400">Details</div>}/>
                                 <ListItem onClick={() => this.setState({editHook: hook})} title={<div className="text-center text-400">Edit</div>}/>
                                 <hr className="no-margin no-padding"/>
                                 <ListItem onClick={() => this.openDeleteModal(hook)} title={<div className="text-center text-danger text-400">Delete</div>}/>
@@ -199,6 +201,8 @@ class List extends Component {
                 <NewHook resources={resources} keys={keys} isOpen={this.state.newHookModal} onClose={this.closeModal} onCreate={this.listHooks}/>
             
                 <EditHook resources={resources} keys={keys}  editHook={this.state.editHook} isOpen={this.state.editHook.hasOwnProperty("id")} onClose={this.closeModal} onCreate={this.listHooks}/>
+                
+                <ViewHook hook={this.state.viewHook} isOpen={this.state.viewHook.hasOwnProperty("hook")} onClose={this.closeModal}/>
 
 				<Modal 
 					close={this.closeDeleteModal}
