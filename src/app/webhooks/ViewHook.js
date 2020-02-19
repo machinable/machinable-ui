@@ -57,7 +57,7 @@ class Details extends Component {
                 <div className="grid grid-2">
                     <h4 className="margin-vertical-5">URL</h4>
                     <h4 className="margin-vertical-5 vertical-align align-right text-muted">
-                        <span>{hook['hook_url']}</span>
+                        <span><a className="anchor" target="_blank" rel="noopener noreferrer" href={hook['hook_url']}>{hook['hook_url']}</a></span>
                     </h4>
                 </div>
 
@@ -85,6 +85,18 @@ class Details extends Component {
 }
 
 class Logs extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            slug: props.slug
+        }
+    }
+
+    componentWillMount() {
+        Machinable.hooks(this.state.slug).listResults(this.props.hook.id, function(resp){console.log(resp)}, function(resp){console.log(resp)});
+    }
+
     render() {
         return (
 			<div className="margin-top-more">logs</div>
@@ -120,9 +132,9 @@ class ViewHook extends Component {
     }
 
     renderLogs = () => {
-        const { hook, entity } = this.state;
+        const { hook, entity, slug } = this.state;
         return (
-            <Logs hook={hook} entity={entity} />
+            <Logs hook={hook} entity={entity} slug={slug} />
         );
     }
 

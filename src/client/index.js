@@ -364,9 +364,16 @@ class MachinableClient {
     hooks(projectSlug) {
         var GET_HOOKS = this.projectHost(projectSlug) + "/hooks/";
         var GET_HOOK = this.projectHost(projectSlug) + "/hooks/{id}";
+        var GET_RESULTS = this.projectHost(projectSlug) + "/hooks/{id}/results";
         var authHeaders = this.getAuthHeaders();
 
         return {
+            listResults: function(id, success, error) {
+                axios.get(GET_RESULTS.replace("{id}", id), {headers: authHeaders})
+                    .then(success)
+                    .catch(error);
+            },
+
             list: function(success, error) {
                 axios.get(GET_HOOKS, {headers: authHeaders})
                     .then(success)
