@@ -113,9 +113,9 @@ class Logs extends Component {
         for (let index = 0; index < logs.length; index++) {
             const element = logs[index];
             values.push([
-                <div>{moment(element.created).fromNow()}</div>,
-                element.status_code,
-                <div>{element.response_time} ms</div>
+                <div className="text-muted text-small">{moment(element.created).fromNow()}</div>,
+                <div className="text-center"><span className={"text-400 text-center tag tag-" + (element.status_code+"")[0]}>{element.status_code}</span></div>,
+                <div className="text-right">{element.response_time} ms</div>
             ]);
         }
 
@@ -124,6 +124,7 @@ class Logs extends Component {
                 <i className="text-small text-muted">Web Hook logs for the past 1 hour</i>
                 <Table
                     classes="margin-top-more m-table"
+                    headers={["Time", <div className="m-th text-center">Status Code</div>, <div className="m-th text-right">Response Time</div>]}
                     values={values}
                 />
             </div>
