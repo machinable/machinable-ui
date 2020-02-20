@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Modal, Select, Button, Input, Card, Switch } from 'turtle-ui';
+import { Modal, Button, Card, Table } from 'turtle-ui';
 import Loader from '../../components/Loader';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import faTimes from '@fortawesome/fontawesome-free-solid/faTimes';
 import Machinable from '../../client';
 import Nav from '../../components/DisplayNav';
+import moment from 'moment';
 
 class Details extends Component {
 
@@ -89,18 +88,53 @@ class Logs extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            slug: props.slug
+            slug: props.slug,
+            loading: true,
+            logs: []
         }
     }
 
+    recError = (response) => {
+        console.log(response);
+        this.setState({loading: false});
+    }
+
+    recResults = (response) => {
+        this.setState({logs: response.data.items, loading: false});
+    }
+
     componentWillMount() {
-        Machinable.hooks(this.state.slug).listResults(this.props.hook.id, function(resp){console.log(resp)}, function(resp){console.log(resp)});
+        Machinable.hooks(this.state.slug).listResults(this.props.hook.id, this.recResults, this.recError);
+    }
+
+    renderLogs = () => {
+        const { logs } = this.state;
+        let values = [];
+        for (let index = 0; index < logs.length; index++) {
+            const element = logs[index];
+            values.push([
+                <div>{moment(element.created).fromNow()}</div>,
+                element.status_code,
+                <div>{element.response_time} ms</div>
+            ]);
+        }
+
+        return (
+            <Table
+                classes="margin-top-more m-table"
+                values={values}
+            />
+        )
     }
 
     render() {
+        const { loading } = this.state;
+        let logs = loading ? <Loader loading={loading} /> : this.renderLogs();
         return (
-			<div className="margin-top-more">logs</div>
-        )
+            <>
+                {logs}
+            </>
+        );
     }
 }
 
