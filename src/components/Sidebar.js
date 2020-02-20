@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
+    faChartNetwork,
     faBracketsCurly, 
     faSlidersH as faSliders,
     faProjectDiagram as faProject,
@@ -12,7 +13,6 @@ import {
     faBookSpells,
 } from '@fortawesome/pro-duotone-svg-icons';
 
-import Statics from '../Statics';
 import Logo from './LogoTitle';
 import './Sidebar.css';
 
@@ -50,21 +50,21 @@ class SideBar extends Component {
                                         </div>
                                     </NavLink>
                                 </li>
-                                {/* <li>
-                                    <NavLink to={"/project/"+slug+"/webhooks"} style={{display: "flex"}}>
-                                        <FontAwesomeIcon className="center-self nav-icon" style={{fontSize: "18px"}} icon={faCodeBranch} fixedWidth/>
-                                        <div className="margin-left-more">
-                                            <span className="nav-title">Web Hooks</span>                                    
-                                            <p className="navlink-description">Trigger hooks on events</p>
-                                        </div>
-                                    </NavLink>
-                                </li> */}
                                 <li>
                                     <NavLink to={"/project/"+slug+"/access"} style={{display: "flex"}}>
                                         <FontAwesomeIcon className="center-self nav-icon" style={{fontSize: "18px"}} icon={faUserLock} fixedWidth/>
                                         <div className="margin-left-more">
                                             <span className="nav-title">Access</span>                                    
                                             <p className="navlink-description">Configure users and access</p>
+                                        </div>
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to={"/project/"+slug+"/webhooks"} style={{display: "flex"}}>
+                                        <FontAwesomeIcon className="center-self nav-icon" style={{fontSize: "18px"}} icon={faChartNetwork} fixedWidth/>
+                                        <div className="margin-left-more">
+                                            <span className="nav-title">Web Hooks</span>                                    
+                                            <p className="navlink-description">Trigger hooks on events</p>
                                         </div>
                                     </NavLink>
                                 </li>
@@ -102,7 +102,6 @@ class SideBar extends Component {
                         <ul className="links">
                             <li><a target="_blank" rel="noopener noreferrer" href="https://machinable.github.io/documentation/"><FontAwesomeIcon className="center-self" icon={faBook} fixedWidth/> Documentation</a></li>
                             <li><a target="_blank" rel="noopener noreferrer" href="/home/settings/support"><FontAwesomeIcon className="center-self" icon={faLifeRing} fixedWidth/> Support</a></li>
-                            <li><a target="_blank" rel="noopener noreferrer" href="https://www.machinable.io/documentation/release_notes/#100alpha"><span className="text-small text-muted">{Statics.APP_VERSION}</span></a></li>
                         </ul>
                     </div>
                 </div>

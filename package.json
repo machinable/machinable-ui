@@ -29,7 +29,7 @@
     "redux": "^3.7.2",
     "slugify": "latest",
     "styled-components": "^5.0.0",
-    "turtle-ui": "^1.3.5",
+    "turtle-ui": "^1.8.1",
     "webpack": "4.28.3"
   },
   "scripts": {
