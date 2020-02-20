@@ -120,10 +120,13 @@ class Logs extends Component {
         }
 
         return (
-            <Table
-                classes="margin-top-more m-table"
-                values={values}
-            />
+            <div className="margin-top-more">
+                <i className="text-small text-muted">Web Hook logs for the past 1 hour</i>
+                <Table
+                    classes="margin-top-more m-table"
+                    values={values}
+                />
+            </div>
         )
     }
 
