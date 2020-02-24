@@ -10,7 +10,7 @@ class Login extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-		  username: "",
+		  email: "",
 		  password: "",
 		  errors: [],
 		  loading: false
@@ -27,13 +27,16 @@ class Login extends Component {
 	}
 
 	handleError = (err) => {
-	    var error = '';
-	    if(err.status === 404) {
-	      error = 'Invalid username or password';
-	    }
-	    else {
-	      error = 'Issue logging in, please try again.'
-	    }
+        console.log(err);
+        var error = err.data.error;
+        if (error === '') {
+            if (err.status === 404) {
+                error = 'Invalid email or password';
+            }
+            else {
+                error = 'Issue logging in, please try again.'
+            }
+        }
 	    this.setState({
 	        loading: false,
 	        errors: [error]
@@ -54,8 +57,8 @@ class Login extends Component {
     	event.preventDefault();
     	var errors = [];
 
-	    if(!this.state.username) {
-	      errors.push('Username cannot be empty');
+	    if(!this.state.email) {
+	      errors.push('Email cannot be empty');
 	    }
 
 	    if(!this.state.password) {
@@ -69,7 +72,7 @@ class Login extends Component {
 	    var arr = errors.map(function(k) { return k });
 
 	    if(arr.join('').length === 0) {
-			var un = this.state.username;
+			var un = this.state.email;
 			var pw = this.state.password;
 	     	this.setState({
 				loading: true,
@@ -116,7 +119,7 @@ class Login extends Component {
                             }
 
                             <div>
-                                <Input placeholder="username" label="Username" name="username" value={this.state.username} onChange={this.onChange}/>
+                                <Input placeholder="email" label="Email" type="text" name="email" value={this.state.email} onChange={this.onChange}/>
                             </div>
                             
                             <div className="margin-top-more">
