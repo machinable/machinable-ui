@@ -62,6 +62,7 @@ const App = () => (
 			<Switch>
 				<Route path="/login" component={User} />
 				<Route path="/register" component={User} />
+				<Route path="/verify/:code" component={User} />
 
 				<Route path="/home" component={Home} />
 				<Route path="/project/:projectSlug" component={({history, match}) => <Project history={history} match={match}/>} />

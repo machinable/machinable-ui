@@ -94,7 +94,7 @@ class Account extends Component {
 						<div className="grid grid-3">
 							<h3 className="vertical-align margin">Email</h3>
 							<div className="col-2 background-content padding-less vertical-align">
-								<span></span>
+								<span>{this.state.user ? this.state.user.email : "" }</span>
 							</div>
 						</div>
 						<div className="grid grid-3">

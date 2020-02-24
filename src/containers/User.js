@@ -7,6 +7,7 @@ import Examples from '../app/documentation/Examples';
 import Overview from '../app/documentation/Overview';
 import Login from '../app/user/Login';
 import Register from '../app/user/Register';
+import Verify from '../app/user/Verify';
 import { Route, Switch } from 'react-router-dom';
 import { loadReCaptcha } from 'react-recaptcha-google'
 
@@ -52,6 +53,7 @@ class User extends Component {
 							<Switch>
                                 <Route path="/login" component={Login} />
                                 <Route path="/register" component={Register} />
+                                <Route path="/verify/:code" component={Verify} />
 							</Switch>
 						</div>
 

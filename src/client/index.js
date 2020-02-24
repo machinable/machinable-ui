@@ -40,10 +40,17 @@ class MachinableClient {
         var REGISTER = MGMT_API_HOST + "/users/register";
         var REFRESH = MGMT_API_HOST + "/users/refresh";
         var DELETE_SESSION = MGMT_API_HOST + "/users/sessions/{sid}";
+        var VERIFY_EMAIL = MGMT_API_HOST + "/users/verify/{code}"
         var authHeaders = this.getAuthHeaders();
         var refreshHeaders = {"Authorization": "Bearer " + this.getRefreshToken()}
 
         return {
+            verify: function(code, success, error) {
+                axios.post(VERIFY_EMAIL.replace("{code}", code))
+                    .then(success)
+                    .catch(error);
+            },
+
             tiers: function(success, error) {
                 axios.get(TIERS, {headers: authHeaders})
                     .then(success)
@@ -62,14 +69,14 @@ class MachinableClient {
                     .catch(error);
             },
 
-            login: function(username, password) {
-                var encoded = window.btoa(username + ":" + password);
+            login: function(email, password) {
+                var encoded = window.btoa(email + ":" + password);
                 var headers = {"Authorization": "Basic " + encoded};
                 return axios.post(LOGIN, {}, {headers: headers});
             },
 
-            register: function(username, password, recaptcha) {
-                return axios.post(REGISTER, {username: username, password: password, recaptcha: recaptcha});
+            register: function(email, password, recaptcha) {
+                return axios.post(REGISTER, {email: email, password: password, recaptcha: recaptcha});
             },
 
             saveTokens: function(accessToken, refreshToken, sessionId) {
