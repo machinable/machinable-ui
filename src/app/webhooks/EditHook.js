@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Modal, Select, Button, Input, Card, Switch } from 'turtle-ui';
-import Loader from '../../components/Loader';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import faTimes from '@fortawesome/fontawesome-free-solid/faTimes';
 import Machinable from '../../client';
