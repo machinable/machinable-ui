@@ -105,6 +105,7 @@ class Register extends Component {
 	}
 
 	componentDidMount = () => {
+		console.log(Statics.RECAPTCHA_SITE_KEY);
 		// load recaptcha
 		const t = this;
 		setTimeout(function () {

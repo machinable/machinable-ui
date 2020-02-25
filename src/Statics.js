@@ -4,7 +4,7 @@ class Statics {
 	MGMT_API_HOST = process.env.REACT_APP_MGMT_API_HOST;
 	PROJECT_API_HOST = process.env.REACT_APP_PROJECT_API_HOST;
 	
-	RECAPTCHA_SITE_KEY = process.env.REACT_RECAPTCHA_SITE_KEY;
+	RECAPTCHA_SITE_KEY = process.env.REACT_APP_RECAPTCHA_SITE_KEY;
 
 	COLLECTIONS = "collections";
 	API = "api";
