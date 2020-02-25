@@ -181,7 +181,7 @@ class ViewHook extends Component {
     }
 
     render() {
-        const { hook, entity } = this.state;
+        const { hook } = this.state;
 
         return (
             <Modal
