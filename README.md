@@ -3,6 +3,9 @@
 Quickly define API resources for production usage or prototyping.
 
 ### Build with docker
+
+`REACT_RECAPTCHA_SITE_KEY` should be set to your Google ReCaptcha, it will not work without the correct secret key.
+
 ```bash
 $ make build
 ```
