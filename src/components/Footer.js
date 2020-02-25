@@ -20,7 +20,7 @@ class Footer extends Component {
 			<div className="footer footer-dark">
 				<div>
 					&copy; 2018 - {new Date().getFullYear()} Machinable.io 
-					\/\/ <a className="text-muted" href="https://github.com/machinable">{Statics.APP_VERSION}</a>	
+					// <a className="text-muted" href="https://github.com/machinable">{Statics.APP_VERSION}</a>	
 				</div>
 			</div>
 		  );
