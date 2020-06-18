@@ -1,176 +1,204 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Dropdown, List, ListItem } from 'turtle-ui';
-import Footer from '../components/Footer';
-import Header from '../components/Header';
-import Sidebar from '../components/Sidebar';
-import ProjectIcon from '../components/ProjectIcon';
-import API from '../app/api/API';
-import Access from '../app/access/Access';
-import Json from '../app/json/Json';
-import Security from '../app/security/Security';
-import Settings from '../app/settings/Settings';
-import Spec from '../app/openapi/Spec';
-import Webhooks from '../app/webhooks/Webhooks';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Dropdown, List, ListItem, Modal } from "turtle-ui";
+import Footer from "../components/Footer";
+import Header from "../components/Header";
+import Sidebar from "../components/Sidebar";
+import ProjectIcon from "../components/ProjectIcon";
+import API from "../app/api/API";
+import Access from "../app/access/Access";
+import Json from "../app/json/Json";
+import Security from "../app/security/Security";
+import Settings from "../app/settings/Settings";
+import Spec from "../app/openapi/Spec";
+import Webhooks from "../app/webhooks/Webhooks";
 
-import {setCurrentProject, setProjectObject} from '../store/projects/actionCreators';
+import {
+  setCurrentProject,
+  setProjectObject,
+} from "../store/projects/actionCreators";
 
-import './Project.css';
+import "./Project.css";
 
-import { Route, Switch, Redirect } from 'react-router-dom';
-import Machinable from '../client';
-
+import { Route, Switch, Redirect } from "react-router-dom";
+import Machinable from "../client";
 
 class Project extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      body: "",
+      projectSlug: props.match.params.projectSlug,
+      sidebar: false,
+      modal: false,
+      projects: [],
+    };
+  }
 
-	constructor(props) {
-	    super(props);
-		this.state = {
-			body: "",
-			projectSlug: props.match.params.projectSlug,
-			sidebar: false,
-			modal: false,
-			projects: []
-		}
-	}
+  handleError = (response) => {
+    console.log(response);
+    if (response.data && response.data.error) {
+      var errors = [response.data.error];
+      this.setState({ errors: errors, loading: false });
+    }
+  };
 
-	handleError = (response) => {
-        console.log(response);
-        if(response.data && response.data.error) {
-            var errors = [response.data.error];
-            this.setState({errors: errors, loading: false});
-        }
+  handleProjects = (response) => {
+    for (let index = 0; index < response.data.items.length; index++) {
+      const element = response.data.items[index];
+      if (element.slug === this.state.projectSlug) {
+        this.props.dispatch(setProjectObject(element));
+      }
     }
 
-    handleProjects = (response) => {
-		for (let index = 0; index < response.data.items.length; index++) {
-			const element = response.data.items[index];
-			if (element.slug === this.state.projectSlug) {
-				this.props.dispatch(setProjectObject(element));
-			}
-		}
+    this.setState({
+      projects: response.data.items,
+    });
+  };
 
-        this.setState({
-            projects: response.data.items
-        });
+  getProjects = () => {
+    Machinable.projects().list(this.handleProjects, this.handleError);
+  };
+
+  componentDidUpdate = (prevProps) => {
+    var newSlug = this.props.match.params.projectSlug;
+    var oldSlug = prevProps.match.params.projectSlug;
+
+    if (newSlug !== oldSlug) {
+      this.setState({
+        projectSlug: newSlug,
+      });
+      this.props.dispatch(setCurrentProject(newSlug));
+      this.getProjects();
     }
+  };
 
-    getProjects = () => {
-        Machinable.projects().list(this.handleProjects, this.handleError);
-    }
+  componentWillMount = () => {
+    this.props.dispatch(setCurrentProject(this.state.projectSlug));
+    this.getProjects();
+  };
 
-	componentDidUpdate = (prevProps) => {
-		var newSlug = this.props.match.params.projectSlug;
-		var oldSlug = prevProps.match.params.projectSlug;
-		
-		if (newSlug !== oldSlug) {
-			this.setState({
-				projectSlug: newSlug
-			})
-			this.props.dispatch(setCurrentProject(newSlug));
-			this.getProjects();
-		}
-	}
+  toggleSidebar = () => {
+    var body = !this.state.sidebar ? "modal-open" : "";
+    this.setState({ sidebar: !this.state.sidebar, body: body });
+  };
 
-  	componentWillMount = () => {
-		this.props.dispatch(setCurrentProject(this.state.projectSlug));
-		this.getProjects();
-  	}
+  navToProject = (slug) => {
+    this.props.history.push("/project/" + slug);
+  };
 
-	toggleSidebar = () => {
-		var body = !this.state.sidebar ? "modal-open" : "";
-		this.setState({sidebar: !this.state.sidebar, body: body});
-	}
+  render() {
+    var currentProjectRender = <div>...</div>;
+    var projectItems = this.state.projects.map(function (project, idx) {
+      var el = (
+        <div className="vertical-align">
+          <ProjectIcon source={project.icon} />{" "}
+          <span className="margin-left-less margin-right-less">
+            {project.name}
+          </span>
+        </div>
+      );
+      if (this.state.projectSlug === project.slug) {
+        currentProjectRender = el;
+      }
+      return (
+        <ListItem
+          key={"project-listitem-" + idx}
+          onClick={() => this.navToProject(project.slug)}
+          title={el}
+          description={project.description}
+        />
+      );
+    }, this);
 
-	navToProject = (slug) => {
-		this.props.history.push("/project/"+slug);
-	}
+    var projectList = (
+      <div className="grid grid-1">
+        <div>
+          <Dropdown
+            showIcon={true}
+            type="brand"
+            width={250}
+            buttonText={currentProjectRender}
+            buttonClasses="text plain text-muted no-click no-padding-side vertical-align"
+            classes="pull-left align-items-left"
+          >
+            <div className="grid grid-1">
+              <List>{projectItems}</List>
+            </div>
+          </Dropdown>
+        </div>
+      </div>
+    );
 
-	render() {
+    var prefix = this.props.match.url;
+    return (
+      <div className={"root container container-project " + this.state.body}>
+        <Modal
+          overrideClasses={true}
+          classes="from-left"
+          close={this.toggleSidebar}
+          isOpen={this.state.sidebar}
+        >
+          <Sidebar
+            {...this.props}
+            sidebarClass="mobile-sidebar"
+            toggleSidebar={this.toggleSidebar}
+          />
+        </Modal>
+        <Sidebar {...this.props} sidebarClass="default-sidebar" />
 
-		var currentProjectRender = <div>...</div>;
-		var projectItems = this.state.projects.map(function(project, idx){
-			var el = <div className="vertical-align"><ProjectIcon source={project.icon}/> <span className="margin-left-less margin-right-less">{project.name}</span></div>
-			if (this.state.projectSlug === project.slug) {
-				currentProjectRender = el;
-			}
-			return (
-				<ListItem 
-					key={"project-listitem-"+idx}
-					onClick={() => this.navToProject(project.slug)}
-					title={el}
-					description={project.description} />
-			)
-		}, this);
+        <Header
+          {...this.props}
+          title={projectList}
+          classes="no-shadow"
+          toggleSidebar={this.toggleSidebar}
+        />
 
-        var projectList = <div className="grid grid-1"><div><Dropdown 
-                        showIcon={true}
-                        type="brand"
-                        width={250}
-                        buttonText={currentProjectRender}
-                        buttonClasses="text plain text-muted no-click no-padding-side vertical-align"
-                        classes="pull-left">
-                        <div className="grid grid-1">
-                            <List>
-								{projectItems}
-                            </List>
-                        </div>
-                    </Dropdown></div></div>
+        <div className="content">
+          <Switch>
+            <Route
+              path={prefix + "/api"}
+              render={(props) => <API {...props} />}
+            />
 
+            <Route
+              path={prefix + "/json"}
+              render={(props) => <Json {...props} />}
+            />
 
-        var prefix = this.props.match.url;
-		return (
-			<div className={"root container container-project " + this.state.body}>
-				<Sidebar {...this.props}/>
+            <Route
+              path={prefix + "/access"}
+              render={(props) => <Access {...props} />}
+            />
 
-				<Header {...this.props} title={projectList} classes="no-shadow"/>				
+            <Route
+              path={prefix + "/webhooks"}
+              render={(props) => <Webhooks {...props} />}
+            />
 
-				<div className="content">
-                    <Switch>
-						<Route 
-							path={prefix+"/api"} 
-							render={(props) => <API {...props} />} 
-						/>
-							
-						<Route 
-							path={prefix+"/json"} 
-							render={(props) => <Json {...props} />}
-						/>
+            <Route
+              path={prefix + "/security"}
+              render={(props) => <Security {...props} />}
+            />
 
-						<Route 
-							path={prefix+"/access"} 
-							render={(props) => <Access {...props} />} 
-						/>
+            <Route
+              path={prefix + "/spec"}
+              render={(props) => <Spec {...props} />}
+            />
 
-						<Route 
-							path={prefix+"/webhooks"} 
-							render={(props) => <Webhooks {...props} />}
-						/>
+            <Route
+              path={prefix + "/settings"}
+              render={(props) => <Settings {...props} />}
+            />
 
-						<Route 
-							path={prefix+"/security"} 
-							render={(props) => <Security {...props} />} 
-						/>
+            <Redirect from="/" to={prefix + "/api"} />
+          </Switch>
+        </div>
 
-						<Route 
-							path={prefix+"/spec"} 
-							render={(props) => <Spec {...props} />} 
-						/>
-
-						<Route 
-							path={prefix+"/settings"} 
-							render={(props) => <Settings {...props} />} 
-						/>
-
-                        <Redirect from="/" to={prefix+"/api"} />
-
-                    </Switch>
-				</div>
-
-				<Footer />
-			</div>
-		  );
-	}
+        <Footer />
+      </div>
+    );
+  }
 }
 
 export default connect()(Project);
