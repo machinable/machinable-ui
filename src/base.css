@@ -519,6 +519,12 @@ hr.thin {
     align-items: center;
     justify-content: center;
 }
+
+.align-items-center{
+	display: flex;
+    align-items: center;
+}
+
 .center {
 	display: flex;
     align-items: center;
@@ -1134,3 +1140,22 @@ dl dd {
 
 }
 
+@media (max-width: 900px) {
+	.default-sidebar{
+		display:none;
+	}
+	.mobile-sidebar {
+		background-color: transparent;
+	}
+	.mobile-sidebar .sidebar-content{
+		position: inherit;
+		background-color: var(--real-brand);
+	}
+	/* .sidebar{
+		display: block;
+		position: absolute;
+	} */
+	.container-project {
+		grid-template-columns: unset;
+	}
+}
