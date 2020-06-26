@@ -1003,6 +1003,13 @@ dl dd {
 	box-shadow: none;
 }
 
+.disabled {
+	pointer-events: none;
+	cursor: not-allowed;
+	opacity: 0.65;
+	filter: alpha(opacity=65);
+}
+
 /* CARDS */
 .card {
 	/* border: 1px solid var(--card-border-color); */
