@@ -30,7 +30,7 @@
     "slugify": "latest",
     "styled-components": "^5.0.0",
     "turtle-ui": "^1.8.1",
-    "webpack": "4.28.3"
+    "webpack": "5.94.0"
   },
   "scripts": {
     "start": "react-scripts start",
